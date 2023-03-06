@@ -41,7 +41,8 @@
                    x:Name="Password"
                    Text="{Binding Password}"
                    Placeholder="Enter password"
-                   HorizontalOptions="Center"/>
+                   HorizontalOptions="Center"
+                   IsPassword="True"/>
 
             <Button Grid.Row="2"
                     Grid.Column="0"

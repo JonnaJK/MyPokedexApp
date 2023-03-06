@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PokedexGo.Models
+namespace PokedexGo.Models;
+
+public class User
 {
-    class User
-    {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Password { get; set; }
-        public List<Pokemon> Pokemons { get; set; }
-    }
+    public Guid Id { get; set; }
+    public string Name { get; set; }
+    public string Password { get; set; }
+    public List<Pokemon> Pokemons { get; set; }
 }

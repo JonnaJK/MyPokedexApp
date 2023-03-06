@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace PokedexGo.Services;
 
-internal class UserService
+public class UserService
 {
     // förbättring är att inte ha direkt kontakt med databasen från appen, utan ha en api
     public UserService()
@@ -36,16 +36,16 @@ internal class UserService
         await collection.InsertOneAsync(user);
     }
 
-    public static User GetUser(string name)
+    public static User GetUser(string name, string password)
     {
         return GetUsersFromDB<User>()
             .AsQueryable()
-            .Where(x => x.Name.ToLower().Contains(name.ToLower()))
+            .Where(x => x.Name.ToLower().Contains(name.ToLower()) && x.Password.Equals(password))
             .FirstOrDefault();
         //var collection = GetUsersFromDB<User>();
         //var user = collection
         //    .AsQueryable()
-        //    .Where(x => x.Name.ToLower().Contains(name.ToLower()))
+        //    .Where(x => x.Name.ToLower().Contains(name.ToLower()) && x.Password.Equals(password))
         //    .FirstOrDefault();
         //return user;
     }
