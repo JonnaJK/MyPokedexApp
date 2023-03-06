@@ -23,14 +23,30 @@ internal class UserService
         settings.ServerApi = new ServerApi(ServerApiVersion.V1);
         var client = new MongoClient(settings);
         var database = client.GetDatabase("PokedexGo");
-        var myCollection = database.GetCollection<T>("User");
-        return myCollection;
+        return database.GetCollection<T>("User");
+        //var myCollection = database.GetCollection<T>("User");
+        //return myCollection;
     }
 
     public static async Task SaveUser(User user)
     {
         // använda facade design pattern? För login!
+        //var collection = GetUsersFromDB<User>().InsertOneAsync(user);
         var collection = GetUsersFromDB<User>();
         await collection.InsertOneAsync(user);
+    }
+
+    public static User GetUser(string name)
+    {
+        return GetUsersFromDB<User>()
+            .AsQueryable()
+            .Where(x => x.Name.ToLower().Contains(name.ToLower()))
+            .FirstOrDefault();
+        //var collection = GetUsersFromDB<User>();
+        //var user = collection
+        //    .AsQueryable()
+        //    .Where(x => x.Name.ToLower().Contains(name.ToLower()))
+        //    .FirstOrDefault();
+        //return user;
     }
 }

@@ -22,15 +22,4 @@ public partial class LoginPage : ContentPage
         var user = sender as User;
 
     }
-
-    private async void OnClickedRegisterNewUser(object sender, EventArgs e)
-    {
-        var user = new User
-        {
-            Id = new Guid(),
-            Name = Name.Text,
-            Password = Password.Text
-        };
-        await UserService.SaveUser(user); 
-    }
 }
