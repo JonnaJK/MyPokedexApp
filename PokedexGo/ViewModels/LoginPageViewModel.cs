@@ -50,10 +50,7 @@ public partial class LoginPageViewModel : ObservableObject
             Password = Password
         };
         await UserService.SaveUser(user);
-        if (SignIn is not null)
-        {
-            SignIn.Invoke(user);
-        }
+        SignIn?.Invoke(user);
         // go to page MyPokemonPage
     }
 

@@ -27,7 +27,6 @@ public partial class LoginPage : ContentPage
     private async void GoToMyPokemonPage(User user)
     {
         await Navigation.PushAsync(new MyPokemonPage(user));
-
     }
 
     private async void OnClickedLogIn(object sender, EventArgs e)
