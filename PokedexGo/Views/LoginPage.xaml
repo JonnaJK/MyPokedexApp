@@ -2,19 +2,56 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="PokedexGo.Views.LoginPage"
-             Title="LoginPage"
-             BackgroundColor="DarkSeaGreen">
+             Title="Login">
 
 
-    <VerticalStackLayout>
+    <VerticalStackLayout Padding="10"
+                         Spacing="10">
 
         <Image Source="pokemonlogga.png"
                HeightRequest="200"
                HorizontalOptions="Center"/>
 
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+        <Image Source="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/25.png"
+               HeightRequest="200"
+               HorizontalOptions="Center"/>
+
+        <Grid RowDefinitions="Auto, Auto, Auto"
+              ColumnDefinitions="Auto, Auto"
+              HorizontalOptions="Center"
+              Padding="10"
+              RowSpacing="10">
+            
+            <Entry Grid.Row="0"
+                   Grid.ColumnSpan="2"
+                   x:Name="Name"
+                   Placeholder="Enter fullname"
+                   HorizontalOptions="Center"/>
+
+            <Entry Grid.Row="1"
+                   Grid.ColumnSpan="2"
+                   x:Name="Password"
+                   Placeholder="Enter password"
+                   HorizontalOptions="Center"/>
+
+            <Button Grid.Row="2"
+                    Grid.Column="0"
+                    Text="Login"
+                    HorizontalOptions="Center"
+                    Clicked="OnClickedLogIn"/>
+
+            <Button Grid.Row="3"
+                    Grid.Column="1"
+                    Text="Register"
+                    HorizontalOptions="Center"
+                    Clicked="OnClickedRegisterNewUser"/>
+
+            <Button Grid.Row="3"
+                    Grid.Column="2"
+                    Text="Go back"
+                    HorizontalOptions="Center"
+                    Clicked="OnClickedGoBack"/>
+        </Grid>
+
     </VerticalStackLayout>
 </ContentPage>

@@ -6,18 +6,22 @@
     <ScrollView>
         <VerticalStackLayout
             Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
+            Padding="30,0">
 
             <Image
                 Source="pokemonlogga.png"
                 HeightRequest="200"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center"/>
+
+            <Image Source="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/25.png"
+               HeightRequest="200"
+               HorizontalOptions="Center"/>
 
             <Label
                 Text="Gotta catch'em all!"
                 FontSize="32"
-                HorizontalOptions="Center" />
+                HorizontalOptions="Center"
+                TextColor="#0C3348"/>
 
             <Button
                 x:Name="Login"
