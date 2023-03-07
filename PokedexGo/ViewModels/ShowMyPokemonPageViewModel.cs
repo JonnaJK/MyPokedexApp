@@ -12,7 +12,7 @@ namespace PokedexGo.ViewModels;
 
 public partial class ShowMyPokemonPageViewModel
 {
-    public List<Pokemon> Pokemons { get; set; }
+    //public List<Pokemon> Pokemons { get; set; }
     public string Name { get; set; }
     public string ImageSource { get; set; }
     public User User { get; set; }
@@ -27,8 +27,8 @@ public partial class ShowMyPokemonPageViewModel
         if (user.Pokemons is not null)
         {
             User.Pokemons = user.Pokemons;
-            Pokemons = user.Pokemons;
-            Name = Pokemons.First().Name;
+            //Pokemons = user.Pokemons;
+            //Name = Pokemons.First().Name;
         }
     }
 }

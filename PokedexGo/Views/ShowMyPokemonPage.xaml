@@ -5,6 +5,7 @@
              xmlns:model="clr-namespace:PokedexGo.Models"
              x:Class="PokedexGo.Views.ShowMyPokemonPage"
              Title="My Pokemon">
+    
     <VerticalStackLayout Padding="10"
                          Spacing="10">
 
@@ -16,23 +17,23 @@
                VerticalOptions="Center"
                HorizontalOptions="Center" />
 
-        <ListView x:DataType="viewmodels:ShowMyPokemonPageViewModel"
-                  ItemsSource="{Binding Pokemons}">
+        <ListView x:Name="ListOfPokemons"
+                  SeparatorColor="#0C3348">
+                  <!--x:DataType="viewmodels:ShowMyPokemonPageViewModel"-->
             
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <Grid Padding="10"
-                              ColumnDefinitions=".75*, .25*">
-                            
-                            <Image Source="{Binding ImageSource}"
+                              ColumnDefinitions=".25*, .75*">
+
+                            <Image Source="{Binding Path=Sprites.FrontDefault}"
                                    Grid.Column="0"
                                    HorizontalOptions="Center"
-                                   HeightRequest="75"/>
+                                   HeightRequest="100"/>
                             
                             <Label Text="{Binding Name}"
                                    Grid.Column="1"
-                                   HorizontalTextAlignment="Start"
                                    FontSize="25"/>
                             
                         </Grid>

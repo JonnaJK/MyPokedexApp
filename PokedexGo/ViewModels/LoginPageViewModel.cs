@@ -33,11 +33,11 @@ public partial class LoginPageViewModel
     //    SignedIn?.Invoke(User);
     //}
 
-    //public void Login()
-    //{
-    //    //User = UserService.GetUser(UserName, UserPassword);
-    //    //if (User is not null)
-    //    //    SignedIn?.Invoke(User);
-    //    //// TODO: Could not find user in db
-    //}
+    public void Login()
+    {
+        User = UserService.GetUser(UserName, UserPassword);
+        if (User is not null)
+            SignedIn?.Invoke(User);
+        // TODO: Could not find user in db
+    }
 }

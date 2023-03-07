@@ -16,6 +16,16 @@ namespace PokedexGo.Services
             _httpService = new HttpService();
         }
 
+        public async Task<List<Pokemon>> GetUsersPokemons(User user)
+        {
+            var list = new List<Pokemon>();
+            foreach (var pokemon in user.Pokemons)
+            {
+                list.Add(await GetPokemon(pokemon.Name));
+            }
+            return list;
+        }
+
         public async Task<Pokemon> GetPokemon(string pokemon)
         {
             return await _httpService.HttpRequest<Pokemon>($"pokemon/{pokemon}");
