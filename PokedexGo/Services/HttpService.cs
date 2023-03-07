@@ -28,7 +28,8 @@ public class HttpService
 
     public async Task<T> HttpRequest<T>(string requestUri)
     {
-        var response = await _client.GetAsync(requestUri);
+        var response = await Client.GetAsync(requestUri);
+        //var response = await _client.GetAsync(requestUri);
         response.EnsureSuccessStatusCode();
 
         var content = await response.Content.ReadAsStringAsync();

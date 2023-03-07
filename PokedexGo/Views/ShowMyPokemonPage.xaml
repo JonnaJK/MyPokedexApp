@@ -10,9 +10,34 @@
                HeightRequest="100"
                HorizontalOptions="Center"/>
         
-        <Label Text="My Pokemon"
+        <Label Text="My Pokemons"
                VerticalOptions="Center"
                HorizontalOptions="Center" />
-        
+
+        <ListView ItemsSource="{Binding Pokemons}"
+                  ItemSelected="ListView_ItemSelected">
+            
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Padding="10"
+                              ColumnDefinitions=".75*, .25*">
+                            
+                            <Image Source="{Binding ImageSource}"
+                                   Grid.Column="0"
+                                   HorizontalOptions="Center"
+                                   HeightRequest="75"/>
+                            
+                            <Label Text="{Binding Name}"
+                                   Grid.Column="1"
+                                   HorizontalTextAlignment="Start"
+                                   FontSize="25"/>
+                            
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
     </VerticalStackLayout>
 </ContentPage>
