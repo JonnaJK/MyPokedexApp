@@ -47,7 +47,7 @@ public class UserService
     {
         return GetUsersFromDB<User>()
             .AsQueryable()
-            .Where(x => x.Name.ToLower().Contains(name.ToLower()) && x.Password.Equals(password))
+            .Where(x => x.UserName.ToLower().Contains(name.ToLower()) && x.UserPassword.Equals(password))
             .FirstOrDefault();
         //var collection = GetUsersFromDB<User>();
         //var user = collection

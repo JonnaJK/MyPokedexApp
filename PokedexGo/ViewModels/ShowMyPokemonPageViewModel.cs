@@ -17,12 +17,12 @@ public partial class ShowMyPokemonPageViewModel : ObservableObject
 
     public ShowMyPokemonPageViewModel(User user)
     {
-        pokemons = new ObservableCollection<Pokemon>();
-        var task = Task.Run(() =>  PokeService.GetAllPokemons(user));
-        task.Wait();
-        for (int i = 0; i < task.Result.Count; i++)
-        {
-            pokemons.Add(task.Result[i]);
-        }
+        //pokemons = new ObservableCollection<Pokemon>();
+        //var task = Task.Run(() =>  PokeService.GetAllPokemons(user));
+        //task.Wait();
+        //for (int i = 0; i < task.Result.Count; i++)
+        //{
+        //    pokemons.Add(task.Result[i]);
+        //}
     }
 }

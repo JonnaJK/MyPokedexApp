@@ -14,7 +14,7 @@ public partial class MyPokemonPage : ContentPage
             GoToShowMyPokemonPage = new Action<List<Pokemon>>(GoToShowMyPokemonPage)
         };
         BindingContext = myPokemonPage;
-		welcomeText.Text = $"Welcome {user.Name}!";
+		welcomeText.Text = $"Welcome {user.UserName}!";
     }
 
     private async void OnClickedLogOut(object sender, EventArgs e)

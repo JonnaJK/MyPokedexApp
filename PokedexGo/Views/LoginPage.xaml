@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:model="clr-namespace:PokedexGo.Models"
+             xmlns:viewmodel="clr-namespace:PokedexGo.ViewModels"
              x:Class="PokedexGo.Views.LoginPage"
              Title="Login">
 
@@ -29,15 +30,13 @@
 
             <Entry Grid.Row="0"
                    Grid.ColumnSpan="2"
-                   x:Name="Name"
-                   Text="{Binding Name}"
+                   Text="{Binding UserName}"
                    Placeholder="Enter fullname"
                    HorizontalOptions="Center"/>
 
             <Entry Grid.Row="1"
                    Grid.ColumnSpan="2"
-                   x:Name="Password"
-                   Text="{Binding Password}"
+                   Text="{Binding UserPassword}"
                    Placeholder="Enter password"
                    HorizontalOptions="Center"
                    IsPassword="True"/>

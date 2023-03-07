@@ -18,10 +18,10 @@ public partial class LoginPageViewModel : ObservableObject
     Guid id;
 
     [ObservableProperty]
-    string name;
+    string userName;
 
     [ObservableProperty]
-    string password;
+    string userPassword;
 
     [ObservableProperty]
     List<Pokemon> pokemons;
@@ -34,8 +34,8 @@ public partial class LoginPageViewModel : ObservableObject
         var user = new User
         {
             Id = new Guid(),
-            Name = Name,
-            Password = Password
+            UserName = UserName,
+            UserPassword = UserPassword
         };
         await UserService.SaveUser(user);
         SignedIn?.Invoke(user);
@@ -44,7 +44,7 @@ public partial class LoginPageViewModel : ObservableObject
     [RelayCommand]
     public void Login()
     {
-        var user = UserService.GetUser(Name, Password);
+        var user = UserService.GetUser(UserName, UserPassword);
         if (user is not null)
             SignedIn?.Invoke(user);
         // TODO: Could not find user in db

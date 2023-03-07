@@ -23,8 +23,8 @@ public partial class MyPokemonPageViewModel : ObservableObject
 
     public MyPokemonPageViewModel(User user)
     {
-        Name = user.Name;
-        Password = user.Password;
+        Name = user.UserName;
+        Password = user.UserPassword;
         if (user.Pokemons is not null)
         {
             Pokemons = user.Pokemons;

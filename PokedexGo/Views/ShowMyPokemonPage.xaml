@@ -14,8 +14,7 @@
                VerticalOptions="Center"
                HorizontalOptions="Center" />
 
-        <ListView ItemsSource="{Binding Pokemons}"
-                  ItemSelected="ListView_ItemSelected">
+        <ListView ItemsSource="{Binding Pokemons}">
             
             <ListView.ItemTemplate>
                 <DataTemplate>
