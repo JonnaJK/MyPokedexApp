@@ -26,19 +26,7 @@ public partial class LoginPageViewModel : ObservableObject
     [ObservableProperty]
     List<Pokemon> pokemons;
 
-    //public delegate void SignIn { get; set; };
-    public Action<User> SignIn { get; set; }
-
-
-    public bool isLoggedIn = false;
-    public bool IsLoggedIn { get; set; } = false;
-
-    public User User { get; set; }
-    public MyPokemonPageViewModel Page { get; set; }
-
-
-
-
+    public Action<User> SignedIn { get; set; }
 
     [RelayCommand]
     public async void RegisterNewUser()
@@ -50,8 +38,7 @@ public partial class LoginPageViewModel : ObservableObject
             Password = Password
         };
         await UserService.SaveUser(user);
-        SignIn?.Invoke(user);
-        // go to page MyPokemonPage
+        SignedIn?.Invoke(user);
     }
 
     [RelayCommand]
@@ -59,10 +46,7 @@ public partial class LoginPageViewModel : ObservableObject
     {
         var user = UserService.GetUser(Name, Password);
         if (user is not null)
-        {
-            isLoggedIn = true;
-            Page = new MyPokemonPageViewModel(user);
-            SignIn?.Invoke(user);
-        }
+            SignedIn?.Invoke(user);
+        // TODO: Could not find user in db
     }
 }

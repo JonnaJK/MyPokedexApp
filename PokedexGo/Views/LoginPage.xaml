@@ -9,9 +9,7 @@
     <VerticalStackLayout Padding="10"
                          Spacing="10">
 
-        <Button Grid.Row="3"
-                Grid.ColumnSpan="2"
-                Text="Go back"
+        <Button Text="Go back"
                 HorizontalOptions="End"
                 Clicked="OnClickedGoBack"/>
 

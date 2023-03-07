@@ -30,6 +30,13 @@ public class UserService
 
     public static async Task SaveUser(User user)
     {
+        user.Pokemons = new()
+        {
+            new Pokemon()
+            {
+                Name = "pikachu"
+            }
+        };
         // använda facade design pattern? För login!
         //var collection = GetUsersFromDB<User>().InsertOneAsync(user);
         var collection = GetUsersFromDB<User>();

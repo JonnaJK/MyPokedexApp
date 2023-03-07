@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PokedexGo.Views.ShowMyPokemonPage"
+             Title="My Pokemon">
+    <VerticalStackLayout Padding="10"
+                         Spacing="10">
+
+        <Image Source="pokemonlogga.png"
+               HeightRequest="100"
+               HorizontalOptions="Center"/>
+        
+        <Label Text="My Pokemon"
+               VerticalOptions="Center"
+               HorizontalOptions="Center" />
+        
+    </VerticalStackLayout>
+</ContentPage>
