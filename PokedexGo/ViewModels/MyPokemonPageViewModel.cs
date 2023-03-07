@@ -9,33 +9,18 @@ using System.Threading.Tasks;
 
 namespace PokedexGo.ViewModels;
 
-public partial class MyPokemonPageViewModel : ObservableObject
+public partial class MyPokemonPageViewModel
 {
-    [ObservableProperty]
-    string name;
+    public User User { get; set; }
 
-    [ObservableProperty]
-    string password;
-
-    [ObservableProperty]
-    List<Pokemon> pokemons;
     public Action<List<Pokemon>> GoToShowMyPokemonPage { get; set; }
 
-    public MyPokemonPageViewModel(User user)
-    {
-        Name = user.UserName;
-        Password = user.UserPassword;
-        if (user.Pokemons is not null)
-        {
-            Pokemons = user.Pokemons;
-        }
-    }
 
     // TODO: Not working, why???
-    [RelayCommand]
-    public void ShowMyPokemonCommand()
-    {
-        // go to show my pokemon page
-        GoToShowMyPokemonPage?.Invoke(Pokemons);
-    }
+    //[RelayCommand]
+    //public void ShowMyPokemonCommand()
+    //{
+    //    // go to show my pokemon page
+    //    GoToShowMyPokemonPage?.Invoke(Pokemons);
+    //}
 }

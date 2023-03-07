@@ -10,19 +10,25 @@ using System.Threading.Tasks;
 
 namespace PokedexGo.ViewModels;
 
-public partial class ShowMyPokemonPageViewModel : ObservableObject
+public partial class ShowMyPokemonPageViewModel
 {
-    [ObservableProperty]
-    ObservableCollection<Pokemon> pokemons;
+    public List<Pokemon> Pokemons { get; set; }
+    public string Name { get; set; }
+    public string ImageSource { get; set; }
+    public User User { get; set; }
 
     public ShowMyPokemonPageViewModel(User user)
     {
-        //pokemons = new ObservableCollection<Pokemon>();
-        //var task = Task.Run(() =>  PokeService.GetAllPokemons(user));
-        //task.Wait();
-        //for (int i = 0; i < task.Result.Count; i++)
-        //{
-        //    pokemons.Add(task.Result[i]);
-        //}
+        User = new User
+        {
+            UserName = user.UserName,
+            UserPassword = user.UserPassword
+        };
+        if (user.Pokemons is not null)
+        {
+            User.Pokemons = user.Pokemons;
+            Pokemons = user.Pokemons;
+            Name = Pokemons.First().Name;
+        }
     }
 }
