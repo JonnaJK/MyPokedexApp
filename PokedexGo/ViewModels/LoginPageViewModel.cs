@@ -12,41 +12,32 @@ using PokedexGo.Views;
 
 namespace PokedexGo.ViewModels;
 
-public partial class LoginPageViewModel : ObservableObject
+public partial class LoginPageViewModel
 {
-    [ObservableProperty]
-    Guid id;
-
-    [ObservableProperty]
-    string userName;
-
-    [ObservableProperty]
-    string userPassword;
-
-    [ObservableProperty]
-    List<Pokemon> pokemons;
+    public string UserName { get; set; }
+    public string UserPassword { get; set; }
+    public List<Pokemon> Pokemons { get; set; }
+    public User User { get; set; }
 
     public Action<User> SignedIn { get; set; }
 
-    [RelayCommand]
-    public async void RegisterNewUser()
-    {
-        var user = new User
-        {
-            Id = new Guid(),
-            UserName = UserName,
-            UserPassword = UserPassword
-        };
-        await UserService.SaveUser(user);
-        SignedIn?.Invoke(user);
-    }
+    //public async void RegisterNewUser()
+    //{
+    //    User = new User
+    //    {
+    //        Id = new Guid(),
+    //        UserName = UserName,
+    //        UserPassword = UserPassword
+    //    };
+    //    await UserService.SaveUser(User);
+    //    SignedIn?.Invoke(User);
+    //}
 
-    [RelayCommand]
-    public void Login()
-    {
-        var user = UserService.GetUser(UserName, UserPassword);
-        if (user is not null)
-            SignedIn?.Invoke(user);
-        // TODO: Could not find user in db
-    }
+    //public void Login()
+    //{
+    //    //User = UserService.GetUser(UserName, UserPassword);
+    //    //if (User is not null)
+    //    //    SignedIn?.Invoke(User);
+    //    //// TODO: Could not find user in db
+    //}
 }

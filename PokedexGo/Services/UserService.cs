@@ -45,15 +45,15 @@ public class UserService
 
     public static User GetUser(string name, string password)
     {
-        return GetUsersFromDB<User>()
+        //return GetUsersFromDB<User>()
+        //    .AsQueryable()
+        //    .Where(x => x.UserName.ToLower().Contains(name.ToLower()) && x.UserPassword.Equals(password))
+        //    .FirstOrDefault();
+        var collection = GetUsersFromDB<User>();
+        var user = collection
             .AsQueryable()
             .Where(x => x.UserName.ToLower().Contains(name.ToLower()) && x.UserPassword.Equals(password))
             .FirstOrDefault();
-        //var collection = GetUsersFromDB<User>();
-        //var user = collection
-        //    .AsQueryable()
-        //    .Where(x => x.Name.ToLower().Contains(name.ToLower()) && x.Password.Equals(password))
-        //    .FirstOrDefault();
-        //return user;
+        return user;
     }
 }

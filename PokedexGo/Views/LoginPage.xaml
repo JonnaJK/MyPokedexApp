@@ -26,32 +26,35 @@
               ColumnDefinitions="Auto, Auto"
               HorizontalOptions="Center"
               Padding="10"
-              RowSpacing="10">
+              RowSpacing="10"
+              x:DataType="model:User">
 
             <Entry Grid.Row="0"
                    Grid.ColumnSpan="2"
                    Text="{Binding UserName}"
                    Placeholder="Enter fullname"
-                   HorizontalOptions="Center"/>
+                   HorizontalOptions="Center"
+                   x:Name="UserName"/>
 
             <Entry Grid.Row="1"
                    Grid.ColumnSpan="2"
                    Text="{Binding UserPassword}"
                    Placeholder="Enter password"
                    HorizontalOptions="Center"
-                   IsPassword="True"/>
+                   IsPassword="True"
+                   x:Name="UserPassword"/>
 
             <Button Grid.Row="2"
                     Grid.Column="0"
                     Text="Login"
                     HorizontalOptions="Center"
-                    Command="{Binding LoginCommand}"/>
+                    Clicked="OnClickedGoToMyPokemonPage"/>
 
             <Button Grid.Row="2"
                     Grid.Column="1"
                     Text="Register"
                     HorizontalOptions="Center"
-                    Command="{Binding RegisterNewUserCommand}"/>
+                    Clicked="OnClickedRegisterNewUser"/>
         </Grid>
 
     </VerticalStackLayout>
