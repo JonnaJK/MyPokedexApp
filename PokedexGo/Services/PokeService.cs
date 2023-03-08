@@ -21,12 +21,12 @@ namespace PokedexGo.Services
             var list = new List<Pokemon>();
             foreach (var pokemon in user.Pokemons)
             {
-                list.Add(await GetPokemon(pokemon.Name));
+                list.Add(await GetOnePokemon(pokemon.Name));
             }
             return list;
         }
 
-        public async Task<Pokemon> GetPokemon(string pokemon)
+        public async Task<Pokemon> GetOnePokemon(string pokemon)
         {
             return await _httpService.HttpRequest<Pokemon>($"pokemon/{pokemon}");
         }

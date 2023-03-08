@@ -14,6 +14,7 @@ public partial class MyPokemonPage : ContentPage
         InitializeComponent();
         User = new User
         {
+            Id = user.Id,
             UserName = user.UserName,
             UserPassword = user.UserPassword
         };

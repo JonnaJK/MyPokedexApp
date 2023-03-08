@@ -5,42 +5,37 @@
              xmlns:model="clr-namespace:PokedexGo.Models"
              x:Class="PokedexGo.Views.ShowMyPokemonPage"
              Title="My Pokemon">
-    
-    <VerticalStackLayout Padding="10"
-                         Spacing="10">
 
-        <Image Source="pokemonlogga.png"
-               HeightRequest="100"
-               HorizontalOptions="Center"/>
-        
-        <Label Text="My Pokemons"
-               VerticalOptions="Center"
-               HorizontalOptions="Center" />
 
-        <ListView x:Name="ListOfPokemons"
-                  SeparatorColor="#0C3348">
-                  <!--x:DataType="viewmodels:ShowMyPokemonPageViewModel"-->
-            
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Grid Padding="10"
-                              ColumnDefinitions=".25*, .75*">
+    <ListView x:Name="ListOfPokemons"
+              SeparatorColor="#0C3348"
+              VerticalScrollBarVisibility="Default"
+              ItemSelected="OnItemSelectedGoToPokemonDetailsPage">
 
-                            <Image Source="{Binding Path=Sprites.FrontDefault}"
-                                   Grid.Column="0"
-                                   HorizontalOptions="Center"
-                                   HeightRequest="100"/>
-                            
-                            <Label Text="{Binding Name}"
-                                   Grid.Column="1"
-                                   FontSize="25"/>
-                            
-                        </Grid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <ListView.Header>
+            <Image Source="pokemonlogga.png"
+                   HorizontalOptions="Center"
+                   HeightRequest="150"/>
+        </ListView.Header>
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <Grid Padding="10"
+                          ColumnDefinitions=".35*, .65*">
 
-    </VerticalStackLayout>
+                        <Image Source="{Binding Path=Sprites.FrontDefault}"
+                               Grid.Column="0"
+                               HorizontalOptions="Center"
+                               HeightRequest="150"/>
+
+                        <Label Text="{Binding Name}"
+                               Grid.Column="1"
+                               FontSize="25"
+                               VerticalTextAlignment="Center"/>
+                    </Grid>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+
 </ContentPage>

@@ -19,13 +19,25 @@ public partial class ShowMyPokemonPage : ContentPage
         };
         if (user.Pokemons is not null)
         {
+            //user.Pokemons.Add(new Pokemon { Name = "diglett" });
+            //var taskTest = Task.Run(() => UserService.AddPokemonToUser(user, new Pokemon { Name = "diglett" }));
+            //taskTest.Wait();
+            
             User.Pokemons = user.Pokemons;
-            var task = Task.Run(() => GetPokemons(user));
+            var pokeService = new PokeService(new HttpService());
+            var task = Task.Run(() => pokeService.GetUsersPokemons(user));
             task.Wait();
-            Pokemons = new List<Pokemon>
+            Pokemons = new List<Pokemon>();
+            foreach (var pokemon in task.Result)
             {
-                task.Result
-            };
+                Pokemons.Add(pokemon);
+            }
+            //var task = Task.Run(() => GetPokemons(user));
+            //task.Wait();
+            //Pokemons = new List<Pokemon>
+            //{
+            //    task.Result
+            //};
         }
 
         ListOfPokemons.ItemsSource = Pokemons;
@@ -33,12 +45,17 @@ public partial class ShowMyPokemonPage : ContentPage
         BindingContext = new ShowMyPokemonPageViewModel(user);
     }
 
-    public async Task<Pokemon> GetPokemons(User user)
+    public static async Task<Pokemon> GetPokemon(string pokemonName)
     {
         var pokeService = new PokeService(new HttpService());
-        var pokemon = pokeService.GetPokemon("pikachu");
+        var pokemon = pokeService.GetOnePokemon(pokemonName);
         //var pokeService = new PokeService(new HttpService()).GetUsersPokemons(user);
 
         return await pokemon;
+    }
+
+    private async void OnItemSelectedGoToPokemonDetailsPage(object sender, SelectedItemChangedEventArgs e)
+    {
+        await Navigation.PushAsync(new PokemonDetailsPage( (GetPokemon( (e.SelectedItem as Pokemon).Name )).Result ) );
     }
 }

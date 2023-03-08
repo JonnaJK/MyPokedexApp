@@ -16,7 +16,7 @@ public class UserService
 
     }
 
-    public static IMongoCollection<T> GetUsersFromDB<T>()
+    public static IMongoCollection<T> GetUserCollectionFromDB<T>()
     {
         // TODO: Not done
         var settings = MongoClientSettings.FromConnectionString("mongodb+srv://Jonna:wKH2nq6pa3X6oM6ED6VC@myfirstcluster.tq5osnl.mongodb.net/?retryWrites=true&w=majority");
@@ -26,6 +26,14 @@ public class UserService
         return database.GetCollection<T>("User");
         //var myCollection = database.GetCollection<T>("User");
         //return myCollection;
+    }
+
+    public static async Task AddPokemonToUser(User user, Pokemon pokemon)
+    {
+        var userCollection = GetUserCollectionFromDB<User>();
+        //var user = userCollection.AsQueryable().Where(x => x.Id == userId).FirstOrDefault();
+        user.Pokemons.Add(pokemon);
+        await userCollection.ReplaceOneAsync(x => x.Id == user.Id, user);
     }
 
     public static async Task SaveUser(User user)
@@ -39,7 +47,7 @@ public class UserService
         };
         // använda facade design pattern? För login!
         //var collection = GetUsersFromDB<User>().InsertOneAsync(user);
-        var collection = GetUsersFromDB<User>();
+        var collection = GetUserCollectionFromDB<User>();
         await collection.InsertOneAsync(user);
     }
 
@@ -49,7 +57,7 @@ public class UserService
         //    .AsQueryable()
         //    .Where(x => x.UserName.ToLower().Contains(name.ToLower()) && x.UserPassword.Equals(password))
         //    .FirstOrDefault();
-        var collection = GetUsersFromDB<User>();
+        var collection = GetUserCollectionFromDB<User>();
         var user = collection
             .AsQueryable()
             .Where(x => x.UserName.ToLower().Contains(name.ToLower()) && x.UserPassword.Equals(password))

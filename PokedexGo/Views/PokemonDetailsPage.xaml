@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:PokedexGo"
              x:Class="PokedexGo.Views.PokemonDetailsPage"
              Title="PokemonDetailsPage">
     <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
+
+        <Image Source="pokemonlogga.png"
+                   HorizontalOptions="Center"
+                   HeightRequest="150"/>
+        <Label x:Name="asd"
+               Text="{Binding .}"/>
+        <Label Text="{Binding Name, StringFormat='Name: {0}'}"/>
+        <Label Text="{Binding BaseExperience, StringFormat='Base experience: {0}'}"/>
+        <Label Text="{Binding Height, StringFormat='Height: {0}'}"/>
+        <Label Text="{Binding Weight, StringFormat='Weight: {0}'}"/>
+
     </VerticalStackLayout>
 </ContentPage>
