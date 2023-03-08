@@ -3,9 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:PokedexGo.ViewModels"
              xmlns:model="clr-namespace:PokedexGo.Models"
+             xmlns:local="clr-namespace:PokedexGo.ViewModels"
              x:Class="PokedexGo.Views.ShowMyPokemonPage"
              Title="My Pokemon">
-
+    <!--<ContentPage.BindingContext>
+        <local:ShowMyPokemonPageViewModel/>
+    </ContentPage.BindingContext>-->
 
     <ListView x:Name="ListOfPokemons"
               SeparatorColor="#0C3348"

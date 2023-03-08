@@ -4,14 +4,16 @@ using PokedexGo.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PokedexGo.ViewModels;
 
-public partial class ShowMyPokemonPageViewModel
+public partial class ShowMyPokemonPageViewModel : ViewModelBase
 {
+
     //public List<Pokemon> Pokemons { get; set; }
     public string Name { get; set; }
     public string ImageSource { get; set; }

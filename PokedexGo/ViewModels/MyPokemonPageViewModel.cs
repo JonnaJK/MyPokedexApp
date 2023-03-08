@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace PokedexGo.ViewModels;
 
-public partial class MyPokemonPageViewModel
+public partial class MyPokemonPageViewModel : ViewModelBase
 {
     public User User { get; set; }
 

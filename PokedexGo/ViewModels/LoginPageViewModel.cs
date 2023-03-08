@@ -12,7 +12,7 @@ using PokedexGo.Views;
 
 namespace PokedexGo.ViewModels;
 
-public partial class LoginPageViewModel
+public partial class LoginPageViewModel : ViewModelBase
 {
     public string UserName { get; set; }
     public string UserPassword { get; set; }
