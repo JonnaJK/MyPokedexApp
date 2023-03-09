@@ -9,16 +9,16 @@ namespace PokedexGo.Services;
 
 public class HttpService
 {
-    public HttpClient Client { get; set; }
     private readonly HttpClient _client;
     //private readonly JsonSerializerOptions _jsonSerializerOptions;
 
     public HttpService()
     {
-        Client = new HttpClient()
+        _client = new HttpClient()
         {
             BaseAddress = new Uri("https://pokeapi.co/api/v2/")
         };
+        // TODO: Eventuellt ha kvar för att visa läraren
         //_jsonSerializerOptions = new JsonSerializerOptions
         //{
         //    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
@@ -28,8 +28,7 @@ public class HttpService
 
     public async Task<T> HttpRequest<T>(string requestUri)
     {
-        var response = await Client.GetAsync(requestUri);
-        //var response = await _client.GetAsync(requestUri);
+        var response = await _client.GetAsync(requestUri);
         response.EnsureSuccessStatusCode();
 
         var content = await response.Content.ReadAsStringAsync();

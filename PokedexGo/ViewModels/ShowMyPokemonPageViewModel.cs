@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using PokedexGo.Helpers;
 using PokedexGo.Models;
 using PokedexGo.Services;
 using System;
@@ -13,24 +14,15 @@ namespace PokedexGo.ViewModels;
 
 public partial class ShowMyPokemonPageViewModel : ViewModelBase
 {
+    private User _user;
 
-    //public List<Pokemon> Pokemons { get; set; }
-    public string Name { get; set; }
-    public string ImageSource { get; set; }
-    public User User { get; set; }
-
-    public ShowMyPokemonPageViewModel(User user)
+    public ShowMyPokemonPageViewModel()
     {
-        User = new User
-        {
-            UserName = user.UserName,
-            UserPassword = user.UserPassword
-        };
-        if (user.Pokemons is not null)
-        {
-            User.Pokemons = user.Pokemons;
-            //Pokemons = user.Pokemons;
-            //Name = Pokemons.First().Name;
-        }
+        _user = ServiceHelper.GetService<User>();
+    }
+
+    public void OnPokemonSelected()
+    {
+
     }
 }

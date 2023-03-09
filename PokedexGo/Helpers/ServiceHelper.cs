@@ -11,7 +11,7 @@ public static class ServiceHelper
     public static T GetService<T>()
         => Current.GetService<T>();
 
-    // Hämtar 
+    // Hämtar service för rätt plattform
     public static IServiceProvider Current =>
     #if WINDOWS10_0_17763_0_OR_GREATER
         MauiWinUIApplication.Current.Services;

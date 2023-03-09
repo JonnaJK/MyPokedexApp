@@ -1,53 +1,31 @@
+using PokedexGo.Helpers;
 using PokedexGo.Models;
 using PokedexGo.Services;
-using PokedexGo.ViewModels;
 
 namespace PokedexGo.Views;
 
 public partial class ShowMyPokemonPage : ContentPage
 {
-    public User User { get; set; }
+    private User _user;
     public List<Pokemon> Pokemons { get; set; }
 
-    public ShowMyPokemonPage(User user)
+    public ShowMyPokemonPage()
     {
         InitializeComponent();
-        User = new User
-        {
-            UserName = user.UserName,
-            UserPassword = user.UserPassword
-        };
-        if (user.Pokemons is not null)
-        {
-            //user.Pokemons.Add(new Pokemon { Name = "diglett" });
-            //var taskTest = Task.Run(() => UserService.AddPokemonToUser(user, new Pokemon { Name = "diglett" }));
-            //taskTest.Wait();
-            
-            User.Pokemons = user.Pokemons;
-            var pokeService = new PokeService(new HttpService());
-            var task = Task.Run(() => pokeService.GetUsersPokemons(user));
-            task.Wait();
-            Pokemons = new List<Pokemon>();
-            foreach (var pokemon in task.Result)
-            {
-                Pokemons.Add(pokemon);
-            }
-            //var task = Task.Run(() => GetPokemons(user));
-            //task.Wait();
-            //Pokemons = new List<Pokemon>
-            //{
-            //    task.Result
-            //};
-        }
+        _user = ServiceHelper.GetService<User>();
+
+        // faktiskt hämtar pokemon från api med all information
+        var pokeService = new PokeService();
+        var task = Task.Run(() => pokeService.GetUsersPokemons(_user));
+        task.Wait();
+        Pokemons = task.Result.ToList();
 
         ListOfPokemons.ItemsSource = Pokemons;
-
-        BindingContext = new ShowMyPokemonPageViewModel(user);
     }
 
     public static async Task<Pokemon> GetPokemon(string pokemonName)
     {
-        var pokeService = new PokeService(new HttpService());
+        var pokeService = new PokeService();
         var pokemon = pokeService.GetOnePokemon(pokemonName);
         //var pokeService = new PokeService(new HttpService()).GetUsersPokemons(user);
 
@@ -56,6 +34,6 @@ public partial class ShowMyPokemonPage : ContentPage
 
     private async void OnItemSelectedGoToPokemonDetailsPage(object sender, SelectedItemChangedEventArgs e)
     {
-        await Navigation.PushAsync(new PokemonDetailsPage( (GetPokemon( (e.SelectedItem as Pokemon).Name )).Result ) );
+        await Navigation.PushAsync(new PokemonDetailsPage((GetPokemon((e.SelectedItem as Pokemon).Name)).Result));
     }
 }

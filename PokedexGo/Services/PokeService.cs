@@ -5,35 +5,34 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PokedexGo.Services
+namespace PokedexGo.Services;
+
+internal class PokeService
 {
-    internal class PokeService
+    private readonly HttpService _httpService;
+
+    public PokeService()
     {
-        private readonly HttpService _httpService;
+        _httpService = new HttpService();
+    }
 
-        public PokeService(HttpService httpService)
+    public async Task<List<Pokemon>> GetUsersPokemons(User user)
+    {
+        var list = new List<Pokemon>();
+        foreach (var pokemon in user.Pokemons)
         {
-            _httpService = new HttpService();
+            list.Add(await GetOnePokemon(pokemon.Name));
         }
+        return list;
+    }
 
-        public async Task<List<Pokemon>> GetUsersPokemons(User user)
-        {
-            var list = new List<Pokemon>();
-            foreach (var pokemon in user.Pokemons)
-            {
-                list.Add(await GetOnePokemon(pokemon.Name));
-            }
-            return list;
-        }
+    public async Task<Pokemon> GetOnePokemon(string pokemon)
+    {
+        return await _httpService.HttpRequest<Pokemon>($"pokemon/{pokemon}");
+    }
 
-        public async Task<Pokemon> GetOnePokemon(string pokemon)
-        {
-            return await _httpService.HttpRequest<Pokemon>($"pokemon/{pokemon}");
-        }
-
-        public async Task<Pokemon> GetType(int type)
-        {
-            return await _httpService.HttpRequest<Pokemon>($"type/{type}");
-        }
+    public async Task<Pokemon> GetType(int type)
+    {
+        return await _httpService.HttpRequest<Pokemon>($"type/{type}");
     }
 }

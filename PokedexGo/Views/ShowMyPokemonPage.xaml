@@ -6,14 +6,16 @@
              xmlns:local="clr-namespace:PokedexGo.ViewModels"
              x:Class="PokedexGo.Views.ShowMyPokemonPage"
              Title="My Pokemon">
-    <!--<ContentPage.BindingContext>
+    
+    <ContentPage.BindingContext>
         <local:ShowMyPokemonPageViewModel/>
-    </ContentPage.BindingContext>-->
+    </ContentPage.BindingContext>
 
     <ListView x:Name="ListOfPokemons"
               SeparatorColor="#0C3348"
               VerticalScrollBarVisibility="Default"
-              ItemSelected="OnItemSelectedGoToPokemonDetailsPage">
+              SelectionMode="None"
+              ItemSelected="OnPokemonSelected">
 
         <ListView.Header>
             <Image Source="pokemonlogga.png"
@@ -25,16 +27,17 @@
                 <ViewCell>
                     <Grid Padding="10"
                           ColumnDefinitions=".35*, .65*">
-
+                        
                         <Image Source="{Binding Path=Sprites.FrontDefault}"
                                Grid.Column="0"
                                HorizontalOptions="Center"
                                HeightRequest="150"/>
-
+                        
                         <Label Text="{Binding Name}"
                                Grid.Column="1"
                                FontSize="25"
                                VerticalTextAlignment="Center"/>
+                        
                     </Grid>
                 </ViewCell>
             </DataTemplate>
