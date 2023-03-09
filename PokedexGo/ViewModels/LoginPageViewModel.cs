@@ -62,14 +62,13 @@ public partial class LoginPageViewModel : ViewModelBase
             await Shell.Current.GoToAsync(nameof(MyPokemonPage));
         }
     }
-    // TODO: Randomisa sin starter pokemon!! 1% för pikachu, 33 för charmander, 33 för bulbasaur, 33 för squirtle
 
     public async Task RegisterNewUser()
     {
         _user.Id = new Guid();
         _user.UserName = UserName;
         _user.UserPassword = UserPassword;
-        // TODO: Ta bort testdata
+        // TODO: Randomisa sin starter pokemon!! 1% för pikachu, 33 för charmander, 33 för bulbasaur, 33 för squirtle
         _user.Pokemons = new List<Pokemon> { new Pokemon { Name = "pikachu" } };
 
         await _userService.CreateUserAsync(_user);

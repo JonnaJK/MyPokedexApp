@@ -20,7 +20,6 @@ public partial class MyPokemonPage : ContentPage
             GoToShowMyPokemonPage = new Action<List<Pokemon>>(GoToShowMyPokemonsPage)
         };
         BindingContext = myPokemonPage;
-        welcomeText.Text = $"Welcome {_user.UserName}!";
     }
 
     private async void OnClickedLogOut(object sender, EventArgs e)
@@ -29,11 +28,6 @@ public partial class MyPokemonPage : ContentPage
     }
 
     private async void GoToShowMyPokemonsPage(List<Pokemon> pokemons)
-    {
-        await Navigation.PushAsync(new ShowMyPokemonPage());
-    }
-
-    private async void OnClickedGoToShowMyPokemonPage(object sender, EventArgs e)
     {
         await Navigation.PushAsync(new ShowMyPokemonPage());
     }

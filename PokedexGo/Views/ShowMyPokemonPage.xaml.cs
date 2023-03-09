@@ -7,7 +7,7 @@ namespace PokedexGo.Views;
 public partial class ShowMyPokemonPage : ContentPage
 {
     private User _user;
-    public List<Pokemon> Pokemons { get; set; }
+    //public List<Pokemon> Pokemons { get; set; }
 
     public ShowMyPokemonPage()
     {
@@ -15,12 +15,12 @@ public partial class ShowMyPokemonPage : ContentPage
         _user = ServiceHelper.GetService<User>();
 
         // faktiskt hämtar pokemon från api med all information
-        var pokeService = new PokeService();
-        var task = Task.Run(() => pokeService.GetUsersPokemons(_user));
-        task.Wait();
-        Pokemons = task.Result.ToList();
+        //var pokeService = new PokeService();
+        //var task = Task.Run(() => pokeService.GetUsersPokemons(_user));
+        //task.Wait();
+        //Pokemons = task.Result.ToList();
 
-        ListOfPokemons.ItemsSource = Pokemons;
+        //ListOfPokemons.ItemsSource = Pokemons;
     }
 
     public static async Task<Pokemon> GetPokemon(string pokemonName)

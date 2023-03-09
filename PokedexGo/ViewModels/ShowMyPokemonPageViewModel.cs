@@ -1,28 +1,52 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
-using PokedexGo.Helpers;
+﻿using PokedexGo.Helpers;
 using PokedexGo.Models;
 using PokedexGo.Services;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using PokedexGo.Views;
+using System.Windows.Input;
 
 namespace PokedexGo.ViewModels;
 
 public partial class ShowMyPokemonPageViewModel : ViewModelBase
 {
     private User _user;
+    private PokeService _pokeService;
+    private List<Pokemon> _pokemons;
+    public List<Pokemon> Pokemons
+    {
+        get => _pokemons;
+        set
+        {
+            _pokemons = value;
+            OnPropertyChanged(nameof(Pokemons));
+        }
+    }
+    public ICommand GoToPokemonDetailsPageCommand { get; private set; }
 
     public ShowMyPokemonPageViewModel()
     {
         _user = ServiceHelper.GetService<User>();
+        _pokeService = ServiceHelper.GetService<PokeService>();
+
+        var task = Task.Run(() => _pokeService.GetUsersPokemons(_user));
+        task.Wait();
+
+        Pokemons = task.Result.ToList();
+        Pokemons = CapitalizeFirstLetters(Pokemons);
+
+        GoToPokemonDetailsPageCommand = new Command(async () => await GoToPokemonDetailsPage());
     }
 
-    public void OnPokemonSelected()
+    public static List<Pokemon> CapitalizeFirstLetters(List<Pokemon> pokemons)
     {
+        foreach (var pokemon in pokemons)
+        {
+            pokemon.Name = pokemon.Name[..1].ToUpper() + pokemon.Name[1..].ToLower();
+        }
+        return pokemons;
+    }
 
+    public async Task GoToPokemonDetailsPage()
+    {
+        await Shell.Current.GoToAsync(nameof(PokemonDetailsPage));
     }
 }

@@ -11,11 +11,11 @@
         <local:ShowMyPokemonPageViewModel/>
     </ContentPage.BindingContext>
 
-    <ListView x:Name="ListOfPokemons"
+    <ListView ItemsSource="{Binding Pokemons}"
               SeparatorColor="#0C3348"
               VerticalScrollBarVisibility="Default"
-              SelectionMode="None"
-              ItemSelected="OnPokemonSelected">
+              SelectionMode="None">
+        <!--ItemSelected="OnPokemonSelected"-->
 
         <ListView.Header>
             <Image Source="pokemonlogga.png"
@@ -26,18 +26,24 @@
             <DataTemplate>
                 <ViewCell>
                     <Grid Padding="10"
-                          ColumnDefinitions=".35*, .65*">
-                        
-                        <Image Source="{Binding Path=Sprites.FrontDefault}"
+                          ColumnDefinitions=".35*, .60*, .5*">
+
+                        <Image Source="{Binding Path=Sprites.Other.Home.FrontDefault}"
                                Grid.Column="0"
                                HorizontalOptions="Center"
                                HeightRequest="150"/>
+                                <!--Source="{Binding ImageSource, Mode=TwoWay}"-->
+                               <!--Source="{Binding Path=Sprites.FrontDefault}"-->
                         
-                        <Label Text="{Binding Name}"
+                        <Label Text="{Binding Path=Name}"
                                Grid.Column="1"
                                FontSize="25"
                                VerticalTextAlignment="Center"/>
-                        
+
+                        <Button Text="Show details"
+                                Grid.Column="2"
+                                Command="{Binding GoToPokemonDetailsPageCommand}"/>
+
                     </Grid>
                 </ViewCell>
             </DataTemplate>

@@ -36,7 +36,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<User>();
         builder.Services.AddSingleton<PokeService>();
 
-        // Adderar en Transient Dependency Injection för de klasser som ska skapas upp endast när de används och sedan "dö"
+        // Adderar en Transient Dependency Injection för de klasser som ska skapas upp endast när de används och sedan "skrotas"
         // Valde att ha det på UserService för att det inte behövs en och samma instans av det objektet, dvs. behöver inte ta upp minne förutom när man behöver göra ett anrop till databasen
         builder.Services.AddTransient<UserService>();
 
