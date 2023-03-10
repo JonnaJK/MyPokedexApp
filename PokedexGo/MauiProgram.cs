@@ -2,6 +2,8 @@
 using PokedexGo.Models;
 using PokedexGo.Services;
 using PokedexGo.Settings;
+using PokedexGo.ViewModels;
+using PokedexGo.Views;
 using System.Reflection;
 
 namespace PokedexGo;
@@ -32,13 +34,26 @@ public static class MauiProgram
 
         // Adderar Singleton Dependency Injection för de klasser som endast ska instansieras en gång och sparas i minnet
         // Valde att ha det på User för att när man är inloggad så ska samma instans av User och dess property användas på alla sidor
-        // Valde att ha det på PokeService TODO: aasdasdasd
-        builder.Services.AddSingleton<User>();
-        builder.Services.AddSingleton<PokeService>();
-
+        // Valde att ha det på PokeService
         // Adderar en Transient Dependency Injection för de klasser som ska skapas upp endast när de används och sedan "skrotas"
         // Valde att ha det på UserService för att det inte behövs en och samma instans av det objektet, dvs. behöver inte ta upp minne förutom när man behöver göra ett anrop till databasen
+
+        // Services
+        builder.Services.AddSingleton<PokeService>();
         builder.Services.AddTransient<UserService>();
+
+        // Models
+        builder.Services.AddSingleton<User>();
+
+        // Views
+        builder.Services.AddSingleton<MyPokemonPage>();
+        builder.Services.AddSingleton<ShowMyPokemonPage>();
+        builder.Services.AddSingleton<PokemonDetailsPage>();
+
+        // View Models
+        builder.Services.AddTransient<MyPokemonPageViewModel>();
+        builder.Services.AddTransient<ShowMyPokemonPageViewModel>();
+        builder.Services.AddTransient<PokemonDetailsPageViewModel>();
 
         return builder.Build();
     }

@@ -5,23 +5,21 @@ namespace PokedexGo.Views;
 
 public partial class PokemonDetailsPage : ContentPage
 {
-    public new int Id { get; set; }
-    public string Asdasd { get; set; }
-    public int BaseExperience { get; set; }
-    public new int Height { get; set; }
-    public int Weight { get; set; }
-    public Pokemon Pokemon { get; set; }
-    public PokemonDetailsPage(Pokemon pokemon)
-	{
-        Id = pokemon.Id;
-        Asdasd = pokemon.Name;
-        BaseExperience = pokemon.BaseExperience;
-        Height = pokemon.Height;
-        Weight = pokemon.Weight;
+    //private Pokemon _pokemon;
+    //public Pokemon Pokemon
+    //{
 
+    //    get => _pokemon;
+    //    set
+    //    {
+    //        _pokemon = value;
+    //        OnPropertyChanged(nameof(Pokemon));
+    //    }
+    //}
 
-		Pokemon = pokemon;
-		InitializeComponent();
-		BindingContext = new PokemonDetailsPageViewModel();
-	}
+    public PokemonDetailsPage(PokemonDetailsPageViewModel viewModel)
+    {
+        InitializeComponent();
+        this.BindingContext = viewModel;
+    }
 }

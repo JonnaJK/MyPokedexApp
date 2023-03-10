@@ -1,53 +1,40 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewmodels="clr-namespace:PokedexGo.ViewModels"
-             xmlns:model="clr-namespace:PokedexGo.Models"
              xmlns:local="clr-namespace:PokedexGo.ViewModels"
+             xmlns:model="clr-namespace:PokedexGo.Models"
              x:Class="PokedexGo.Views.ShowMyPokemonPage"
              Title="My Pokemon">
-    
+
     <ContentPage.BindingContext>
         <local:ShowMyPokemonPageViewModel/>
     </ContentPage.BindingContext>
 
-    <ListView ItemsSource="{Binding Pokemons}"
-              SeparatorColor="#0C3348"
-              VerticalScrollBarVisibility="Default"
-              SelectionMode="None">
-        <!--ItemSelected="OnPokemonSelected"-->
-
-        <ListView.Header>
-            <Image Source="pokemonlogga.png"
-                   HorizontalOptions="Center"
-                   HeightRequest="150"/>
-        </ListView.Header>
-        <ListView.ItemTemplate>
-            <DataTemplate>
-                <ViewCell>
+    <CollectionView ItemsSource="{Binding Pokemons}">
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="model:Pokemon">
+                <StackLayout Padding="10">
                     <Grid Padding="10"
                           ColumnDefinitions=".35*, .60*, .5*">
 
                         <Image Source="{Binding Path=Sprites.Other.Home.FrontDefault}"
-                               Grid.Column="0"
-                               HorizontalOptions="Center"
-                               HeightRequest="150"/>
-                                <!--Source="{Binding ImageSource, Mode=TwoWay}"-->
-                               <!--Source="{Binding Path=Sprites.FrontDefault}"-->
-                        
+                           Grid.Column="0"
+                           HorizontalOptions="Center"
+                           HeightRequest="100"/>
+
                         <Label Text="{Binding Path=Name}"
-                               Grid.Column="1"
-                               FontSize="25"
-                               VerticalTextAlignment="Center"/>
-
-                        <Button Text="Show details"
-                                Grid.Column="2"
-                                Command="{Binding GoToPokemonDetailsPageCommand}"/>
-
+                           Grid.Column="1"
+                           FontSize="25"
+                           VerticalTextAlignment="Center"/>
                     </Grid>
-                </ViewCell>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:ShowMyPokemonPageViewModel}}, Path=SelectedItemCommand}"
+                                              CommandParameter="{Binding .}"/>
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
             </DataTemplate>
-        </ListView.ItemTemplate>
-    </ListView>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+
 
 </ContentPage>

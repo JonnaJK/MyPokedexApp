@@ -1,13 +1,23 @@
 ﻿using PokedexGo.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PokedexGo.ViewModels;
 
-internal class PokemonDetailsPageViewModel : ViewModelBase
+[QueryProperty(nameof(Pokemon), "Pokemon")]
+public class PokemonDetailsPageViewModel : ViewModelBase
 {
-    public Pokemon Pokemon { get; set; }
+    private Pokemon _pokemon;
+    public Pokemon Pokemon
+    {
+        get => _pokemon;
+        set => SetProperty(ref _pokemon, value);
+        //set
+        //{
+        //    _pokemon = value;
+        //    OnPropertyChanged(nameof(Pokemon));
+        //}
+    }
+    //public PokemonDetailsPageViewModel(Pokemon pokemon)
+    //{
+    //    Pokemon = pokemon;
+    //}
 }

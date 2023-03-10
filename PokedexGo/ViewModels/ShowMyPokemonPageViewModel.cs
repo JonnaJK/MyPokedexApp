@@ -33,7 +33,7 @@ public partial class ShowMyPokemonPageViewModel : ViewModelBase
         Pokemons = task.Result.ToList();
         Pokemons = CapitalizeFirstLetters(Pokemons);
 
-        GoToPokemonDetailsPageCommand = new Command(async () => await GoToPokemonDetailsPage());
+        GoToPokemonDetailsPageCommand = new Command(async (pokemon) => await GoToPokemonDetailsPage(pokemon));
     }
 
     public static List<Pokemon> CapitalizeFirstLetters(List<Pokemon> pokemons)
@@ -45,8 +45,18 @@ public partial class ShowMyPokemonPageViewModel : ViewModelBase
         return pokemons;
     }
 
-    public async Task GoToPokemonDetailsPage()
+    public ICommand SelectedItemCommand => new Command<Pokemon>(async (pokemon) =>
     {
-        await Shell.Current.GoToAsync(nameof(PokemonDetailsPage));
+        var navigationParameter = new Dictionary<string, object>
+        {
+            { "Pokemon", pokemon }
+        };
+        await AppShell.Current.GoToAsync(nameof(PokemonDetailsPage), navigationParameter);
+    });
+
+    public async Task GoToPokemonDetailsPage(object pokemon)
+    {
+        //var pokemon = ((pokemon as SelectedItemChangedEventArgs).SelectedItem as Pokemon);
+        await Shell.Current.GoToAsync(nameof(PokemonDetailsPage), new Dictionary<string, object> { { "Pokemon", pokemon as Pokemon } });
     }
 }
