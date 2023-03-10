@@ -18,14 +18,15 @@
                           ColumnDefinitions=".35*, .60*, .5*">
 
                         <Image Source="{Binding Path=Sprites.Other.Home.FrontDefault}"
-                           Grid.Column="0"
-                           HorizontalOptions="Center"
-                           HeightRequest="100"/>
+                               Grid.Column="0"
+                               HorizontalOptions="Center"
+                               HeightRequest="100"/>
 
                         <Label Text="{Binding Path=Name}"
-                           Grid.Column="1"
-                           FontSize="25"
-                           VerticalTextAlignment="Center"/>
+                               Grid.Column="1"
+                               FontSize="25"
+                               VerticalTextAlignment="Center"
+                               FontAttributes="Bold"/>
                     </Grid>
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:ShowMyPokemonPageViewModel}}, Path=SelectedItemCommand}"
