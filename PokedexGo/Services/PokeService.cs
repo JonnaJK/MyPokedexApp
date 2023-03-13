@@ -26,13 +26,12 @@ internal class PokeService
         return list;
     }
 
-    public async Task<Pokemon> GetOnePokemon(string pokemon)
-    {
-        return await _httpService.HttpRequest<Pokemon>($"pokemon/{pokemon}");
-    }
+    public async Task<Pokemon> GetOnePokemon(string pokemon) =>
+        await _httpService.HttpRequest<Pokemon>($"pokemon/{pokemon}");
 
-    public async Task<Pokemon> GetType(int type)
-    {
-        return await _httpService.HttpRequest<Pokemon>($"type/{type}");
-    }
+    public async Task<Pokemon> GetType(int type) =>
+        await _httpService.HttpRequest<Pokemon>($"type/{type}");
+
+    public async Task<T> GetFromUrl<T>(Uri url) =>
+        await _httpService.HttpRequest<T>(url);
 }

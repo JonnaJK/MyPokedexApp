@@ -37,6 +37,10 @@ public class UserService
         await _users.ReplaceOneAsync(x => x.Id == user.Id, user);
     }
 
+    public async Task UpdateUserAsync(User user) =>
+        await _users.ReplaceOneAsync(x => x.Id == user.Id, user);
+    
+
     //public static async Task<IMongoCollection<T>> GetUserCollectionFromDB<T>()
     //{
     //    // TODO: Not done

@@ -12,42 +12,57 @@
     <ScrollView>
 
         <VerticalStackLayout Padding="10"
-                         Spacing="10">
+                             Spacing="10"
+                             HorizontalOptions="Center">
 
             <Image Source="pokemonlogga.png"
-               HorizontalOptions="Center"
-               HeightRequest="150"/>
+                   HorizontalOptions="Center"
+                   HeightRequest="150"/>
 
             <Grid ColumnDefinitions="Auto, Auto"
-              ColumnSpacing="10"
-              Padding="10"
-              HorizontalOptions="Center">
+                  ColumnSpacing="10"
+                  Padding="10"
+                  HorizontalOptions="Center">
 
                 <Image Source="{Binding Pokemon.Sprites.Other.Home.FrontDefault, Mode=TwoWay}"
-                   HeightRequest="250"
-                   Grid.Column="0"/>
+                       HeightRequest="250"
+                       Grid.Column="0"/>
 
                 <Image Source="{Binding Pokemon.Sprites.Other.Home.FrontShiny, Mode=TwoWay}"
-                   HeightRequest="250"
-                   Grid.Column="1"/>
+                       HeightRequest="250"
+                       Grid.Column="1"/>
             </Grid>
 
-            <Label Text="{Binding Pokemon.Name, StringFormat='Name: {0}'}"
-               TextColor="#0C3348"
-               FontAttributes="Bold"
-               FontSize="Title"
-               TextDecorations="Underline"/>
+            <Label Text="Details"
+                   TextColor="#0C3348"
+                   FontAttributes="Bold"
+                   FontSize="Large"
+                   TextDecorations="Underline"/>
 
-            <Label Text="{Binding Pokemon.BaseExperience, StringFormat='Base experience: {0}'}"
-               TextColor="#0C3348"
-               FontAttributes="Bold"
-               FontSize="Medium"/>
+            <Label Text="{Binding Pokemon.Id, StringFormat='Id: {0}'}"
+                   TextColor="#0C3348"
+                   FontAttributes="Bold"
+                   FontSize="Medium"/>
 
-            <Label Text="{Binding Pokemon.Height, StringFormat='Height: {0}'}"
-               TextColor="#0C3348"
-               FontAttributes="Bold"
-               FontSize="Medium"/>
+            <Label Text="{Binding SpeciesDetail.flavor_text_entries[0].flavor_text, StringFormat='Description: {0}'}"
+                   TextColor="#0C3348"
+                   FontAttributes="Bold"
+                   FontSize="Medium"/>
 
+            <Label Text="{Binding Pokemon.IsFavorite, StringFormat='Is favorite: {0}'}"
+                   TextColor="#0C3348"
+                   FontAttributes="Bold"
+                   FontSize="Medium"/>
+
+            <Label Text="{Binding Pokemon.IsWanted, StringFormat='Is wanted: {0}'}"
+                   TextColor="#0C3348"
+                   FontAttributes="Bold"
+                   FontSize="Medium"/>
+
+            <Label Text="{Binding Pokemon.Order, StringFormat='Pokemon order: {0}'}"
+                   TextColor="#0C3348"
+                   FontAttributes="Bold"
+                   FontSize="Medium"/>
 
             <Label Text="Held item(s):"
                    TextColor="#0C3348"
@@ -55,9 +70,9 @@
                    FontSize="Medium"/>
             <CollectionView ItemsSource="{Binding Pokemon.HeldItems}">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:Pokemon">
+                    <DataTemplate>
                         <StackLayout>
-                            <Label Text="{Binding Path=Item.Name, StringFormat='          {0}'}"
+                            <Label Text="{Binding Path=Item.Name, Mode=TwoWay, StringFormat='          {0}'}"
                                    TextColor="#0C3348"
                                    FontAttributes="Bold"
                                    FontSize="Medium"/>
@@ -67,47 +82,23 @@
             </CollectionView>
 
 
-
-            <Label Text="{Binding Pokemon.Id, StringFormat='Id: {0}'}"
-               TextColor="#0C3348"
-               FontAttributes="Bold"
-               FontSize="Medium"/>
-
-            <Label Text="{Binding Pokemon.IsDefault, StringFormat='Is default: {0}'}"
-               TextColor="#0C3348"
-               FontAttributes="Bold"
-               FontSize="Medium"/>
-
-            <Label Text="{Binding Pokemon.Order, StringFormat='Order: {0}'}"
-               TextColor="#0C3348"
-               FontAttributes="Bold"
-               FontSize="Medium"/>
-
-            <Label Text="{Binding Pokemon.Species, StringFormat='Order: {0}'}"
-               TextColor="#0C3348"
-               FontAttributes="Bold"
-               FontSize="Medium"/>
-
-
-            <!--<Label Text="Moves:"
-               TextColor="#0C3348"
-               FontAttributes="Bold"
-               FontSize="Medium"/>
-            <CollectionView ItemsSource="{Binding Pokemon.Moves}">
+            <Label Text="Type(s):"
+                   TextColor="#0C3348"
+                   FontAttributes="Bold"
+                   FontSize="Medium"/>
+            <CollectionView ItemsSource="{Binding Pokemon.Types}">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:Pokemon">
+                    <DataTemplate>
                         <StackLayout>
-                            <Label Text="{Binding Path=MoveMove.Name, StringFormat='          {0}'}"
+                            <Label Text="{Binding Path=Type.Name, StringFormat='          {0}'}"
                                    TextColor="#0C3348"
                                    FontAttributes="Bold"
                                    FontSize="Medium"/>
                         </StackLayout>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
-            </CollectionView>-->
-
-
-
+            </CollectionView>
+            
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

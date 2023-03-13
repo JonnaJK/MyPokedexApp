@@ -1,17 +1,13 @@
-﻿using Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
+﻿using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace PokedexGo.Models;
 
 public partial class Pokemon
 {
+    #region JsonProperties
+
     [JsonPropertyName("id")]
     public int Id { get; set; }
 
@@ -340,6 +336,12 @@ public partial class Pokemon
     //{
     //    public static string ToJson(this Pokemon self) => JsonSerializer.Serialize(self, QuickType.Converter.Settings);
     //}
+    #endregion
+
+    public string FlavorText { get; set; }
+    public bool IsFavorite { get; set; }
+    public bool IsWanted { get; set; }
+
 
     internal static class Converter
     {
