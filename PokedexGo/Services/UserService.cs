@@ -3,11 +3,6 @@ using MongoDB.Driver;
 using PokedexGo.Helpers;
 using PokedexGo.Models;
 using PokedexGo.Settings;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PokedexGo.Services;
 
@@ -39,18 +34,4 @@ public class UserService
 
     public async Task UpdateUserAsync(User user) =>
         await _users.ReplaceOneAsync(x => x.Id == user.Id, user);
-    
-
-    //public static async Task<IMongoCollection<T>> GetUserCollectionFromDB<T>()
-    //{
-    //    // TODO: Not done
-    //    var settings = MongoClientSettings.FromConnectionString("mongodb+srv://Jonna:wKH2nq6pa3X6oM6ED6VC@myfirstcluster.tq5osnl.mongodb.net/?retryWrites=true&w=majority");
-    // Kanske behöver settings!?
-    //    settings.ServerApi = new ServerApi(ServerApiVersion.V1);
-    //    var client = new MongoClient(settings);
-    //    var database = client.GetDatabase("PokedexGo");
-    //    return await database.GetCollection<T>("User");
-    //    //var myCollection = database.GetCollection<T>("User");
-    //    //return myCollection;
-    //}
 }

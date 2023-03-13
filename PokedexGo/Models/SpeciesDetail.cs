@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-
-namespace PokedexGo.Models;
+﻿namespace PokedexGo.Models;
 
 public class SpeciesDetail
 {
-
+    // TODO: Add JsonPropertyName
     public int base_happiness { get; set; }
     public int capture_rate { get; set; }
     public Color color { get; set; }

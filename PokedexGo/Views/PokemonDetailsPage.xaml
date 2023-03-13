@@ -11,9 +11,7 @@
     </ContentPage.BindingContext>
     <ScrollView>
 
-        <VerticalStackLayout Padding="10"
-                             Spacing="10"
-                             HorizontalOptions="Center">
+        <VerticalStackLayout Padding="10">
 
             <Image Source="pokemonlogga.png"
                    HorizontalOptions="Center"
@@ -33,72 +31,89 @@
                        Grid.Column="1"/>
             </Grid>
 
-            <Label Text="Details"
-                   TextColor="#0C3348"
-                   FontAttributes="Bold"
-                   FontSize="Large"
-                   TextDecorations="Underline"/>
 
-            <Label Text="{Binding Pokemon.Id, StringFormat='Id: {0}'}"
-                   TextColor="#0C3348"
-                   FontAttributes="Bold"
-                   FontSize="Medium"/>
+            <Grid ColumnDefinitions=".50*, .50*"
+                  RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
+                  HorizontalOptions="Center"
+                  ColumnSpacing="30">
+                
+                <Label Text="Details"
+                       TextColor="#0C3348"
+                       FontSize="Header"
+                       TextDecorations="Underline"
+                       HorizontalOptions="Center"
+                       Grid.ColumnSpan="2"/>
 
-            <Label Text="{Binding SpeciesDetail.flavor_text_entries[0].flavor_text, StringFormat='Description: {0}'}"
-                   TextColor="#0C3348"
-                   FontAttributes="Bold"
-                   FontSize="Medium"/>
+                <Label Text="{Binding Pokemon.Id, StringFormat='Id: {0}'}"
+                       TextColor="#0C3348"
+                       FontSize="Medium"
+                       Grid.Row="1"/>
 
-            <Label Text="{Binding Pokemon.IsFavorite, StringFormat='Is favorite: {0}'}"
-                   TextColor="#0C3348"
-                   FontAttributes="Bold"
-                   FontSize="Medium"/>
+                <Label Text="Description:"
+                       TextColor="#0C3348"
+                       FontSize="Medium"
+                       Grid.Column="2"
+                       Grid.Row="1"/>
 
-            <Label Text="{Binding Pokemon.IsWanted, StringFormat='Is wanted: {0}'}"
-                   TextColor="#0C3348"
-                   FontAttributes="Bold"
-                   FontSize="Medium"/>
+                <Label Text="{Binding SpeciesDetail.flavor_text_entries[0].flavor_text}"
+                       TextColor="#0C3348"
+                       FontSize="Medium"
+                       Grid.Column="2"
+                       Grid.Row="2"
+                       Grid.RowSpan="10"/>
 
-            <Label Text="{Binding Pokemon.Order, StringFormat='Pokemon order: {0}'}"
-                   TextColor="#0C3348"
-                   FontAttributes="Bold"
-                   FontSize="Medium"/>
+                <Label Text="{Binding Pokemon.IsFavorite, StringFormat='Is favorite: {0}'}"
+                       TextColor="#0C3348"
+                       FontSize="Medium"
+                       Grid.Row="3"/>
 
-            <Label Text="Held item(s):"
-                   TextColor="#0C3348"
-                   FontAttributes="Bold"
-                   FontSize="Medium"/>
-            <CollectionView ItemsSource="{Binding Pokemon.HeldItems}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <StackLayout>
-                            <Label Text="{Binding Path=Item.Name, Mode=TwoWay, StringFormat='          {0}'}"
-                                   TextColor="#0C3348"
-                                   FontAttributes="Bold"
-                                   FontSize="Medium"/>
-                        </StackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+                <Label Text="{Binding Pokemon.IsWanted, StringFormat='Is wanted: {0}'}"
+                       TextColor="#0C3348"
+                       FontSize="Medium"
+                       Grid.Row="4"/>
+
+                <Label Text="{Binding Pokemon.Order, StringFormat='Pokemon order: {0}'}"
+                       TextColor="#0C3348"
+                       FontSize="Medium"
+                       Grid.Row="5"/>
+
+                <Label Text="Held item(s):"
+                       TextColor="#0C3348"
+                       FontSize="Medium"
+                       Grid.Row="6"/>
+                <CollectionView ItemsSource="{Binding Pokemon.HeldItems}"
+                                Grid.Row="7">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout>
+                                <Label Text="{Binding Path=Item.Name, Mode=TwoWay, StringFormat='          {0}'}"
+                                       TextColor="#0C3348"
+                                       FontSize="Medium"/>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
 
 
-            <Label Text="Type(s):"
-                   TextColor="#0C3348"
-                   FontAttributes="Bold"
-                   FontSize="Medium"/>
-            <CollectionView ItemsSource="{Binding Pokemon.Types}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <StackLayout>
-                            <Label Text="{Binding Path=Type.Name, StringFormat='          {0}'}"
-                                   TextColor="#0C3348"
-                                   FontAttributes="Bold"
-                                   FontSize="Medium"/>
-                        </StackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-            
+                <Label Text="Type(s):"
+                       TextColor="#0C3348"
+                       FontSize="Medium"
+                       Grid.Row="8"/>
+                <CollectionView ItemsSource="{Binding Pokemon.Types}"
+                                Grid.Row="9">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout>
+                                <Label Text="{Binding Path=Type.Name, StringFormat='          {0}'}"
+                                       TextColor="#0C3348"
+                                       FontSize="Medium"/>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </Grid>
+
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
