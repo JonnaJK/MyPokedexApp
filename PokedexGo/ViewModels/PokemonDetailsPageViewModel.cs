@@ -52,6 +52,30 @@ public class PokemonDetailsPageViewModel : ViewModelBase
         var pokemons = await _pokeService.GetUsersPokemons(_user);
         var pokemon = pokemons.Where(x => x.Id == _pokemon.Id).FirstOrDefault();
         pokemon.IsWanted = !pokemon.IsWanted;
+
+        _user.Pokemons.Where(x => x.Name == pokemon.Name).ToList().ForEach(x => x.IsWanted = !x.IsWanted);
+        Pokemon.IsWanted = pokemon.IsWanted;
+
+        if (_user.WantedPokemons is not null)
+        {
+            if (pokemon.IsWanted)
+                _user.WantedPokemons.Add(new Pokemon { Name = pokemon.Name, IsFavorite = pokemon.IsFavorite, IsWanted = pokemon.IsWanted });
+            else
+            {
+                var pokemonToRemove = _user.WantedPokemons.Where(x => x.Name == pokemon.Name).FirstOrDefault();
+                _user.WantedPokemons.Remove(pokemonToRemove);
+            }
+        }
+        else
+        {
+            _user.WantedPokemons = new()
+            {
+                //pokemon
+                new Pokemon { Name = pokemon.Name, IsFavorite = pokemon.IsFavorite, IsWanted = pokemon.IsWanted }
+            };
+        }
+        OnPropertyChanged(nameof(Pokemon));
+
         await _userService.UpdateUserAsync(_user);
     }
 
@@ -60,15 +84,29 @@ public class PokemonDetailsPageViewModel : ViewModelBase
         var pokemons = await _pokeService.GetUsersPokemons(_user);
         var pokemon = pokemons.Where(x => x.Id == _pokemon.Id).FirstOrDefault();
         pokemon.IsFavorite = !pokemon.IsFavorite;
-        _user.Pokemons = pokemons;
+
+        _user.Pokemons.Where(x => x.Name == pokemon.Name).ToList().ForEach(x => x.IsFavorite = !x.IsFavorite);
+        Pokemon.IsFavorite = pokemon.IsFavorite;
 
         if (_user.FavoritePokemons is not null)
-            _user.FavoritePokemons.Add(pokemon);
+        {
+            if (pokemon.IsFavorite)
+                _user.FavoritePokemons.Add(new Pokemon { Name = pokemon.Name, IsFavorite = pokemon.IsFavorite, IsWanted = pokemon.IsWanted });
+            else
+            {
+                var pokemonToRemove = _user.FavoritePokemons.Where(x => x.Name == pokemon.Name).FirstOrDefault();
+                _user.FavoritePokemons.Remove(pokemonToRemove);
+            }
+        }
         else
+        {
             _user.FavoritePokemons = new()
             {
-                pokemon
+                //pokemon
+                new Pokemon { Name = pokemon.Name, IsFavorite = pokemon.IsFavorite, IsWanted = pokemon.IsWanted }
             };
+        }
+        OnPropertyChanged(nameof(Pokemon));
 
         await _userService.UpdateUserAsync(_user);
     }

@@ -22,11 +22,11 @@
                   Padding="10"
                   HorizontalOptions="Center">
 
-                <Image Source="{Binding Pokemon.Sprites.Other.Home.FrontDefault, Mode=TwoWay}"
+                <Image Source="{Binding Pokemon.Sprites.Other.Home.FrontDefault}"
                        HeightRequest="250"
                        Grid.Column="0"/>
 
-                <Image Source="{Binding Pokemon.Sprites.Other.Home.FrontShiny, Mode=TwoWay}"
+                <Image Source="{Binding Pokemon.Sprites.Other.Home.FrontShiny}"
                        HeightRequest="250"
                        Grid.Column="1"/>
             </Grid>
@@ -61,17 +61,17 @@
                        Grid.Row="2"
                        Grid.RowSpan="10"/>
 
-                <Label Text="{Binding Pokemon.IsFavorite, StringFormat='Is favorite: {0}'}"
+                <Label Text="{Binding Pokemon.IsFavorite, Mode=TwoWay, StringFormat='Is favorite: {0}'}"
                        TextColor="#0C3348"
                        FontSize="Medium"
                        Grid.Row="3"/>
 
-                <Label Text="{Binding Pokemon.IsWanted, StringFormat='Is wanted: {0}'}"
+                <Label Text="{Binding Pokemon.IsWanted, Mode=TwoWay, StringFormat='Is wanted: {0}'}"
                        TextColor="#0C3348"
                        FontSize="Medium"
                        Grid.Row="4"/>
 
-                <Label Text="{Binding Pokemon.Forms[0].Name, Mode=TwoWay, StringFormat='Form: {0}'}"
+                <Label Text="{Binding Pokemon.Forms[0].Name, StringFormat='Form: {0}'}"
                        TextColor="#0C3348"
                        FontSize="Medium"
                        Grid.Row="5"/>
@@ -85,7 +85,7 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout>
-                                <Label Text="{Binding Path=Item.Name, Mode=TwoWay, StringFormat='     {0}'}"
+                                <Label Text="{Binding Path=Item.Name, StringFormat='     {0}'}"
                                        TextColor="#0C3348"
                                        FontSize="Medium"/>
                             </StackLayout>
@@ -115,11 +115,11 @@
 
             <Button Text="Change Is favorite"
                     HorizontalOptions="Center"
-                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:PokemonDetailsPageViewModel}}, Path=ChangeFavoritePropertyCommand, Mode=TwoWay}"/>
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:PokemonDetailsPageViewModel}}, Path=ChangeFavoritePropertyCommand}"/>
             
             <Button Text="Change Is wanted"
                     HorizontalOptions="Center"
-                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:PokemonDetailsPageViewModel}}, Path=ChangeWantedPropertyCommand, Mode=TwoWay}"/>
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:PokemonDetailsPageViewModel}}, Path=ChangeWantedPropertyCommand}"/>
 
         </VerticalStackLayout>
     </ScrollView>

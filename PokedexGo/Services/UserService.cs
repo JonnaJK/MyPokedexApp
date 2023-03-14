@@ -30,6 +30,7 @@ public class UserService
         await _users.ReplaceOneAsync(x => x.Id == user.Id, user);
     }
 
+    // TODO: NOT WORKING
     public async Task UpdateUserAsync(User user) =>
         await _users.ReplaceOneAsync(x => x.Id == user.Id, user);
 }

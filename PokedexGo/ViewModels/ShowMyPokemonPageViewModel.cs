@@ -51,7 +51,7 @@ public partial class ShowMyPokemonPageViewModel : ViewModelBase
         {
             { "Pokemon", pokemon }
         };
-        await AppShell.Current.GoToAsync(nameof(PokemonDetailsPage), navigationParameter);
+        await Shell.Current.GoToAsync(nameof(PokemonDetailsPage), navigationParameter);
     });
 
     public async Task GoToPokemonDetailsPage(object pokemon) =>

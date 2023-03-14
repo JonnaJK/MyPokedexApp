@@ -13,7 +13,6 @@ public partial class LoginPage : ContentPage
     {
         InitializeComponent();
 
-        // TODO: Förklara vad GetService gör
         _user = ServiceHelper.GetService<User>();
 
         var loginPage = new LoginPageViewModel

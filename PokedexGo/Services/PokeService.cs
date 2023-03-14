@@ -17,12 +17,16 @@ internal class PokeService
         foreach (var pokemon in user.Pokemons)
         {
             list.Add(await GetOnePokemon(pokemon.Name));
+            if (pokemon.IsWanted)
+                list.Where(x => x.Name == pokemon.Name).FirstOrDefault().IsWanted = true;
+            if (pokemon.IsFavorite)
+                list.Where(x => x.Name == pokemon.Name).ToList().ForEach(x => x.IsFavorite = true);
         }
         return list;
     }
 
-    public async Task<Pokemon> GetOnePokemon(string pokemon) =>
-        await _httpService.HttpRequest<Pokemon>($"pokemon/{pokemon}");
+    public async Task<Pokemon> GetOnePokemon(string pokemonName) =>
+        await _httpService.HttpRequest<Pokemon>($"pokemon/{pokemonName}");
 
     public async Task<Pokemon> GetType(int type) =>
         await _httpService.HttpRequest<Pokemon>($"type/{type}");

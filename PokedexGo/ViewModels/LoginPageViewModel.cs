@@ -54,10 +54,8 @@ public partial class LoginPageViewModel : ViewModelBase
             _user.UserName = user.UserName;
             _user.UserPassword = user.UserPassword;
             _user.Pokemons = user.Pokemons;
-
-            // TODO: This should work...
-            //EntryUserName.Text = string.Empty;
-            //EntryPassword.Text = string.Empty;
+            _user.FavoritePokemons = user.FavoritePokemons;
+            _user.WantedPokemons = user.WantedPokemons;
 
             await Shell.Current.GoToAsync(nameof(MyPokemonPage));
         }
