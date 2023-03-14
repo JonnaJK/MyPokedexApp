@@ -31,4 +31,9 @@ public partial class MyPokemonPage : ContentPage
     {
         await Navigation.PushAsync(new ShowMyPokemonPage());
     }
+
+    private async void OnClickedGoBack(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync();
+    }
 }

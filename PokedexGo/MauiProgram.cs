@@ -41,13 +41,15 @@ public static class MauiProgram
         // Services
         builder.Services.AddSingleton<PokeService>();
         builder.Services.AddTransient<UserService>();
+        builder.Services.AddSingleton<AlertService>();
 
         // Models
         builder.Services.AddSingleton<User>();
 
         // Views
         builder.Services.AddSingleton<MyPokemonPage>();
-        builder.Services.AddSingleton<ShowMyPokemonPage>();
+        //builder.Services.AddSingleton<ShowMyPokemonPage>();
+        builder.Services.AddTransient<ShowMyPokemonPage>();
         builder.Services.AddSingleton<PokemonDetailsPage>();
 
         // View Models

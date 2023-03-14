@@ -7,13 +7,10 @@ namespace PokedexGo.Views;
 
 public partial class LoginPage : ContentPage
 {
-    private User _user;
 
     public LoginPage()
     {
         InitializeComponent();
-
-        _user = ServiceHelper.GetService<User>();
 
         var loginPage = new LoginPageViewModel
         {

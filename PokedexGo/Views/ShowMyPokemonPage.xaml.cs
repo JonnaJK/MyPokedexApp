@@ -1,7 +1,6 @@
 using PokedexGo.Helpers;
 using PokedexGo.Models;
 using PokedexGo.Services;
-using PokedexGo.ViewModels;
 
 namespace PokedexGo.Views;
 
@@ -18,8 +17,13 @@ public partial class ShowMyPokemonPage : ContentPage
     public static async Task<Pokemon> GetPokemon(string pokemonName)
     {
         var pokeService = new PokeService();
-        var pokemon = pokeService.GetOnePokemon(pokemonName);
+        var pokemon = pokeService.GetPokemonByName(pokemonName);
 
         return await pokemon;
+    }
+
+    private async void OnClickedGoBack(object sender, EventArgs e)
+    {
+        await Navigation.PopAsync();
     }
 }

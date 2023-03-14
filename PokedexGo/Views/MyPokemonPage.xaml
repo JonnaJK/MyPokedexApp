@@ -13,25 +13,41 @@
                          Spacing="10">
 
         <Image Source="pokemonlogga.png"
-               HeightRequest="200"
+               HeightRequest="250"
                HorizontalOptions="Center"/>
 
         <Label Text="{Binding WelcomeText, Mode=TwoWay}"
                VerticalOptions="Center"
                HorizontalOptions="Center"
-               FontSize="30"/>
+               FontSize="Header"/>
 
         <Image Source="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/25.png"
-               HeightRequest="200"
+               HeightRequest="250"
                HorizontalOptions="Center"/>
 
-        <Button Text="Show my Pokemon"
-                HorizontalOptions="Center"
-                Command="{Binding GoToShowMyPokemonsPageCommand}"/>
+        <Grid ColumnDefinitions="Auto, Auto"
+              HorizontalOptions="Center">
+            
+            <Button Text="Show my Pokemon"
+                    Command="{Binding GoToShowMyPokemonsPageCommand}"/>
+            
+            <!--<Button Text="Catch'em ALL"
+                    Command="{Binding GoToCatchEmAllPageCommand}"
+                    Grid.Column="1"/>-->
+            
+        </Grid>
 
-        <Button Text="Log out"
-                HorizontalOptions="Center"
-                Clicked="OnClickedLogOut"/>
+        <Grid ColumnDefinitions="Auto, Auto"
+              HorizontalOptions="Center">
+
+            <Button Text="Log out"
+                    Clicked="OnClickedLogOut"/>
+
+            <Button Text="Go back"
+                    HorizontalOptions="End"
+                    Clicked="OnClickedGoBack"
+                    Grid.Column="1"/>
+        </Grid>
 
     </VerticalStackLayout>
 </ContentPage>

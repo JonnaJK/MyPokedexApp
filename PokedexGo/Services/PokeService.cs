@@ -11,21 +11,20 @@ internal class PokeService
         _httpService = new HttpService();
     }
 
-    public async Task<List<Pokemon>> GetUsersPokemons(User user)
+    public async Task<List<Pokemon>> GetUsersPokemonASD(List<Pokemon> usersPokemon)
     {
         var list = new List<Pokemon>();
-        foreach (var pokemon in user.Pokemons)
+        foreach (var pokemon in usersPokemon)
         {
-            list.Add(await GetOnePokemon(pokemon.Name));
-            if (pokemon.IsWanted)
-                list.Where(x => x.Name == pokemon.Name).FirstOrDefault().IsWanted = true;
-            if (pokemon.IsFavorite)
-                list.Where(x => x.Name == pokemon.Name).ToList().ForEach(x => x.IsFavorite = true);
+            var retrievedPokemon = await GetPokemonByName(pokemon.Name);
+            retrievedPokemon.IsWanted = pokemon.IsWanted;
+            retrievedPokemon.IsFavorite = pokemon.IsFavorite;
+            list.Add(retrievedPokemon);
         }
         return list;
     }
 
-    public async Task<Pokemon> GetOnePokemon(string pokemonName) =>
+    public async Task<Pokemon> GetPokemonByName(string pokemonName) =>
         await _httpService.HttpRequest<Pokemon>($"pokemon/{pokemonName}");
 
     public async Task<Pokemon> GetType(int type) =>

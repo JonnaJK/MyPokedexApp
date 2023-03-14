@@ -2,6 +2,8 @@
 using PokedexGo.Models;
 using PokedexGo.Services;
 using System.Windows.Input;
+using Microsoft.Maui.Controls;
+using PokedexGo.Views;
 
 namespace PokedexGo.ViewModels;
 
@@ -12,6 +14,7 @@ public class PokemonDetailsPageViewModel : ViewModelBase
     private UserService _userService;
     private PokeService _pokeService;
     private Pokemon _pokemon;
+    private AlertService _alertService;
     public Pokemon Pokemon
     {
         get => _pokemon;
@@ -34,79 +37,62 @@ public class PokemonDetailsPageViewModel : ViewModelBase
             OnPropertyChanged(nameof(SpeciesDetail));
         }
     }
-
-    public ICommand ChangeFavoritePropertyCommand { get; set; }
-    public ICommand ChangeWantedPropertyCommand { get; set; }
+    #region Commands
+    public ICommand ToggleFavoriteCommand { get; set; }
+    public ICommand ToggleWantedCommand { get; set; }
+    public ICommand RemoveCommand { get; set; }
+    #endregion
 
     public PokemonDetailsPageViewModel()
     {
         _user = ServiceHelper.GetService<User>();
         _userService = ServiceHelper.GetService<UserService>();
         _pokeService = ServiceHelper.GetService<PokeService>();
-        ChangeFavoritePropertyCommand = new Command(async () => await ChangePokemonFavoriteProperty());
-        ChangeWantedPropertyCommand = new Command(async () => await ChangePokemonWantedProperty());
+        _alertService = ServiceHelper.GetService<AlertService>();
+
+        ToggleFavoriteCommand = new Command(async () => await ToggleIsFavorite());
+        ToggleWantedCommand = new Command(async () => await ToggleIsWanted());
+        RemoveCommand = new Command(async () => await RemovePokemon());
     }
 
-    public async Task ChangePokemonWantedProperty()
+    private async Task RemovePokemon()
     {
-        var pokemons = await _pokeService.GetUsersPokemons(_user);
-        var pokemon = pokemons.Where(x => x.Id == _pokemon.Id).FirstOrDefault();
-        pokemon.IsWanted = !pokemon.IsWanted;
-
-        _user.Pokemons.Where(x => x.Name == pokemon.Name).ToList().ForEach(x => x.IsWanted = !x.IsWanted);
-        Pokemon.IsWanted = pokemon.IsWanted;
-
-        if (_user.WantedPokemons is not null)
+        var answer = await _alertService.ShowConfirmationAsync("Warning", "Are you sure that you want to remove this pokemon?", "Yes", "No");
+        if (answer)
         {
-            if (pokemon.IsWanted)
-                _user.WantedPokemons.Add(new Pokemon { Name = pokemon.Name, IsFavorite = pokemon.IsFavorite, IsWanted = pokemon.IsWanted });
-            else
-            {
-                var pokemonToRemove = _user.WantedPokemons.Where(x => x.Name == pokemon.Name).FirstOrDefault();
-                _user.WantedPokemons.Remove(pokemonToRemove);
-            }
+            var pokemon = _user.Pokemons.Find(x => x.Name == _pokemon.Name.ToLower());
+            _user.Pokemons.Remove(pokemon);
+            await _userService.UpdateUserAsync(_user);
+            await Shell.Current.GoToAsync(nameof(ShowMyPokemonPage));
         }
-        else
-        {
-            _user.WantedPokemons = new()
-            {
-                //pokemon
-                new Pokemon { Name = pokemon.Name, IsFavorite = pokemon.IsFavorite, IsWanted = pokemon.IsWanted }
-            };
-        }
+    }
+
+    public async Task ToggleIsWanted()
+    {
+        Pokemon.IsWanted = !Pokemon.IsWanted;
         OnPropertyChanged(nameof(Pokemon));
+
+        _user.Pokemons.FindAll(x => x.Name == Pokemon.Name.ToLower()).ForEach(x => x.IsWanted = Pokemon.IsWanted);
+
+        if (Pokemon.IsWanted)
+            _user.WantedPokemons.Add(new Pokemon { Name = Pokemon.Name.ToLower(), IsFavorite = Pokemon.IsFavorite, IsWanted = Pokemon.IsWanted });
+        else
+            _user.WantedPokemons.Remove(_user.WantedPokemons.Find(x => x.Name == Pokemon.Name.ToLower()));
 
         await _userService.UpdateUserAsync(_user);
     }
 
-    public async Task ChangePokemonFavoriteProperty()
+    public async Task ToggleIsFavorite()
     {
-        var pokemons = await _pokeService.GetUsersPokemons(_user);
-        var pokemon = pokemons.Where(x => x.Id == _pokemon.Id).FirstOrDefault();
-        pokemon.IsFavorite = !pokemon.IsFavorite;
-
-        _user.Pokemons.Where(x => x.Name == pokemon.Name).ToList().ForEach(x => x.IsFavorite = !x.IsFavorite);
-        Pokemon.IsFavorite = pokemon.IsFavorite;
-
-        if (_user.FavoritePokemons is not null)
-        {
-            if (pokemon.IsFavorite)
-                _user.FavoritePokemons.Add(new Pokemon { Name = pokemon.Name, IsFavorite = pokemon.IsFavorite, IsWanted = pokemon.IsWanted });
-            else
-            {
-                var pokemonToRemove = _user.FavoritePokemons.Where(x => x.Name == pokemon.Name).FirstOrDefault();
-                _user.FavoritePokemons.Remove(pokemonToRemove);
-            }
-        }
-        else
-        {
-            _user.FavoritePokemons = new()
-            {
-                //pokemon
-                new Pokemon { Name = pokemon.Name, IsFavorite = pokemon.IsFavorite, IsWanted = pokemon.IsWanted }
-            };
-        }
+        Pokemon.IsFavorite = !Pokemon.IsFavorite;
         OnPropertyChanged(nameof(Pokemon));
+
+        _user.Pokemons.FindAll(x => x.Name == Pokemon.Name.ToLower()).ForEach(x => x.IsFavorite = Pokemon.IsFavorite);
+
+        if (Pokemon.IsFavorite)
+            _user.FavoritePokemons.Add(new Pokemon { Name = Pokemon.Name.ToLower(), IsFavorite = Pokemon.IsFavorite, IsWanted = Pokemon.IsWanted });
+        else
+            _user.FavoritePokemons.Remove(_user.FavoritePokemons.Find(x => x.Name == Pokemon.Name.ToLower()));
 
         await _userService.UpdateUserAsync(_user);
     }

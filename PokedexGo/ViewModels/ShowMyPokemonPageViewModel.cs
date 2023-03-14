@@ -22,27 +22,29 @@ public partial class ShowMyPokemonPageViewModel : ViewModelBase
     }
     public ICommand GoToPokemonDetailsPageCommand { get; private set; }
 
+    // TODO: Make the list automaticly updated whenever you enter the page, switch to transient?
     public ShowMyPokemonPageViewModel()
     {
         _user = ServiceHelper.GetService<User>();
         _pokeService = ServiceHelper.GetService<PokeService>();
 
-        var task = Task.Run(() => _pokeService.GetUsersPokemons(_user));
+        var task = Task.Run(() => _pokeService.GetUsersPokemonASD(_user.Pokemons));
         task.Wait();
 
+        // TODO: Ändra Pokemons till Pokemon överallt
         Pokemons = task.Result.ToList();
         Pokemons = CapitalizeFirstLetters(Pokemons);
 
         GoToPokemonDetailsPageCommand = new Command(async (pokemon) => await GoToPokemonDetailsPage(pokemon));
     }
 
-    public static List<Pokemon> CapitalizeFirstLetters(List<Pokemon> pokemons)
+    public static List<Pokemon> CapitalizeFirstLetters(List<Pokemon> pokemonList)
     {
-        foreach (var pokemon in pokemons)
+        foreach (var pokemon in pokemonList)
         {
             pokemon.Name = pokemon.Name[..1].ToUpper() + pokemon.Name[1..].ToLower();
         }
-        return pokemons;
+        return pokemonList;
     }
 
     public ICommand SelectedItemCommand => new Command<Pokemon>(async (pokemon) =>
