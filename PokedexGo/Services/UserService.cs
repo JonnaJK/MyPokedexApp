@@ -18,10 +18,8 @@ public class UserService
         _users = mongoDatabase.GetCollection<User>(options.Value.UserCollectionName);
     }
 
-    public async Task<User> GetUserAsync(string userName, string password)
-    {
-        return await _users.Find(x => x.UserName == userName && x.UserPassword == password).FirstOrDefaultAsync();
-    }
+    public async Task<User> GetUserAsync(string userName, string password) =>
+        await _users.Find(x => x.UserName == userName && x.UserPassword == password).FirstOrDefaultAsync();
 
     public async Task CreateUserAsync(User user) =>
         await _users.InsertOneAsync(user);

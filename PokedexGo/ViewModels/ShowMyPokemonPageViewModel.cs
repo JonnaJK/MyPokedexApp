@@ -54,9 +54,6 @@ public partial class ShowMyPokemonPageViewModel : ViewModelBase
         await AppShell.Current.GoToAsync(nameof(PokemonDetailsPage), navigationParameter);
     });
 
-    public async Task GoToPokemonDetailsPage(object pokemon)
-    {
-        //var pokemon = ((pokemon as SelectedItemChangedEventArgs).SelectedItem as Pokemon);
+    public async Task GoToPokemonDetailsPage(object pokemon) =>
         await Shell.Current.GoToAsync(nameof(PokemonDetailsPage), new Dictionary<string, object> { { "Pokemon", pokemon as Pokemon } });
-    }
 }

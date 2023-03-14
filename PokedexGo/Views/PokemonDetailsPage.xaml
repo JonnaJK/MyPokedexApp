@@ -9,13 +9,13 @@
     <ContentPage.BindingContext>
         <local:PokemonDetailsPageViewModel/>
     </ContentPage.BindingContext>
+    
     <ScrollView>
-
         <VerticalStackLayout Padding="10">
 
             <Image Source="pokemonlogga.png"
                    HorizontalOptions="Center"
-                   HeightRequest="150"/>
+                   HeightRequest="125"/>
 
             <Grid ColumnDefinitions="Auto, Auto"
                   ColumnSpacing="10"
@@ -31,12 +31,11 @@
                        Grid.Column="1"/>
             </Grid>
 
-
             <Grid ColumnDefinitions=".50*, .50*"
                   RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
                   HorizontalOptions="Center"
                   ColumnSpacing="30">
-                
+
                 <Label Text="Details"
                        TextColor="#0C3348"
                        FontSize="Header"
@@ -72,7 +71,7 @@
                        FontSize="Medium"
                        Grid.Row="4"/>
 
-                <Label Text="{Binding Pokemon.Order, StringFormat='Pokemon order: {0}'}"
+                <Label Text="{Binding Pokemon.Forms[0].Name, Mode=TwoWay, StringFormat='Form: {0}'}"
                        TextColor="#0C3348"
                        FontSize="Medium"
                        Grid.Row="5"/>
@@ -86,7 +85,7 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout>
-                                <Label Text="{Binding Path=Item.Name, Mode=TwoWay, StringFormat='          {0}'}"
+                                <Label Text="{Binding Path=Item.Name, Mode=TwoWay, StringFormat='     {0}'}"
                                        TextColor="#0C3348"
                                        FontSize="Medium"/>
                             </StackLayout>
@@ -104,7 +103,7 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout>
-                                <Label Text="{Binding Path=Type.Name, StringFormat='          {0}'}"
+                                <Label Text="{Binding Path=Type.Name, StringFormat='     {0}'}"
                                        TextColor="#0C3348"
                                        FontSize="Medium"/>
                             </StackLayout>
@@ -113,6 +112,14 @@
                 </CollectionView>
 
             </Grid>
+
+            <Button Text="Change Is favorite"
+                    HorizontalOptions="Center"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:PokemonDetailsPageViewModel}}, Path=ChangeFavoritePropertyCommand, Mode=TwoWay}"/>
+            
+            <Button Text="Change Is wanted"
+                    HorizontalOptions="Center"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:PokemonDetailsPageViewModel}}, Path=ChangeWantedPropertyCommand, Mode=TwoWay}"/>
 
         </VerticalStackLayout>
     </ScrollView>
