@@ -37,21 +37,28 @@
                         Command="{Binding Source={RelativeSource AncestorType={x:Type local:PokemonDetailsPageViewModel}}, Path=RemoveCommand}"/>
             </Grid>
             
-            <Grid ColumnDefinitions=".50*, .50*"
+            <Grid ColumnDefinitions=".50*, .50*, *"
                   ColumnSpacing="10"
                   Padding="10"
                   HorizontalOptions="Center">
-                
+
                 <Image Source="{Binding Pokemon.Sprites.Other.Home.FrontDefault}"
                        HeightRequest="250"/>
 
                 <Image Source="{Binding Pokemon.Sprites.Other.Home.FrontShiny}"
                        HeightRequest="250"
                        Grid.Column="1"/>
+                
+                <Image Source="{Binding ImageSource, Mode=TwoWay}"
+                       Background="transparent"
+                       Grid.Column="2"
+                       HeightRequest="20"
+                       VerticalOptions="Start"
+                       HorizontalOptions="Start"/>
             </Grid>
 
             <Grid ColumnDefinitions=".50*, .50*"
-                  RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
+                  RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
                   HorizontalOptions="Center"
                   ColumnSpacing="30">
 
@@ -62,7 +69,7 @@
                        HorizontalOptions="Center"
                        Grid.ColumnSpan="2"/>
 
-                <Label Text="{Binding Pokemon.Id, StringFormat='Id: {0}'}"
+                <Label Text="{Binding Pokemon.Id, StringFormat='Pokemon id: {0}'}"
                        TextColor="#0C3348"
                        FontSize="Medium"
                        Grid.Row="1"/>
@@ -73,6 +80,7 @@
                        Grid.Column="2"
                        Grid.Row="1"/>
 
+                 <!--Text="{Binding FUNKTION}"-->
                 <Label Text="{Binding SpeciesDetail.FlavorTextEntries[0].FlavorText}"
                        TextColor="#0C3348"
                        FontSize="Medium"
@@ -80,29 +88,23 @@
                        Grid.Row="2"
                        Grid.RowSpan="10"/>
 
-                <Label Text="{Binding SpeciesDetail.IsLegendary, StringFormat='Legendary: {0}'}"
-                       TextColor="#0C3348"
-                       FontSize="Medium"
-                       Grid.Column="2"
-                       Grid.Row="2"
-                       Grid.RowSpan="10"/>
-
-                <Label Text="{Binding Pokemon.IsFavorite, Mode=TwoWay, StringFormat='Is favorite: {0}'}"
-                       TextColor="#0C3348"
-                       FontSize="Medium"
-                       Grid.Row="3"/>
-
                 <Label Text="{Binding Pokemon.Forms[0].Name, StringFormat='Form: {0}'}"
                        TextColor="#0C3348"
                        FontSize="Medium"
-                       Grid.Row="5"/>
+                       Grid.Row="2"/>
+
+                <Label Text="{Binding SpeciesDetail.IsLegendary, StringFormat='Legendary: {0}'}"
+                       TextColor="#0C3348"
+                       FontSize="Medium"
+                       Grid.Column="0"
+                       Grid.Row="3"/>
 
                 <Label Text="Held item(s):"
                        TextColor="#0C3348"
                        FontSize="Medium"
-                       Grid.Row="6"/>
+                       Grid.Row="4"/>
                 <CollectionView ItemsSource="{Binding Pokemon.HeldItems}"
-                                Grid.Row="7">
+                                Grid.Row="5">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout>
@@ -118,9 +120,9 @@
                 <Label Text="Type(s):"
                        TextColor="#0C3348"
                        FontSize="Medium"
-                       Grid.Row="8"/>
+                       Grid.Row="6"/>
                 <CollectionView ItemsSource="{Binding Pokemon.Types}"
-                                Grid.Row="9">
+                                Grid.Row="7">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout>
@@ -131,6 +133,7 @@
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
                 </CollectionView>
+
 
             </Grid>
 

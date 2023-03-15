@@ -35,26 +35,9 @@ public partial class ShowMyPokemonPageViewModel : ViewModelBase
         var task = Task.Run(() => _pokeService.GetUsersPokemon(_user.Pokemon));
         task.Wait();
 
-        Pokemon = task.Result.ToList();
-        Pokemon = CapitalizeFirstLetters(Pokemon);
+        Pokemon = task.Result.ToList().CapitalizeFirstLetters();
 
         GoToPokemonDetailsPageCommand = new Command(async (pokemon) => await GoToPokemonDetailsPage(pokemon));
-    }
-
-    // TODO: NEW kanske bör vara i PokemonHelpers?
-    public static List<Pokemon> CapitalizeFirstLetters(List<Pokemon> pokemonList)
-    {
-        foreach (var pokemon in pokemonList)
-        {
-            pokemon.Name = pokemon.Name[..1].ToUpper() + pokemon.Name[1..].ToLower();
-        }
-        return pokemonList;
-    }
-    // TODO: NEW kanske bör vara i PokemonHelpers?
-    public static Pokemon CapitalizeFirstLetter(Pokemon pokemon)
-    {
-        pokemon.Name = pokemon.Name[..1].ToUpper() + pokemon.Name[1..].ToLower();
-        return pokemon;
     }
 
     public ICommand SelectedItemCommand => new Command<Pokemon>(async (pokemon) =>

@@ -48,6 +48,7 @@ public partial class LoginPageViewModel : ViewModelBase
         RegisterNewUserCommand = new Command(async () => await RegisterNewUser());
     }
 
+    #region Commands
     public async Task Login()
     {
         var user = await _userService.GetUserAsync(UserName, UserPassword);
@@ -64,7 +65,6 @@ public partial class LoginPageViewModel : ViewModelBase
         }
     }
 
-    #region Commands
     public async Task RegisterNewUser()
     {
         _user.Id = new Guid();

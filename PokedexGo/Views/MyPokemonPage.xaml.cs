@@ -23,9 +23,6 @@ public partial class MyPokemonPage : ContentPage
     private async void OnClickedLogOut(object sender, EventArgs e) =>
         await Navigation.PopAsync();
 
-    private async void GoToShowMyPokemonsPage(List<Pokemon> pokemons) =>
+    private async void GoToShowMyPokemonsPage(List<Pokemon> pokemon) =>
         await Navigation.PushAsync(new ShowMyPokemonPage());
-
-    private async void OnClickedGoBack(object sender, EventArgs e) =>
-        await Navigation.PopAsync();
 }

@@ -16,9 +16,19 @@ public class PokemonDetailsPageViewModel : ViewModelBase
     private AlertService _alertService;
     private Pokemon _pokemon;
     private SpeciesDetail _speciesDetail;
+    private string _imageSource;
     #endregion
 
     #region Properties
+    public string ImageSource
+    {
+        get => _imageSource;
+        set
+        {
+            _imageSource = value;
+            OnPropertyChanged(nameof(ImageSource));
+        }
+    }
     public Pokemon Pokemon
     {
         get => _pokemon;
@@ -26,6 +36,7 @@ public class PokemonDetailsPageViewModel : ViewModelBase
         {
             _pokemon = value;
             _ = Task.Run(async () => { SpeciesDetail = await _pokeService.GetFromUrl<SpeciesDetail>(_pokemon.Species.Url); });
+            _ = Task.Run(() => { ImageSource = _pokemon.IsFavorite ? "favorite.png" : "notfavorite.png"; });
             OnPropertyChanged(nameof(Pokemon));
         }
     }
@@ -53,6 +64,7 @@ public class PokemonDetailsPageViewModel : ViewModelBase
         ToggleFavoriteCommand = new Command(async () => await ToggleIsFavorite());
         ToggleWantedCommand = new Command(async () => await ToggleIsWanted());
         RemoveCommand = new Command(async () => await RemovePokemon());
+        //ImageSource = Pokemon.IsFavorite ? "favorite.png" : "notfavorite.png";
     }
 
     #region Commands
@@ -85,7 +97,10 @@ public class PokemonDetailsPageViewModel : ViewModelBase
 
     public async Task ToggleIsFavorite()
     {
+
         Pokemon.IsFavorite = !Pokemon.IsFavorite;
+        // TODO: New 
+        ImageSource = Pokemon.IsFavorite ? "favorite.png" : "notfavorite.png";
         OnPropertyChanged(nameof(Pokemon));
 
         _user.Pokemon.FindAll(x => x.Name == Pokemon.Name.ToLower()).ForEach(x => x.IsFavorite = Pokemon.IsFavorite);

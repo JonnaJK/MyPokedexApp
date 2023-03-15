@@ -38,7 +38,7 @@ public static class MauiProgram
         // Valde att ha det på PokeService
         // Adderar en Transient Dependency Injection för de klasser som ska skapas upp endast när de används och sedan "skrotas"
         // Valde att ha det på UserService för att det inte behövs en och samma instans av det objektet, dvs. behöver inte ta upp minne förutom när man behöver göra ett anrop till databasen
-
+        
         // Services - Singleton
         builder.Services.AddSingleton<PokeService>();
         builder.Services.AddSingleton<AlertService>();
@@ -48,10 +48,9 @@ public static class MauiProgram
         // Models - Singleton
         builder.Services.AddSingleton<User>();
 
-        // Views - Singleton
-        builder.Services.AddSingleton<MyPokemonPage>();
-        builder.Services.AddSingleton<PokemonDetailsPage>();
         // Views - Transient
+        builder.Services.AddTransient<MyPokemonPage>();
+        builder.Services.AddTransient<PokemonDetailsPage>();
         builder.Services.AddTransient<ShowMyPokemonPage>();
         builder.Services.AddTransient<CatchEmAllPage>();
 

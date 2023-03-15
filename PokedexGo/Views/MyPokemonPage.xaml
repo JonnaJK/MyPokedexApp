@@ -27,27 +27,18 @@
 
         <Grid ColumnDefinitions="Auto, Auto"
               HorizontalOptions="Center">
-            
+
             <Button Text="Show my Pokemon"
                     Command="{Binding GoToShowMyPokemonsPageCommand}"/>
-            
-            <Button Text="Catch'em ALL"
+
+            <Button Text="Gotta catch'em all"
                     Command="{Binding GoToCatchEmAllPageCommand}"
                     Grid.Column="1"/>
-            
+
         </Grid>
-
-        <Grid ColumnDefinitions="Auto, Auto"
-              HorizontalOptions="Center">
-
-            <Button Text="Log out"
-                    Clicked="OnClickedLogOut"/>
-
-            <Button Text="Go back"
-                    HorizontalOptions="End"
-                    Clicked="OnClickedGoBack"
-                    Grid.Column="1"/>
-        </Grid>
+        
+        <Button Text="Log out"
+                Clicked="OnClickedLogOut"/>
 
     </VerticalStackLayout>
 </ContentPage>

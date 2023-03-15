@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:PokedexGo.ViewModels"
              x:Class="PokedexGo.Views.CatchEmAllPage"
-             Title="Catch'em ALL">
+             Title="Gotta catch'em ALL">
 
     <ContentPage.BindingContext>
         <local:CatchEmAllPageViewModel/>
@@ -20,14 +20,9 @@
         <Grid ColumnDefinitions="Auto, Auto"
               HorizontalOptions="Center">
 
-            <Button Text="Start catching"
-                Command="{Binding Source={RelativeSource AncestorType={x:Type local:CatchEmAllPageViewModel}}, Path=StartCatchingCommand}"
-                HorizontalOptions="Center"/>
-
-            <Button Text="Stop catching"
-                Command="{Binding Source={RelativeSource AncestorType={x:Type local:CatchEmAllPageViewModel}}, Path=StopCatchingCommand}"
+            <Button Text="Go back"
                 HorizontalOptions="Center"
-                Grid.Column="1"/>
+                    Clicked="OnClickedGoBack"/>
         </Grid>
 
         <Image Source="{Binding Pokemon.Sprites.Other.Home.FrontDefault, Mode=TwoWay}"
@@ -36,17 +31,17 @@
         <Label Text="{Binding Pokemon.Name, StringFormat='A wild pokemon, {0}, appeared. Would you like to catch it?'}"
                FontSize="Large"/>
 
-
         <Grid ColumnDefinitions="Auto, Auto"
               HorizontalOptions="Center"
               ColumnSpacing="40">
 
-            <Button Text="Yes"
+            <Button Text="Yes, throw PokeBall"
                     HorizontalOptions="Center"
-                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:CatchEmAllPageViewModel}}, Path=CatchCommand}"/>
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:CatchEmAllPageViewModel}}, Path=ThrowPokeBallCommand}"/>
             
-            <Button Text="No"
+            <Button Text="No, skip Pokemon"
                     HorizontalOptions="Center"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:CatchEmAllPageViewModel}}, Path=SkipPokemonCommand}"
                     Grid.Column="1"/>
         </Grid>
 
