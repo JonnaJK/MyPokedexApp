@@ -4,10 +4,9 @@ namespace PokedexGo.Views;
 
 public partial class ShowMyPokemonPage : ContentPage
 {
-    public ShowMyPokemonPage(ShowMyPokemonPageViewModel viewModel)
+    public ShowMyPokemonPage()
     {
         InitializeComponent();
-        BindingContext = viewModel;
     }
 
     private async void OnClickedGoBack(object sender, EventArgs e) =>

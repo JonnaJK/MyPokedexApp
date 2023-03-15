@@ -11,7 +11,7 @@ public class CatchEmAllPageViewModel : ViewModelBase
     private const int TASK_DELAY_TIME = 5_000;
     private const int MAX_POKEMON_ID_REQUEST = 906;
     // The base capture rate; up to 255. The higher the number, the easier the catch.
-    private const int MAX_CAPTURE_RATE = 255;
+    private const int MAX_CAPTURE_RATE = 260;
     #endregion
 
     #region Attributes
@@ -32,7 +32,6 @@ public class CatchEmAllPageViewModel : ViewModelBase
         set
         {
             _pokemon = value;
-            // TODO: Ändra som ovan på andra ställen som använder task.wait
             _ = Task.Run(async () => { SpeciesDetail = await _pokeService.GetFromUrl<SpeciesDetail>(_pokemon.Species.Url); });
             OnPropertyChanged(nameof(Pokemon));
         }
@@ -63,6 +62,7 @@ public class CatchEmAllPageViewModel : ViewModelBase
         CatchCommand = new Command(async () => await Catch());
     }
 
+    #region Commands
     public async Task CatchRandomPokemon()
     {
         var random = new Random();
@@ -72,9 +72,7 @@ public class CatchEmAllPageViewModel : ViewModelBase
             if (_isShowing)
             {
                 Pokemon = await _pokeService.GetRandomPokemonById(random.Next(MAX_POKEMON_ID_REQUEST));
-
-                var pokemon = ShowMyPokemonPageViewModel.CapitalizeFirstLetters(new List<Pokemon> { Pokemon });
-                Pokemon = pokemon.First();
+                Pokemon = ShowMyPokemonPageViewModel.CapitalizeFirstLetter(Pokemon);
             }
         }
     }
@@ -89,55 +87,15 @@ public class CatchEmAllPageViewModel : ViewModelBase
         var title = "Status";
         var cancelButton = "OK";
         string message;
-        if (SpeciesDetail.CaptureRate < 25.5)
+        if (random.Next(MAX_CAPTURE_RATE) <= SpeciesDetail.CaptureRate)
         {
-            message = "10%";
-            // 10% chans att fånga
-        }
-        else if (SpeciesDetail.CaptureRate > 50)
-        {
-            message = "20%";
-            // 20% chans att fånga
-        }
-        else if (SpeciesDetail.CaptureRate > 76.5)
-        {
-            message = "30%";
-            // 30% chans att fånga
-        }
-        else if (SpeciesDetail.CaptureRate > 102)
-        {
-            message = "40%";
-            // 40% chans att fånga
-        }
-        else if (SpeciesDetail.CaptureRate > 127.5)
-        {
-            message = "50%";
-            // 50% chans att fånga
-        }
-        else if (SpeciesDetail.CaptureRate > 153)
-        {
-            message = "60%";
-            // 60% chans att fånga
-        }
-        else if (SpeciesDetail.CaptureRate > 178.5)
-        {
-            message = "70%";
-            // 70% chans att fånga
-        }
-        else if (SpeciesDetail.CaptureRate > 204)
-        {
-            message = "80%";
-            // 80% chans att fånga
-        }
-        else if (SpeciesDetail.CaptureRate > 229.5)
-        {
-            message = "90%";
-            // 90% chans att fånga
+            // fångad
+            message = $"Gotcha! {Pokemon.Name} was caught!";
         }
         else
         {
-            message = "100%";
-            // 100% chans att fånga
+            // inte fångad
+            message = $"Oh, no! The {Pokemon.Name} broke free!";
         }
 
         await _alertService.ShowAlertAsync(title, message, cancelButton);
@@ -150,4 +108,5 @@ public class CatchEmAllPageViewModel : ViewModelBase
 
     public void StopCatching() =>
         _isGonnaCatchEmAll = false;
+    #endregion
 }

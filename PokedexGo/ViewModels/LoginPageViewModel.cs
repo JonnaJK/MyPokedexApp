@@ -64,6 +64,7 @@ public partial class LoginPageViewModel : ViewModelBase
         }
     }
 
+    #region Commands
     public async Task RegisterNewUser()
     {
         _user.Id = new Guid();
@@ -75,4 +76,5 @@ public partial class LoginPageViewModel : ViewModelBase
         await _userService.CreateUserAsync(_user);
         await Shell.Current.GoToAsync(nameof(MyPokemonPage));
     }
+    #endregion
 }

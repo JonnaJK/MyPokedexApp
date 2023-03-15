@@ -25,7 +25,6 @@ public class PokemonDetailsPageViewModel : ViewModelBase
         set
         {
             _pokemon = value;
-            // TODO: Ändra som ovan på andra ställen som använder task.wait
             _ = Task.Run(async () => { SpeciesDetail = await _pokeService.GetFromUrl<SpeciesDetail>(_pokemon.Species.Url); });
             OnPropertyChanged(nameof(Pokemon));
         }
@@ -56,6 +55,7 @@ public class PokemonDetailsPageViewModel : ViewModelBase
         RemoveCommand = new Command(async () => await RemovePokemon());
     }
 
+    #region Commands
     private async Task RemovePokemon()
     {
         var answer = await _alertService.ShowConfirmationAsync("Warning", "Are you sure that you want to remove this pokemon?", "Yes", "No");
@@ -97,4 +97,5 @@ public class PokemonDetailsPageViewModel : ViewModelBase
 
         await _userService.UpdateUserAsync(_user);
     }
+    #endregion
 }

@@ -8,7 +8,7 @@ namespace PokedexGo.Services;
 
 public class UserService
 {
-    // Förbättring är att inte ha direkt kontakt med databasen från appen, utan ha en api
+    // TODO: NEW Skriv en tydlig kommentar om: Förbättring är att inte ha direkt kontakt med databasen från appen, utan ha en api
 
     private readonly IMongoCollection<User> _userCollection;
 

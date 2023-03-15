@@ -1,4 +1,6 @@
-﻿using PokedexGo.Views;
+﻿using PokedexGo.Models;
+using PokedexGo.ViewModels;
+using PokedexGo.Views;
 
 namespace PokedexGo;
 

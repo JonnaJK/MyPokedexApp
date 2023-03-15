@@ -10,7 +10,6 @@ public partial class MyPokemonPageViewModel : ViewModelBase
     #region Attributes
     private string _welcomeText = "Welcome!";
     private User _user;
-    public string welcomeText;
     #endregion
 
     #region Properties
@@ -35,9 +34,11 @@ public partial class MyPokemonPageViewModel : ViewModelBase
         GoToCatchEmAllPageCommand = new Command(async () => await GoToCatchEmAllPage());
     }
 
+    #region Commands
     public async Task GoToShowMyPokemonsPage() =>
         await Shell.Current.GoToAsync(nameof(ShowMyPokemonPage));
 
     public async Task GoToCatchEmAllPage() =>
         await Shell.Current.GoToAsync(nameof(CatchEmAllPage));
+    #endregion
 }
