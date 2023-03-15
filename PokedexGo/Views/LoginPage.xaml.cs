@@ -1,6 +1,4 @@
-using PokedexGo.Helpers;
 using PokedexGo.Models;
-using PokedexGo.Services;
 using PokedexGo.ViewModels;
 
 namespace PokedexGo.Views;
@@ -19,13 +17,9 @@ public partial class LoginPage : ContentPage
         BindingContext = loginPage;
     }
 
-    private async void OnClickedGoBack(object sender, EventArgs e)
-    {
+    private async void OnClickedGoBack(object sender, EventArgs e) =>
         await Navigation.PopAsync();
-    }
 
-    private async void GoToMyPokemonPage(User user)
-    {
+    private async void GoToMyPokemonPage(User user) =>
         await Navigation.PushAsync(new MyPokemonPage());
-    }
 }

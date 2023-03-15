@@ -8,8 +8,10 @@ namespace PokedexGo.Services;
 
 public class UserService
 {
+    // Förbättring är att inte ha direkt kontakt med databasen från appen, utan ha en api
+
     private readonly IMongoCollection<User> _userCollection;
-    // förbättring är att inte ha direkt kontakt med databasen från appen, utan ha en api
+
     public UserService()
     {
         var options = ServiceHelper.GetService<IOptions<UserDatabaseSettings>>();
@@ -26,11 +28,10 @@ public class UserService
 
     public async Task UpdateUserAsync(User user, Pokemon pokemon)
     {
-        user.Pokemons.Add(pokemon);
+        user.Pokemon.Add(pokemon);
         await _userCollection.ReplaceOneAsync(x => x.Id == user.Id, user);
     }
 
-    // TODO: NOT WORKING
     public async Task UpdateUserAsync(User user) =>
         await _userCollection.ReplaceOneAsync(x => x.Id == user.Id, user);
 }

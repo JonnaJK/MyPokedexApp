@@ -73,7 +73,14 @@
                        Grid.Column="2"
                        Grid.Row="1"/>
 
-                <Label Text="{Binding SpeciesDetail.flavor_text_entries[0].flavor_text}"
+                <Label Text="{Binding SpeciesDetail.FlavorTextEntries[0].FlavorText}"
+                       TextColor="#0C3348"
+                       FontSize="Medium"
+                       Grid.Column="2"
+                       Grid.Row="2"
+                       Grid.RowSpan="10"/>
+
+                <Label Text="{Binding SpeciesDetail.IsLegendary, StringFormat='Legendary: {0}'}"
                        TextColor="#0C3348"
                        FontSize="Medium"
                        Grid.Column="2"

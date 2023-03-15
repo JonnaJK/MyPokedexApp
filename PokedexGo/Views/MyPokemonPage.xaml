@@ -31,9 +31,9 @@
             <Button Text="Show my Pokemon"
                     Command="{Binding GoToShowMyPokemonsPageCommand}"/>
             
-            <!--<Button Text="Catch'em ALL"
+            <Button Text="Catch'em ALL"
                     Command="{Binding GoToCatchEmAllPageCommand}"
-                    Grid.Column="1"/>-->
+                    Grid.Column="1"/>
             
         </Grid>
 

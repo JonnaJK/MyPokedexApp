@@ -326,22 +326,13 @@ public partial class Pokemon
         [JsonPropertyName("stat")]
         public Species StatStat { get; set; }
     }
-
-    //public partial class Pokemon
-    //{
-    //    public static Pokemon FromJson(string json) => JsonSerializer.Deserialize<Pokemon>(json, QuickType.Converter.Settings);
-    //}
-
-    //public static class Serialize
-    //{
-    //    public static string ToJson(this Pokemon self) => JsonSerializer.Serialize(self, QuickType.Converter.Settings);
-    //}
     #endregion
 
+    #region OwnProperties
     public string FlavorText { get; set; }
     public bool IsFavorite { get; set; }
     public bool IsWanted { get; set; }
-
+    #endregion
 
     internal static class Converter
     {

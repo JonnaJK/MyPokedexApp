@@ -8,36 +8,41 @@ namespace PokedexGo.ViewModels;
 
 public partial class ShowMyPokemonPageViewModel : ViewModelBase
 {
+    #region Attributes
     private User _user;
     private PokeService _pokeService;
-    private List<Pokemon> _pokemons;
-    public List<Pokemon> Pokemons
+    private List<Pokemon> _pokemon;
+    #endregion
+
+    #region Properties
+    public List<Pokemon> Pokemon
     {
-        get => _pokemons;
+        get => _pokemon;
         set
         {
-            _pokemons = value;
-            OnPropertyChanged(nameof(Pokemons));
+            _pokemon = value;
+            OnPropertyChanged(nameof(Pokemon));
         }
     }
     public ICommand GoToPokemonDetailsPageCommand { get; private set; }
+    #endregion
 
-    // TODO: Make the list automaticly updated whenever you enter the page, switch to transient?
     public ShowMyPokemonPageViewModel()
     {
         _user = ServiceHelper.GetService<User>();
         _pokeService = ServiceHelper.GetService<PokeService>();
 
-        var task = Task.Run(() => _pokeService.GetUsersPokemonASD(_user.Pokemons));
+        var task = Task.Run(() => _pokeService.GetUsersPokemon(_user.Pokemon));
         task.Wait();
 
         // TODO: Ändra Pokemons till Pokemon överallt
-        Pokemons = task.Result.ToList();
-        Pokemons = CapitalizeFirstLetters(Pokemons);
+        Pokemon = task.Result.ToList();
+        Pokemon = CapitalizeFirstLetters(Pokemon);
 
         GoToPokemonDetailsPageCommand = new Command(async (pokemon) => await GoToPokemonDetailsPage(pokemon));
     }
 
+    // TODO: NEW kanske bör vara i PokemonHelpers?
     public static List<Pokemon> CapitalizeFirstLetters(List<Pokemon> pokemonList)
     {
         foreach (var pokemon in pokemonList)

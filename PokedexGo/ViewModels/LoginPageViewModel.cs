@@ -8,10 +8,14 @@ namespace PokedexGo.ViewModels;
 
 public partial class LoginPageViewModel : ViewModelBase
 {
+    #region Attributes
     private User _user;
     private UserService _userService;
-
     private string _userName;
+    private string _userPassword;
+    #endregion
+
+    #region Properties
     public string UserName
     {
         get => _userName;
@@ -21,7 +25,6 @@ public partial class LoginPageViewModel : ViewModelBase
             OnPropertyChanged(nameof(UserName));
         }
     }
-    private string _userPassword;
     public string UserPassword
     {
         get => _userPassword;
@@ -31,11 +34,11 @@ public partial class LoginPageViewModel : ViewModelBase
             OnPropertyChanged(nameof(UserPassword));
         }
     }
-
     public List<Pokemon> Pokemons { get; set; }
     public Action<User> SignedIn { get; set; }
     public ICommand LoginCommand { get; private set; }
     public ICommand RegisterNewUserCommand { get; private set; }
+    #endregion
 
     public LoginPageViewModel()
     {
@@ -53,9 +56,9 @@ public partial class LoginPageViewModel : ViewModelBase
             _user.Id = user.Id;
             _user.UserName = user.UserName;
             _user.UserPassword = user.UserPassword;
-            _user.Pokemons = user.Pokemons;
-            _user.FavoritePokemons = user.FavoritePokemons;
-            _user.WantedPokemons = user.WantedPokemons;
+            _user.Pokemon = user.Pokemon;
+            _user.FavoritePokemon = user.FavoritePokemon;
+            _user.WantedPokemon = user.WantedPokemon;
 
             await Shell.Current.GoToAsync(nameof(MyPokemonPage));
         }
@@ -67,7 +70,7 @@ public partial class LoginPageViewModel : ViewModelBase
         _user.UserName = UserName;
         _user.UserPassword = UserPassword;
         // TODO: Randomisa sin starter pokemon!! 1% för pikachu, 33 för charmander, 33 för bulbasaur, 33 för squirtle
-        _user.Pokemons = new List<Pokemon> { new Pokemon { Name = "pikachu" } };
+        _user.Pokemon = new List<Pokemon> { new Pokemon { Name = "pikachu" } };
 
         await _userService.CreateUserAsync(_user);
         await Shell.Current.GoToAsync(nameof(MyPokemonPage));

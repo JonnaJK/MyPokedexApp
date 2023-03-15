@@ -21,6 +21,7 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
+        // TODO: NEW Gå igenom kommentarer
         // Skapar en configuration för att enklare kunna använda databas options när jag ska connecta med min databas på MongoDB, connectionsträngen samt databasnamn och collectionnamn.
         // På detta sätt behöver jag endast ändra i appsettings.json
         var assembly = Assembly.GetExecutingAssembly();
@@ -38,24 +39,27 @@ public static class MauiProgram
         // Adderar en Transient Dependency Injection för de klasser som ska skapas upp endast när de används och sedan "skrotas"
         // Valde att ha det på UserService för att det inte behövs en och samma instans av det objektet, dvs. behöver inte ta upp minne förutom när man behöver göra ett anrop till databasen
 
-        // Services
+        // Services - Singleton
         builder.Services.AddSingleton<PokeService>();
-        builder.Services.AddTransient<UserService>();
         builder.Services.AddSingleton<AlertService>();
+        // Services - Transient
+        builder.Services.AddTransient<UserService>();
 
-        // Models
+        // Models - Singleton
         builder.Services.AddSingleton<User>();
 
-        // Views
+        // Views - Singleton
         builder.Services.AddSingleton<MyPokemonPage>();
-        //builder.Services.AddSingleton<ShowMyPokemonPage>();
-        builder.Services.AddTransient<ShowMyPokemonPage>();
         builder.Services.AddSingleton<PokemonDetailsPage>();
+        // Views - Transient
+        builder.Services.AddTransient<ShowMyPokemonPage>();
+        builder.Services.AddTransient<CatchEmAllPage>();
 
-        // View Models
+        // View Models - Transient
         builder.Services.AddTransient<MyPokemonPageViewModel>();
         builder.Services.AddTransient<ShowMyPokemonPageViewModel>();
         builder.Services.AddTransient<PokemonDetailsPageViewModel>();
+        builder.Services.AddTransient<CatchEmAllPageViewModel>();
 
         return builder.Build();
     }

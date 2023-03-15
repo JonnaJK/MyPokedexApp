@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:PokedexGo.ViewModels"
+             x:Class="PokedexGo.Views.CatchEmAllPage"
+             Title="Catch'em ALL">
+
+    <ContentPage.BindingContext>
+        <local:CatchEmAllPageViewModel/>
+    </ContentPage.BindingContext>
+
+    <VerticalStackLayout Padding="10"
+                         Spacing="20"
+                         HorizontalOptions="Center">
+
+        <Image Source="pokemonlogga.png"
+               HeightRequest="250"
+               HorizontalOptions="Center"/>
+
+        <Grid ColumnDefinitions="Auto, Auto"
+              HorizontalOptions="Center">
+
+            <Button Text="Start catching"
+                Command="{Binding Source={RelativeSource AncestorType={x:Type local:CatchEmAllPageViewModel}}, Path=StartCatchingCommand}"
+                HorizontalOptions="Center"/>
+
+            <Button Text="Stop catching"
+                Command="{Binding Source={RelativeSource AncestorType={x:Type local:CatchEmAllPageViewModel}}, Path=StopCatchingCommand}"
+                HorizontalOptions="Center"
+                Grid.Column="1"/>
+        </Grid>
+
+        <Image Source="{Binding Pokemon.Sprites.Other.Home.FrontDefault, Mode=TwoWay}"
+               HeightRequest="300"/>
+
+        <Label Text="{Binding Pokemon.Name, StringFormat='A wild pokemon, {0}, appeared. Would you like to catch it?'}"
+               FontSize="Large"/>
+
+
+        <Grid ColumnDefinitions="Auto, Auto"
+              HorizontalOptions="Center"
+              ColumnSpacing="40">
+
+            <Button Text="Yes"
+                    HorizontalOptions="Center"
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:CatchEmAllPageViewModel}}, Path=CatchCommand}"/>
+            
+            <Button Text="No"
+                    HorizontalOptions="Center"
+                    Grid.Column="1"/>
+        </Grid>
+
+    </VerticalStackLayout>
+</ContentPage>

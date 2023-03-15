@@ -1,168 +1,241 @@
-﻿namespace PokedexGo.Models;
+﻿using System.Text.Json.Serialization;
+
+namespace PokedexGo.Models;
 
 public class SpeciesDetail
 {
-    // TODO: Add JsonPropertyName
-    public int base_happiness { get; set; }
-    public int capture_rate { get; set; }
-    public Color color { get; set; }
-    public Egg_Groups[] egg_groups { get; set; }
-    public Evolution_Chain evolution_chain { get; set; }
-    public object evolves_from_species { get; set; }
-    public Flavor_Text_Entries[] flavor_text_entries { get; set; }
-    public Form_Descriptions[] form_descriptions { get; set; }
-    public bool forms_switchable { get; set; }
-    public int gender_rate { get; set; }
-    public Genera[] genera { get; set; }
-    public Generation generation { get; set; }
-    public Growth_Rate growth_rate { get; set; }
-    public Habitat habitat { get; set; }
-    public bool has_gender_differences { get; set; }
-    public int hatch_counter { get; set; }
-    public int id { get; set; }
-    public bool is_baby { get; set; }
-    public bool is_legendary { get; set; }
-    public bool is_mythical { get; set; }
-    public string name { get; set; }
-    public Name[] names { get; set; }
-    public int order { get; set; }
-    public Pal_Park_Encounters[] pal_park_encounters { get; set; }
-    public Pokedex_Numbers[] pokedex_numbers { get; set; }
-    public Shape shape { get; set; }
-    public Variety[] varieties { get; set; }
+    [JsonPropertyName("base_happiness")]
+    public int BaseHappiness { get; set; }
+    [JsonPropertyName("capture_rate")]
+    public int CaptureRate { get; set; }
+    [JsonPropertyName("color")]
+    public Color ColorColor { get; set; }
+    [JsonPropertyName("egg_groups")]
+    public Egg_Groups[] EggGroups { get; set; }
+    [JsonPropertyName("evolution_chain")]
+    public Evolution_Chain EvolutionChain { get; set; }
+    [JsonPropertyName("evolves_from_species")]
+    public object EvolvesFromSpecies { get; set; }
+    [JsonPropertyName("flavor_text_entries")]
+    public Flavor_Text_Entries[] FlavorTextEntries { get; set; }
+    [JsonPropertyName("form_descriptions")]
+    public Form_Descriptions[] FormDescriptions { get; set; }
+    [JsonPropertyName("forms_switchable")]
+    public bool FormsSwitchable { get; set; }
+    [JsonPropertyName("gender_rate")]
+    public int GenderRate { get; set; }
+    [JsonPropertyName("genera")]
+    public Genera[] GeneraGenera { get; set; }
+    [JsonPropertyName("generation")]
+    public Generation GenerationGeneration { get; set; }
+    [JsonPropertyName("growth_rate")]
+    public Growth_Rate GrowthRate { get; set; }
+    [JsonPropertyName("habitat")]
+    public Habitat HabitatHabitat { get; set; }
+    [JsonPropertyName("has_gender_differences")]
+    public bool HasGenderDifferences { get; set; }
+    [JsonPropertyName("hatch_counter")]
+    public int HatchCounter { get; set; }
+    [JsonPropertyName("id")]
+    public int Id { get; set; }
+    [JsonPropertyName("is_baby")]
+    public bool IsBaby { get; set; }
+    [JsonPropertyName("is_legendary")]
+    public bool IsLegendary { get; set; }
+    [JsonPropertyName("is_mythical")]
+    public bool IsMythical { get; set; }
+    [JsonPropertyName("name")]
+    public string NameName { get; set; }
+    [JsonPropertyName("names")]
+    public Name[] Names { get; set; }
+    [JsonPropertyName("order")]
+    public int Order { get; set; }
+    [JsonPropertyName("pal_park_encounters")]
+    public Pal_Park_Encounters[] PalParkEncounters { get; set; }
+    [JsonPropertyName("pokedex_numbers")]
+    public Pokedex_Numbers[] PokedexNumbers { get; set; }
+    [JsonPropertyName("shape")]
+    public Shape ShapeShape { get; set; }
+    [JsonPropertyName("varieties")]
+    public Variety[] Varieties { get; set; }
 
 
     public class Color
     {
-        public string name { get; set; }
-        public string url { get; set; }
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+        [JsonPropertyName("url")]
+        public string Url { get; set; }
     }
 
     public class Evolution_Chain
     {
-        public string url { get; set; }
+        [JsonPropertyName("url")]
+        public string Url { get; set; }
     }
 
     public class Generation
     {
-        public string name { get; set; }
-        public string url { get; set; }
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+        [JsonPropertyName("url")]
+        public string Url { get; set; }
     }
 
     public class Growth_Rate
     {
-        public string name { get; set; }
-        public string url { get; set; }
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+        [JsonPropertyName("url")]
+        public string Url { get; set; }
     }
 
     public class Habitat
     {
-        public string name { get; set; }
-        public string url { get; set; }
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+        [JsonPropertyName("url")]
+        public string Url { get; set; }
     }
 
     public class Shape
     {
-        public string name { get; set; }
-        public string url { get; set; }
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+        [JsonPropertyName("url")]
+        public string Url { get; set; }
     }
 
     public class Egg_Groups
     {
-        public string name { get; set; }
-        public string url { get; set; }
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+        [JsonPropertyName("url")]
+        public string Url { get; set; }
     }
 
     public class Flavor_Text_Entries
     {
-        public string flavor_text { get; set; }
-        public Language language { get; set; }
-        public Version version { get; set; }
+        [JsonPropertyName("flavor_text")]
+        public string FlavorText { get; set; }
+        [JsonPropertyName("language")]
+        public Language Language { get; set; }
+        [JsonPropertyName("version")]
+        public Version Version { get; set; }
     }
 
     public class Language
     {
-        public string name { get; set; }
-        public string url { get; set; }
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+        [JsonPropertyName("url")]
+        public string Url { get; set; }
     }
 
     public class Version
     {
-        public string name { get; set; }
-        public string url { get; set; }
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+        [JsonPropertyName("url")]
+        public string Url { get; set; }
     }
 
     public class Form_Descriptions
     {
-        public string description { get; set; }
-        public Language1 language { get; set; }
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
+        [JsonPropertyName("language")]
+        public Language1 Language { get; set; }
     }
 
     public class Language1
     {
-        public string name { get; set; }
-        public string url { get; set; }
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+        [JsonPropertyName("url")]
+        public string Url { get; set; }
     }
 
     public class Genera
     {
-        public string genus { get; set; }
-        public Language2 language { get; set; }
+        [JsonPropertyName("genus")]
+        public string Genus { get; set; }
+        [JsonPropertyName("language")]
+        public Language2 Language { get; set; }
     }
 
     public class Language2
     {
-        public string name { get; set; }
-        public string url { get; set; }
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+        [JsonPropertyName("url")]
+        public string Url { get; set; }
     }
 
     public class Name
     {
-        public Language3 language { get; set; }
-        public string name { get; set; }
+        [JsonPropertyName("language")]
+        public Language3 Language { get; set; }
+        [JsonPropertyName("name")]
+        public string NameName { get; set; }
     }
 
     public class Language3
     {
-        public string name { get; set; }
-        public string url { get; set; }
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+        [JsonPropertyName("url")]
+        public string Url { get; set; }
     }
 
     public class Pal_Park_Encounters
     {
-        public Area area { get; set; }
-        public int base_score { get; set; }
-        public int rate { get; set; }
+        [JsonPropertyName("area")]
+        public Area Area { get; set; }
+        [JsonPropertyName("base_score")]
+        public int BaseScore { get; set; }
+        [JsonPropertyName("rate")]
+        public int Rate { get; set; }
     }
 
     public class Area
     {
-        public string name { get; set; }
-        public string url { get; set; }
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+        [JsonPropertyName("url")]
+        public string Url { get; set; }
     }
 
     public class Pokedex_Numbers
     {
-        public int entry_number { get; set; }
-        public Pokedex pokedex { get; set; }
+        [JsonPropertyName("entry_number")]
+        public int EntryNumber { get; set; }
+        [JsonPropertyName("pokedex")]
+        public Pokedex Pokedex { get; set; }
     }
 
     public class Pokedex
     {
-        public string name { get; set; }
-        public string url { get; set; }
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+        [JsonPropertyName("url")]
+        public string Url { get; set; }
     }
 
     public class Variety
     {
-        public bool is_default { get; set; }
-        public Pokemon pokemon { get; set; }
+        [JsonPropertyName("is_default")]
+        public bool IsDefault { get; set; }
+        [JsonPropertyName("pokemon")]
+        public Pokemon Pokemon { get; set; }
     }
 
     public class Pokemon
     {
-        public string name { get; set; }
-        public string url { get; set; }
+        [JsonPropertyName("name")]
+        public string Name { get; set; }
+        [JsonPropertyName("url")]
+        public string Url { get; set; }
     }
 
 }

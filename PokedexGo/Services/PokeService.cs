@@ -11,7 +11,8 @@ internal class PokeService
         _httpService = new HttpService();
     }
 
-    public async Task<List<Pokemon>> GetUsersPokemonASD(List<Pokemon> usersPokemon)
+    // TODO: NEW Bör kanske vara i PokemonHelper?
+    public async Task<List<Pokemon>> GetUsersPokemon(List<Pokemon> usersPokemon)
     {
         var list = new List<Pokemon>();
         foreach (var pokemon in usersPokemon)
@@ -23,6 +24,9 @@ internal class PokeService
         }
         return list;
     }
+
+    public async Task<Pokemon> GetRandomPokemonById(int pokemonId) =>
+        await _httpService.HttpRequest<Pokemon>($"pokemon/{pokemonId}");
 
     public async Task<Pokemon> GetPokemonByName(string pokemonName) =>
         await _httpService.HttpRequest<Pokemon>($"pokemon/{pokemonName}");

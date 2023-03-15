@@ -5,7 +5,7 @@ public class User
     public Guid Id { get; set; }
     public string UserName { get; set; }
     public string UserPassword { get; set; }
-    public List<Pokemon> Pokemons { get; set; } = new();
-    public List<Pokemon> FavoritePokemons { get; set; } = new();
-    public List<Pokemon> WantedPokemons { get; set; } = new();
+    public List<Pokemon> Pokemon { get; set; } = new();
+    public List<Pokemon> FavoritePokemon { get; set; } = new();
+    public List<Pokemon> WantedPokemon { get; set; } = new();
 }

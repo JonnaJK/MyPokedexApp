@@ -7,7 +7,13 @@ namespace PokedexGo.ViewModels;
 
 public partial class MyPokemonPageViewModel : ViewModelBase
 {
+    #region Attributes
     private string _welcomeText = "Welcome!";
+    private User _user;
+    public string welcomeText;
+    #endregion
+
+    #region Properties
     public string WelcomeText
     {
         get => _welcomeText;
@@ -17,18 +23,21 @@ public partial class MyPokemonPageViewModel : ViewModelBase
             OnPropertyChanged(nameof(WelcomeText));
         }
     }
-    private User _user;
     public Action<List<Pokemon>> GoToShowMyPokemonPage { get; set; }
     public ICommand GoToShowMyPokemonsPageCommand { get; private set; }
-    public string welcomeText;
+    public ICommand GoToCatchEmAllPageCommand { get; private set; }
+    #endregion
+
     public MyPokemonPageViewModel()
     {
         _user = ServiceHelper.GetService<User>();
         GoToShowMyPokemonsPageCommand = new Command(async () => await GoToShowMyPokemonsPage());
+        GoToCatchEmAllPageCommand = new Command(async () => await GoToCatchEmAllPage());
     }
 
-    public async Task GoToShowMyPokemonsPage()
-    {
+    public async Task GoToShowMyPokemonsPage() =>
         await Shell.Current.GoToAsync(nameof(ShowMyPokemonPage));
-    }
+
+    public async Task GoToCatchEmAllPage() =>
+        await Shell.Current.GoToAsync(nameof(CatchEmAllPage));
 }

@@ -2,7 +2,6 @@
 using PokedexGo.Models;
 using PokedexGo.Services;
 using System.Windows.Input;
-using Microsoft.Maui.Controls;
 using PokedexGo.Views;
 
 namespace PokedexGo.ViewModels;
@@ -10,11 +9,16 @@ namespace PokedexGo.ViewModels;
 [QueryProperty(nameof(Pokemon), "Pokemon")]
 public class PokemonDetailsPageViewModel : ViewModelBase
 {
+    #region Attributes
     private User _user;
     private UserService _userService;
     private PokeService _pokeService;
-    private Pokemon _pokemon;
     private AlertService _alertService;
+    private Pokemon _pokemon;
+    private SpeciesDetail _speciesDetail;
+    #endregion
+
+    #region Properties
     public Pokemon Pokemon
     {
         get => _pokemon;
@@ -26,8 +30,6 @@ public class PokemonDetailsPageViewModel : ViewModelBase
             OnPropertyChanged(nameof(Pokemon));
         }
     }
-
-    private SpeciesDetail _speciesDetail;
     public SpeciesDetail SpeciesDetail
     {
         get => _speciesDetail;
@@ -37,10 +39,9 @@ public class PokemonDetailsPageViewModel : ViewModelBase
             OnPropertyChanged(nameof(SpeciesDetail));
         }
     }
-    #region Commands
-    public ICommand ToggleFavoriteCommand { get; set; }
-    public ICommand ToggleWantedCommand { get; set; }
-    public ICommand RemoveCommand { get; set; }
+    public ICommand ToggleFavoriteCommand { get; private set; }
+    public ICommand ToggleWantedCommand { get; private set; }
+    public ICommand RemoveCommand { get; private set; }
     #endregion
 
     public PokemonDetailsPageViewModel()
@@ -60,8 +61,8 @@ public class PokemonDetailsPageViewModel : ViewModelBase
         var answer = await _alertService.ShowConfirmationAsync("Warning", "Are you sure that you want to remove this pokemon?", "Yes", "No");
         if (answer)
         {
-            var pokemon = _user.Pokemons.Find(x => x.Name == _pokemon.Name.ToLower());
-            _user.Pokemons.Remove(pokemon);
+            var pokemon = _user.Pokemon.Find(x => x.Name == _pokemon.Name.ToLower());
+            _user.Pokemon.Remove(pokemon);
             await _userService.UpdateUserAsync(_user);
             await Shell.Current.GoToAsync(nameof(ShowMyPokemonPage));
         }
@@ -72,12 +73,12 @@ public class PokemonDetailsPageViewModel : ViewModelBase
         Pokemon.IsWanted = !Pokemon.IsWanted;
         OnPropertyChanged(nameof(Pokemon));
 
-        _user.Pokemons.FindAll(x => x.Name == Pokemon.Name.ToLower()).ForEach(x => x.IsWanted = Pokemon.IsWanted);
+        _user.Pokemon.FindAll(x => x.Name == Pokemon.Name.ToLower()).ForEach(x => x.IsWanted = Pokemon.IsWanted);
 
         if (Pokemon.IsWanted)
-            _user.WantedPokemons.Add(new Pokemon { Name = Pokemon.Name.ToLower(), IsFavorite = Pokemon.IsFavorite, IsWanted = Pokemon.IsWanted });
+            _user.WantedPokemon.Add(new Pokemon { Name = Pokemon.Name.ToLower(), IsFavorite = Pokemon.IsFavorite, IsWanted = Pokemon.IsWanted });
         else
-            _user.WantedPokemons.Remove(_user.WantedPokemons.Find(x => x.Name == Pokemon.Name.ToLower()));
+            _user.WantedPokemon.Remove(_user.WantedPokemon.Find(x => x.Name == Pokemon.Name.ToLower()));
 
         await _userService.UpdateUserAsync(_user);
     }
@@ -87,12 +88,12 @@ public class PokemonDetailsPageViewModel : ViewModelBase
         Pokemon.IsFavorite = !Pokemon.IsFavorite;
         OnPropertyChanged(nameof(Pokemon));
 
-        _user.Pokemons.FindAll(x => x.Name == Pokemon.Name.ToLower()).ForEach(x => x.IsFavorite = Pokemon.IsFavorite);
+        _user.Pokemon.FindAll(x => x.Name == Pokemon.Name.ToLower()).ForEach(x => x.IsFavorite = Pokemon.IsFavorite);
 
         if (Pokemon.IsFavorite)
-            _user.FavoritePokemons.Add(new Pokemon { Name = Pokemon.Name.ToLower(), IsFavorite = Pokemon.IsFavorite, IsWanted = Pokemon.IsWanted });
+            _user.FavoritePokemon.Add(new Pokemon { Name = Pokemon.Name.ToLower(), IsFavorite = Pokemon.IsFavorite, IsWanted = Pokemon.IsWanted });
         else
-            _user.FavoritePokemons.Remove(_user.FavoritePokemons.Find(x => x.Name == Pokemon.Name.ToLower()));
+            _user.FavoritePokemon.Remove(_user.FavoritePokemon.Find(x => x.Name == Pokemon.Name.ToLower()));
 
         await _userService.UpdateUserAsync(_user);
     }

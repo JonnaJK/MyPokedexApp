@@ -6,15 +6,13 @@ namespace PokedexGo.Views;
 
 public partial class MyPokemonPage : ContentPage
 {
-    private User _user;
 
     public Action<List<Pokemon>> GoToShowMyPokemonPage { get; set; }
 
     public MyPokemonPage()
     {
-        _user = ServiceHelper.GetService<User>();
         InitializeComponent();
-        // TODO: Not working, why???
+        // TODO: NEW. Not working, why??? Ta bort??
         var myPokemonPage = new MyPokemonPageViewModel()
         {
             GoToShowMyPokemonPage = new Action<List<Pokemon>>(GoToShowMyPokemonsPage)
@@ -22,18 +20,12 @@ public partial class MyPokemonPage : ContentPage
         BindingContext = myPokemonPage;
     }
 
-    private async void OnClickedLogOut(object sender, EventArgs e)
-    {
+    private async void OnClickedLogOut(object sender, EventArgs e) =>
         await Navigation.PopAsync();
-    }
 
-    private async void GoToShowMyPokemonsPage(List<Pokemon> pokemons)
-    {
+    private async void GoToShowMyPokemonsPage(List<Pokemon> pokemons) =>
         await Navigation.PushAsync(new ShowMyPokemonPage());
-    }
 
-    private async void OnClickedGoBack(object sender, EventArgs e)
-    {
+    private async void OnClickedGoBack(object sender, EventArgs e) =>
         await Navigation.PopAsync();
-    }
 }

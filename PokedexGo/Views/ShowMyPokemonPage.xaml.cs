@@ -1,29 +1,15 @@
-using PokedexGo.Helpers;
-using PokedexGo.Models;
-using PokedexGo.Services;
+using PokedexGo.ViewModels;
 
 namespace PokedexGo.Views;
 
 public partial class ShowMyPokemonPage : ContentPage
 {
-    private User _user;
-
-    public ShowMyPokemonPage()
+    public ShowMyPokemonPage(ShowMyPokemonPageViewModel viewModel)
     {
         InitializeComponent();
-        _user = ServiceHelper.GetService<User>();
+        BindingContext = viewModel;
     }
 
-    public static async Task<Pokemon> GetPokemon(string pokemonName)
-    {
-        var pokeService = new PokeService();
-        var pokemon = pokeService.GetPokemonByName(pokemonName);
-
-        return await pokemon;
-    }
-
-    private async void OnClickedGoBack(object sender, EventArgs e)
-    {
+    private async void OnClickedGoBack(object sender, EventArgs e) =>
         await Navigation.PopAsync();
-    }
 }

@@ -9,7 +9,7 @@ public class ViewModelBase : INotifyPropertyChanged
     internal void OnPropertyChanged(string name) =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
 
-    // NEW
+    // TOOD: NEW Eventuellt ta bort? 
     protected bool SetProperty<T>(ref T backingStore, T value,
        [CallerMemberName] string propertyName = "",
        Action onChanged = null)
