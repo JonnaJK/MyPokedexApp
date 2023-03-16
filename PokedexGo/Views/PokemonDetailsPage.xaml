@@ -24,7 +24,7 @@
                   HorizontalOptions="Center">
 
                 <Button Text="Change Is favorite"
-                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:PokemonDetailsPageViewModel}}, Path=ToggleFavoriteCommand}"/>
+                        Command="{Binding ToggleFavoriteCommand}"/>
 
                 <Button Text="Go back"
                         Clicked="OnClickedGoBack"
@@ -34,7 +34,7 @@
                         BackgroundColor="#FB1B1B"
                         TextColor="#0C3348"
                         Grid.Column="2"
-                        Command="{Binding Source={RelativeSource AncestorType={x:Type local:PokemonDetailsPageViewModel}}, Path=RemoveCommand}"/>
+                        Command="{Binding RemoveCommand}"/>
             </Grid>
             
             <Grid ColumnDefinitions=".50*, .50*, *"
@@ -58,7 +58,7 @@
             </Grid>
 
             <Grid ColumnDefinitions=".50*, .50*"
-                  RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
+                  RowDefinitions="Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto, Auto"
                   HorizontalOptions="Center"
                   ColumnSpacing="30">
 
@@ -80,8 +80,7 @@
                        Grid.Column="2"
                        Grid.Row="1"/>
 
-                 <!--Text="{Binding FUNKTION}"-->
-                <Label Text="{Binding SpeciesDetail.FlavorTextEntries[0].FlavorText}"
+                <Label Text="{Binding FlavorTextLabel}"
                        TextColor="#0C3348"
                        FontSize="Medium"
                        Grid.Column="2"
@@ -99,12 +98,18 @@
                        Grid.Column="0"
                        Grid.Row="3"/>
 
+                <Label Text="{Binding SpeciesDetail.IsMythical, StringFormat='Mythical: {0}'}"
+                       TextColor="#0C3348"
+                       FontSize="Medium"
+                       Grid.Column="0"
+                       Grid.Row="4"/>
+
                 <Label Text="Held item(s):"
                        TextColor="#0C3348"
                        FontSize="Medium"
-                       Grid.Row="4"/>
+                       Grid.Row="5"/>
                 <CollectionView ItemsSource="{Binding Pokemon.HeldItems}"
-                                Grid.Row="5">
+                                Grid.Row="6">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout>
@@ -120,9 +125,9 @@
                 <Label Text="Type(s):"
                        TextColor="#0C3348"
                        FontSize="Medium"
-                       Grid.Row="6"/>
+                       Grid.Row="7"/>
                 <CollectionView ItemsSource="{Binding Pokemon.Types}"
-                                Grid.Row="7">
+                                Grid.Row="8">
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout>

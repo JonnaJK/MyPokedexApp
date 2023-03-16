@@ -1,6 +1,4 @@
-using PokedexGo.Helpers;
 using PokedexGo.Models;
-using PokedexGo.ViewModels;
 
 namespace PokedexGo.Views;
 
@@ -15,8 +13,5 @@ public partial class MyPokemonPage : ContentPage
     }
 
     private async void OnClickedLogOut(object sender, EventArgs e) =>
-        await Navigation.PopAsync();
-
-    private async void GoToShowMyPokemonsPage(List<Pokemon> pokemon) =>
-        await Navigation.PushAsync(new ShowMyPokemonPage());
+        await Shell.Current.GoToAsync($"..");
 }

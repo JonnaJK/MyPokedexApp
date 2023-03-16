@@ -17,6 +17,7 @@ public class PokemonDetailsPageViewModel : ViewModelBase
     private Pokemon _pokemon;
     private SpeciesDetail _speciesDetail;
     private string _imageSource;
+    private string _flavorTexLabel;
     #endregion
 
     #region Properties
@@ -46,12 +47,23 @@ public class PokemonDetailsPageViewModel : ViewModelBase
         set
         {
             _speciesDetail = value;
+            _ = Task.Run(() => { FlavorTextLabel = GetEnFlavorText(); });
             OnPropertyChanged(nameof(SpeciesDetail));
+        }
+    }
+    public string FlavorTextLabel
+    {
+        get => _flavorTexLabel;
+        set
+        {
+            _flavorTexLabel = value;
+            OnPropertyChanged(nameof(FlavorTextLabel));
         }
     }
     public ICommand ToggleFavoriteCommand { get; private set; }
     public ICommand ToggleWantedCommand { get; private set; }
     public ICommand RemoveCommand { get; private set; }
+    public ICommand GetEnFlavorTextCommand { get; private set; }
     #endregion
 
     public PokemonDetailsPageViewModel()
@@ -64,9 +76,15 @@ public class PokemonDetailsPageViewModel : ViewModelBase
         ToggleFavoriteCommand = new Command(async () => await ToggleIsFavorite());
         ToggleWantedCommand = new Command(async () => await ToggleIsWanted());
         RemoveCommand = new Command(async () => await RemovePokemon());
-        //ImageSource = Pokemon.IsFavorite ? "favorite.png" : "notfavorite.png";
     }
 
+
+    public string GetEnFlavorText()
+    {
+        return SpeciesDetail.FlavorTextEntries.Where(x => x.Language.Name == "en").FirstOrDefault().FlavorText;
+        FlavorTextLabel = SpeciesDetail.FlavorTextEntries.Where(x => x.Language.Name == "en").FirstOrDefault().FlavorText;
+        OnPropertyChanged(nameof(FlavorTextLabel));
+    }
     #region Commands
     private async Task RemovePokemon()
     {
@@ -80,25 +98,12 @@ public class PokemonDetailsPageViewModel : ViewModelBase
         }
     }
 
-    public async Task ToggleIsWanted()
-    {
-        Pokemon.IsWanted = !Pokemon.IsWanted;
-        OnPropertyChanged(nameof(Pokemon));
-
-        _user.Pokemon.FindAll(x => x.Name == Pokemon.Name.ToLower()).ForEach(x => x.IsWanted = Pokemon.IsWanted);
-
-        if (Pokemon.IsWanted)
-            _user.WantedPokemon.Add(new Pokemon { Name = Pokemon.Name.ToLower(), IsFavorite = Pokemon.IsFavorite, IsWanted = Pokemon.IsWanted });
-        else
-            _user.WantedPokemon.Remove(_user.WantedPokemon.Find(x => x.Name == Pokemon.Name.ToLower()));
-
-        await _userService.UpdateUserAsync(_user);
-    }
-
     public async Task ToggleIsFavorite()
     {
-        Pokemon.IsFavorite = !Pokemon.IsFavorite;
+        // Change heart image source
         ImageSource = Pokemon.IsFavorite ? "favorite.png" : "notfavorite.png";
+
+        Pokemon.IsFavorite = !Pokemon.IsFavorite;
         OnPropertyChanged(nameof(Pokemon));
 
         _user.Pokemon.FindAll(x => x.Name == Pokemon.Name.ToLower()).ForEach(x => x.IsFavorite = Pokemon.IsFavorite);
@@ -116,4 +121,20 @@ public class PokemonDetailsPageViewModel : ViewModelBase
         await _userService.UpdateUserAsync(_user);
     }
     #endregion
+
+    // TODO: Move to page wantedpokemons
+    public async Task ToggleIsWanted()
+    {
+        Pokemon.IsWanted = !Pokemon.IsWanted;
+        OnPropertyChanged(nameof(Pokemon));
+
+        _user.Pokemon.FindAll(x => x.Name == Pokemon.Name.ToLower()).ForEach(x => x.IsWanted = Pokemon.IsWanted);
+
+        if (Pokemon.IsWanted)
+            _user.WantedPokemon.Add(new Pokemon { Name = Pokemon.Name.ToLower(), IsFavorite = Pokemon.IsFavorite, IsWanted = Pokemon.IsWanted });
+        else
+            _user.WantedPokemon.Remove(_user.WantedPokemon.Find(x => x.Name == Pokemon.Name.ToLower()));
+
+        await _userService.UpdateUserAsync(_user);
+    }
 }

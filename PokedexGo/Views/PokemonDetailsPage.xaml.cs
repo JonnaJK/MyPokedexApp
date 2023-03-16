@@ -1,5 +1,3 @@
-using PokedexGo.ViewModels;
-
 namespace PokedexGo.Views;
 
 public partial class PokemonDetailsPage : ContentPage

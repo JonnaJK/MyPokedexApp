@@ -9,7 +9,7 @@ public partial class MyPokemonPageViewModel : ViewModelBase
 {
     #region Attributes
     private string _welcomeText = "Welcome!";
-    private User _user;
+    private readonly User _user;
     #endregion
 
 
@@ -23,10 +23,10 @@ public partial class MyPokemonPageViewModel : ViewModelBase
             OnPropertyChanged(nameof(WelcomeText));
         }
     }
-    public Action<List<Pokemon>> GoToShowMyPokemonPage { get; set; }
     public ICommand GoToShowMyPokemonsPageCommand { get; private set; }
     public ICommand GoToCatchEmAllPageCommand { get; private set; }
     public ICommand GoToSearchPokemonPageCommand { get; private set; }
+
     #endregion
 
     public MyPokemonPageViewModel()

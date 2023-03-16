@@ -57,6 +57,9 @@ internal class PokeService
     public async Task<Pokemon> GetType(int type) =>
         await _httpService.HttpRequest<Pokemon>($"type/{type}");
 
+    public async Task<TypeDetail> GetTypeDetail(int type) =>
+        await _httpService.HttpRequest<TypeDetail>($"type/{type}");
+
     public async Task<T> GetFromUrl<T>(Uri url) =>
         await _httpService.HttpRequest<T>(url);
 }
