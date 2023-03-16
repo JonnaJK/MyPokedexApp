@@ -4,10 +4,9 @@ namespace PokedexGo.Views;
 
 public partial class CatchEmAllPage : ContentPage
 {
-	public CatchEmAllPage(CatchEmAllPageViewModel viewModel)
+	public CatchEmAllPage()
 	{
 		InitializeComponent();
-        BindingContext = viewModel;
 	}
 
     private async void OnClickedGoBack(object sender, EventArgs e) =>

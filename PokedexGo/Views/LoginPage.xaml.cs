@@ -9,12 +9,6 @@ public partial class LoginPage : ContentPage
     public LoginPage()
     {
         InitializeComponent();
-
-        var loginPage = new LoginPageViewModel
-        {
-            SignedIn = new Action<User>(GoToMyPokemonPage)
-        };
-        BindingContext = loginPage;
     }
 
     private async void OnClickedGoBack(object sender, EventArgs e) =>

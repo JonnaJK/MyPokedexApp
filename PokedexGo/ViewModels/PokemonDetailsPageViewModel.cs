@@ -97,16 +97,19 @@ public class PokemonDetailsPageViewModel : ViewModelBase
 
     public async Task ToggleIsFavorite()
     {
-
         Pokemon.IsFavorite = !Pokemon.IsFavorite;
-        // TODO: New 
         ImageSource = Pokemon.IsFavorite ? "favorite.png" : "notfavorite.png";
         OnPropertyChanged(nameof(Pokemon));
 
         _user.Pokemon.FindAll(x => x.Name == Pokemon.Name.ToLower()).ForEach(x => x.IsFavorite = Pokemon.IsFavorite);
 
         if (Pokemon.IsFavorite)
-            _user.FavoritePokemon.Add(new Pokemon { Name = Pokemon.Name.ToLower(), IsFavorite = Pokemon.IsFavorite, IsWanted = Pokemon.IsWanted });
+            _user.FavoritePokemon.Add(new Pokemon
+            {
+                Name = Pokemon.Name.ToLower(),
+                IsFavorite = Pokemon.IsFavorite,
+                IsWanted = Pokemon.IsWanted
+            });
         else
             _user.FavoritePokemon.Remove(_user.FavoritePokemon.Find(x => x.Name == Pokemon.Name.ToLower()));
 

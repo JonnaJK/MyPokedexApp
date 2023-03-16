@@ -4,7 +4,6 @@ using PokedexGo.Views;
 using System.Windows.Input;
 using PokedexGo.Helpers;
 using PokedexGo.Interfaces;
-using PokedexGo.Facades;
 
 namespace PokedexGo.ViewModels;
 
@@ -14,6 +13,7 @@ public partial class LoginPageViewModel : ViewModelBase
     private User _user;
     private UserService _userService;
     private AlertService _alertService;
+    private PokeService _pokeService;
     private ILoginFacade _loginFacade;
     private IRegisterNewUserFacade _registerNewUserFacade;
     private string _username;
@@ -90,14 +90,14 @@ public partial class LoginPageViewModel : ViewModelBase
             return;
         }
 
-        // TODO: Randomisa sin starter pokemon!! 1% för pikachu, 33 för charmander, 33 för bulbasaur, 33 för squirtle
         _user.Id = new Guid();
         _user.Username = Username;
         _user.Password = Password;
-        _user.Pokemon = new List<Pokemon> { new Pokemon { Name = "pikachu" } };
+        _user.Pokemon.Add(PokeService.GetRandomPokemon());
 
         await _userService.CreateUserAsync(_user);
         await Shell.Current.GoToAsync(nameof(MyPokemonPage));
     }
     #endregion
+
 }

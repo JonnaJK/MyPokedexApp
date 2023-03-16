@@ -12,12 +12,6 @@ public partial class MyPokemonPage : ContentPage
     public MyPokemonPage()
     {
         InitializeComponent();
-        // TODO: NEW. Not working, why??? Ta bort??
-        var myPokemonPage = new MyPokemonPageViewModel()
-        {
-            GoToShowMyPokemonPage = new Action<List<Pokemon>>(GoToShowMyPokemonsPage)
-        };
-        BindingContext = myPokemonPage;
     }
 
     private async void OnClickedLogOut(object sender, EventArgs e) =>

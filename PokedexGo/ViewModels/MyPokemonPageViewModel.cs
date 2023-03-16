@@ -12,6 +12,7 @@ public partial class MyPokemonPageViewModel : ViewModelBase
     private User _user;
     #endregion
 
+
     #region Properties
     public string WelcomeText
     {
@@ -25,6 +26,7 @@ public partial class MyPokemonPageViewModel : ViewModelBase
     public Action<List<Pokemon>> GoToShowMyPokemonPage { get; set; }
     public ICommand GoToShowMyPokemonsPageCommand { get; private set; }
     public ICommand GoToCatchEmAllPageCommand { get; private set; }
+    public ICommand GoToSearchPokemonPageCommand { get; private set; }
     #endregion
 
     public MyPokemonPageViewModel()
@@ -32,6 +34,7 @@ public partial class MyPokemonPageViewModel : ViewModelBase
         _user = ServiceHelper.GetService<User>();
         GoToShowMyPokemonsPageCommand = new Command(async () => await GoToShowMyPokemonsPage());
         GoToCatchEmAllPageCommand = new Command(async () => await GoToCatchEmAllPage());
+        GoToSearchPokemonPageCommand = new Command(async () => await GoToSearchPokemonPage());
     }
 
     #region Commands
@@ -40,5 +43,8 @@ public partial class MyPokemonPageViewModel : ViewModelBase
 
     public async Task GoToCatchEmAllPage() =>
         await Shell.Current.GoToAsync(nameof(CatchEmAllPage));
+
+    public async Task GoToSearchPokemonPage() =>
+        await Shell.Current.GoToAsync(nameof(SearchPokemonPage));
     #endregion
 }

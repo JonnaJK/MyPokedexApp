@@ -53,7 +53,12 @@ public class SearchPokemonPageViewModel : ViewModelBase
     {
         try
         {
-            Pokemon = await _pokeService.GetPokemonByName(PokemonNameEntry);
+            Pokemon = await _pokeService.GetPokemonByName(PokemonNameEntry.ToLower());
+            if (Pokemon != null)
+            {
+                // got to detail
+                // But from team rocket, lägg till bild på dom om det finns och om köpet går igenom
+            }
         }
         catch (Exception e)
         {

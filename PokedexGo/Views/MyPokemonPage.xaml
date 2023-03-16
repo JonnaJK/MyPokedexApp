@@ -25,7 +25,7 @@
                HeightRequest="250"
                HorizontalOptions="Center"/>
 
-        <Grid ColumnDefinitions="Auto, Auto"
+        <Grid ColumnDefinitions="Auto, Auto, Auto, Auto"
               HorizontalOptions="Center">
 
             <Button Text="Show my Pokemon"
@@ -34,6 +34,10 @@
             <Button Text="Gotta catch'em all"
                     Command="{Binding GoToCatchEmAllPageCommand}"
                     Grid.Column="1"/>
+
+            <Button Text="Search pokemon"
+                    Command="{Binding GoToSearchPokemonPageCommand}"
+                    Grid.Column="2"/>
 
         </Grid>
         
