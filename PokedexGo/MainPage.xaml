@@ -4,32 +4,27 @@
              x:Class="PokedexGo.MainPage">
 
     <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0">
+        <VerticalStackLayout Spacing="25"
+                             Padding="30,0">
 
-            <Image
-                Source="pokemonlogga.png"
-                HeightRequest="200"
-                HorizontalOptions="Center"/>
+            <Image Source="pokemonlogga.png"
+                   HeightRequest="200"
+                   HorizontalOptions="Center"/>
 
             <Image Source="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/25.png"
-               HeightRequest="200"
-               HorizontalOptions="Center"/>
+                   HeightRequest="200"
+                   HorizontalOptions="Center"/>
 
-            <Label
-                Text="Gotta catch'em all!"
-                FontSize="32"
-                HorizontalOptions="Center"
-                TextColor="#0C3348"/>
+            <Label Text="Gotta catch'em all!"
+                   FontSize="32"
+                   HorizontalOptions="Center"
+                   TextColor="#0C3348"/>
 
-            <Button
-                x:Name="Login"
-                Text="Login"
-                Clicked="OnClickedGoLoginPage"
-                HorizontalOptions="Center" />
+            <Button Text="Login"
+                    Clicked="OnClickedGoLoginPage"
+                    HorizontalOptions="Center" />
 
         </VerticalStackLayout>
     </ScrollView>
-
+    
 </ContentPage>

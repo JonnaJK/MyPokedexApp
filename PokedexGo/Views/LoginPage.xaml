@@ -4,21 +4,25 @@
              xmlns:local="clr-namespace:PokedexGo.ViewModels"
              x:Class="PokedexGo.Views.LoginPage"
              Title="Login">
-    
+
     <ContentPage.BindingContext>
         <local:LoginPageViewModel/>
     </ContentPage.BindingContext>
 
     <VerticalStackLayout Padding="10"
                          Spacing="10">
+        <Grid>
+            
+            <Button Text="Go back"
+                    HorizontalOptions="End"
+                    VerticalOptions="Start"
+                    Clicked="OnClickedGoBack"/>
 
-        <Button Text="Go back"
-                HorizontalOptions="End"
-                Clicked="OnClickedGoBack"/>
-
-        <Image Source="pokemonlogga.png"
-               HeightRequest="200"
-               HorizontalOptions="Center"/>
+            <Image Source="pokemonlogga.png"
+                   HeightRequest="200"
+                   HorizontalOptions="Center"/>
+            
+        </Grid>
 
         <Image Source="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/25.png"
                HeightRequest="200"
@@ -30,10 +34,9 @@
               Padding="10"
               RowSpacing="10">
 
-            <Entry Grid.Row="0"
-                   Grid.ColumnSpan="2"
+            <Entry Grid.ColumnSpan="2"
                    Text="{Binding Username}"
-                   Placeholder="Enter fullname"
+                   Placeholder="Enter username"
                    HorizontalOptions="Fill"
                    x:Name="EntryUserName"/>
 
@@ -42,11 +45,9 @@
                    Text="{Binding Password}"
                    Placeholder="Enter password"
                    HorizontalOptions="Fill"
-                   IsPassword="True"
-                   x:Name="EntryPassword"/>
+                   IsPassword="True"/>
 
             <Button Grid.Row="2"
-                    Grid.Column="0"
                     Text="Register"
                     HorizontalOptions="Center"
                     Command="{Binding RegisterNewUserCommand}"/>

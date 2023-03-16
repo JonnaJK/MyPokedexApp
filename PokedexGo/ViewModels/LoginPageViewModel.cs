@@ -10,17 +10,19 @@ namespace PokedexGo.ViewModels;
 public partial class LoginPageViewModel : ViewModelBase
 {
     #region Attributes
-    private User _user;
-    private UserService _userService;
-    private AlertService _alertService;
-    private PokeService _pokeService;
-    private ILoginFacade _loginFacade;
-    private IRegisterNewUserFacade _registerNewUserFacade;
+    private readonly User _user;
+    private readonly UserService _userService;
+    private readonly AlertService _alertService;
+    private readonly PokeService _pokeService;
+    private readonly ILoginFacade _loginFacade;
+    private readonly IRegisterNewUserFacade _registerNewUserFacade;
     private string _username;
     private string _password;
     #endregion
 
     #region Properties
+    public ICommand LoginCommand { get; private set; }
+    public ICommand RegisterNewUserCommand { get; private set; }
     public string Username
     {
         get => _username;
@@ -39,10 +41,6 @@ public partial class LoginPageViewModel : ViewModelBase
             OnPropertyChanged(nameof(Password));
         }
     }
-    public List<Pokemon> Pokemons { get; set; }
-    public Action<User> SignedIn { get; set; }
-    public ICommand LoginCommand { get; private set; }
-    public ICommand RegisterNewUserCommand { get; private set; }
     #endregion
 
     public LoginPageViewModel()
@@ -50,6 +48,7 @@ public partial class LoginPageViewModel : ViewModelBase
         _user = ServiceHelper.GetService<User>();
         _userService = ServiceHelper.GetService<UserService>();
         _alertService = ServiceHelper.GetService<AlertService>();
+
         _loginFacade = ServiceHelper.GetService<ILoginFacade>();
         _registerNewUserFacade = ServiceHelper.GetService<IRegisterNewUserFacade>();
 
@@ -60,10 +59,10 @@ public partial class LoginPageViewModel : ViewModelBase
     #region Commands
     public async Task Login()
     {
-        var message = await _loginFacade.CanLogin(Username, Password);
-        if (!string.IsNullOrWhiteSpace(message))
+        var loginFailMessage = await _loginFacade.CanLogin(Username, Password);
+        if (!string.IsNullOrWhiteSpace(loginFailMessage))
         {
-            await _alertService.ShowAlertAsync("Incorrect", message, "OK");
+            await _alertService.ShowAlertAsync("Incorrect", loginFailMessage, "OK");
             return;
         }
 
@@ -83,10 +82,10 @@ public partial class LoginPageViewModel : ViewModelBase
 
     public async Task RegisterNewUser()
     {
-        var message = await _registerNewUserFacade.CanRegister(Username, Password);
-        if (!string.IsNullOrWhiteSpace(message))
+        var registerFailMessage = await _registerNewUserFacade.CanRegister(Username, Password);
+        if (!string.IsNullOrWhiteSpace(registerFailMessage))
         {
-            await _alertService.ShowAlertAsync("ValidationMessage", message, "OK");
+            await _alertService.ShowAlertAsync("Incorrect", registerFailMessage, "OK");
             return;
         }
 
@@ -99,5 +98,4 @@ public partial class LoginPageViewModel : ViewModelBase
         await Shell.Current.GoToAsync(nameof(MyPokemonPage));
     }
     #endregion
-
 }

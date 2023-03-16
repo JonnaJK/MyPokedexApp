@@ -1,6 +1,4 @@
-﻿using PokedexGo.Models;
-using PokedexGo.ViewModels;
-using PokedexGo.Views;
+﻿using PokedexGo.Views;
 
 namespace PokedexGo;
 
@@ -13,5 +11,5 @@ public partial class MainPage : ContentPage
     }
 
     private async void OnClickedGoLoginPage(object sender, EventArgs e) =>
-        await Navigation.PushAsync(new LoginPage());
+        await Shell.Current.GoToAsync(nameof(LoginPage));
 }
