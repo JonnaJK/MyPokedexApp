@@ -46,5 +46,10 @@ public partial class MyPokemonPageViewModel : ViewModelBase
 
     public async Task GoToSearchPokemonPage() =>
         await Shell.Current.GoToAsync(nameof(SearchPokemonPage));
+
+    public ICommand GoToShowMyWantedPokemonPageCommand => new Command(async () =>
+    {
+        await Shell.Current.GoToAsync(nameof(ShowMyWantedPokemonPage));
+    });
     #endregion
 }

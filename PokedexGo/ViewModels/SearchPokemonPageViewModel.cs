@@ -14,6 +14,7 @@ public class SearchPokemonPageViewModel : ViewModelBase
     private PokeService _pokeService;
     private AlertService _alertService;
     private string _pokemonNameEntry;
+    private SpeciesDetail _speciesDetail;
     #endregion
 
     #region Properties
@@ -35,12 +36,23 @@ public class SearchPokemonPageViewModel : ViewModelBase
             OnPropertyChanged(nameof(Pokemon));
         }
     }
+    public SpeciesDetail SpeciesDetail
+    {
+        get => _speciesDetail;
+        set
+        {
+            _speciesDetail = value;
+            OnPropertyChanged(nameof(SpeciesDetail));
+        }
+    }
+    public string FlavorText { get; private set; }
     public ICommand SearchCommand { get; private set; }
     #endregion
 
     public SearchPokemonPageViewModel()
     {
         _user = ServiceHelper.GetService<User>();
+
         _userService = ServiceHelper.GetService<UserService>();
         _pokeService = ServiceHelper.GetService<PokeService>();
         _alertService = ServiceHelper.GetService<AlertService>();
@@ -54,10 +66,14 @@ public class SearchPokemonPageViewModel : ViewModelBase
         try
         {
             Pokemon = await _pokeService.GetPokemonByName(PokemonNameEntry.ToLower());
+            SpeciesDetail = await _pokeService.GetFromUrl<SpeciesDetail>(_pokemon.Species.Url);
+            FlavorText = SpeciesDetail.FlavorTextEntries.Where(x => x.Language.Name == "en").FirstOrDefault().FlavorText;
+            OnPropertyChanged(nameof(FlavorText));
+
             if (Pokemon != null)
             {
-                // got to detail
-                // But from team rocket, lägg till bild på dom om det finns och om köpet går igenom
+                // TODO: Här är jag
+                // Buy from team rocket, lägg till bild på dom om det finns och om köpet går igenom
             }
         }
         catch (Exception e)
@@ -65,5 +81,18 @@ public class SearchPokemonPageViewModel : ViewModelBase
 
         }
     }
+
+    public ICommand AddToWantedListCommand => new Command(async () =>
+    {
+        try
+        {
+            _user.WantedPokemon.Add(new Pokemon { Name = Pokemon.Name });
+            await _userService.UpdateUserAsync(_user);
+        }
+        catch (Exception e)
+        {
+            _alertService.ShowAlert("Exception", e.Message, "OK");
+        }
+    });
     #endregion
 }

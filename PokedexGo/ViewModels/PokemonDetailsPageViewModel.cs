@@ -47,7 +47,7 @@ public class PokemonDetailsPageViewModel : ViewModelBase
         set
         {
             _speciesDetail = value;
-            _ = Task.Run(() => { FlavorTextLabel = GetEnFlavorText(); });
+            _ = Task.Run(() => { FlavorTextLabel = SpeciesDetail.FlavorTextEntries.Where(x => x.Language.Name == "en").FirstOrDefault().FlavorText; });
             OnPropertyChanged(nameof(SpeciesDetail));
         }
     }
@@ -79,12 +79,9 @@ public class PokemonDetailsPageViewModel : ViewModelBase
     }
 
 
-    public string GetEnFlavorText()
-    {
-        return SpeciesDetail.FlavorTextEntries.Where(x => x.Language.Name == "en").FirstOrDefault().FlavorText;
-        FlavorTextLabel = SpeciesDetail.FlavorTextEntries.Where(x => x.Language.Name == "en").FirstOrDefault().FlavorText;
-        OnPropertyChanged(nameof(FlavorTextLabel));
-    }
+    public string GetEnFlavorText() =>
+        SpeciesDetail.FlavorTextEntries.Where(x => x.Language.Name == "en").FirstOrDefault().FlavorText;
+
     #region Commands
     private async Task RemovePokemon()
     {

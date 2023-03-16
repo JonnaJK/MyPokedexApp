@@ -59,8 +59,9 @@ public static class MauiProgram
         builder.Services.AddTransient<PokemonDetailsPage>();
         builder.Services.AddTransient<ShowMyPokemonPage>();
         builder.Services.AddTransient<CatchEmAllPage>();
+        builder.Services.AddTransient<SearchPokemonPage>();
+        builder.Services.AddTransient<ShowMyPokemonPage>();
         // Views - Singleton
-        builder.Services.AddSingleton<SearchPokemonPage>();
 
         // View Models - Transient
         builder.Services.AddTransient<MyPokemonPageViewModel>();
@@ -68,6 +69,7 @@ public static class MauiProgram
         builder.Services.AddTransient<PokemonDetailsPageViewModel>();
         builder.Services.AddTransient<CatchEmAllPageViewModel>();
         builder.Services.AddTransient<SearchPokemonPageViewModel>();
+        builder.Services.AddTransient<ShowMyPokemonPageViewModel>();
 
         return builder.Build();
     }

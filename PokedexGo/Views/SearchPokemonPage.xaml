@@ -9,20 +9,86 @@
         <local:SearchPokemonPageViewModel/>
     </ContentPage.BindingContext>
 
-    <VerticalStackLayout>
+    <ScrollView>
 
-        <Image Source="pokemonlogga.png"
-               HorizontalOptions="Center"
-               HeightRequest="200"/>
+        <VerticalStackLayout HorizontalOptions="Center"
+                             Spacing="10"
+                             Padding="10">
+            <Grid>
+                <Image Source="pokemonlogga.png"
+                       HorizontalOptions="Center"
+                       HeightRequest="200"/>
 
-        <!--TODO: Make bindings to commands like below, first test if command is reachable and working-->
-        <Entry Text="{Binding PokemonNameEntry}"
-               Placeholder="Enter name of Pokemon"
-               HorizontalOptions="Center"/>
+                <Button Text="Go back"
+                        HorizontalOptions="End"
+                        VerticalOptions="Start"
+                        Clicked="OnClickedGoBack"/>
+            </Grid>
 
-        <Button Text="Search"
-                HorizontalOptions="Center"
-                Command="{Binding SearchCommand}"/>
+            <Entry Text="{Binding PokemonNameEntry}"
+                   Placeholder="Enter name of Pokemon"
+                   HorizontalOptions="Center"/>
 
-    </VerticalStackLayout>
+            <Button Text="Search"
+                    HorizontalOptions="Center"
+                    Command="{Binding SearchCommand}"/>
+
+            <Image Source="{Binding Pokemon.Sprites.Other.Home.FrontDefault}"
+                   HorizontalOptions="Center"
+                   HeightRequest="150"/>
+
+            <Grid ColumnDefinitions="Auto, Auto"
+                  RowDefinitions="Auto, Auto, Auto"
+                  ColumnSpacing="10"
+                  HorizontalOptions="Center">
+
+                <Label Text="Name: "
+                       FontSize="25"
+                       HorizontalOptions="End"/>
+
+                <Label Text="{Binding Pokemon.Name}"
+                       FontSize="25"
+                       Grid.Column="1"
+                       HorizontalOptions="Start"/>
+
+                <Label Text="Legendary: "
+                       FontSize="25"
+                       HorizontalOptions="End"
+                       Grid.Row="1"/>
+
+                <Label Text="{Binding SpeciesDetail.IsLegendary}"
+                       HorizontalOptions="Start"
+                       FontSize="25"
+                       Grid.Row="1"
+                       Grid.Column="1"/>
+
+                <Label Text="Description: "
+                       FontSize="25"
+                       Grid.Row="2"
+                       HorizontalOptions="End"/>
+
+                <Label Text="{Binding FlavorText}"
+                       HorizontalOptions="Start"
+                       FontSize="25"
+                       Grid.Column="2"
+                       Grid.Row="2"/>
+
+            </Grid>
+
+            <Grid ColumnDefinitions="Auto, Auto"
+                  HorizontalOptions="Center">
+
+                <Button Text="Add to wanted list"
+                        HorizontalOptions="Center"
+                        Command="{Binding AddToWantedListCommand}"/>
+
+                <Button Text="NOT IMPLEMENTED (Buy from Team Rocket)"
+                        HorizontalOptions="Center"
+                        Command="{Binding AddToWantedListCommand}"
+                        Grid.Column="1"/>
+                
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

@@ -24,7 +24,6 @@ public partial class ShowMyPokemonPageViewModel : ViewModelBase
             OnPropertyChanged(nameof(Pokemon));
         }
     }
-    public ICommand GoToPokemonDetailsPageCommand { get; private set; }
     #endregion
 
     public ShowMyPokemonPageViewModel()
@@ -36,11 +35,10 @@ public partial class ShowMyPokemonPageViewModel : ViewModelBase
         task.Wait();
 
         Pokemon = task.Result.ToList().CapitalizeFirstLetters();
-
-        GoToPokemonDetailsPageCommand = new Command(async (pokemon) => await GoToPokemonDetailsPage(pokemon));
     }
 
-    public ICommand SelectedItemCommand => new Command<Pokemon>(async (pokemon) =>
+    #region Commands
+    public ICommand GoToPokemonDetailsPageCommand => new Command<Pokemon>(async (pokemon) =>
     {
         var navigationParameter = new Dictionary<string, object>
         {
@@ -48,7 +46,5 @@ public partial class ShowMyPokemonPageViewModel : ViewModelBase
         };
         await Shell.Current.GoToAsync(nameof(PokemonDetailsPage), navigationParameter);
     });
-
-    public async Task GoToPokemonDetailsPage(object pokemon) =>
-        await Shell.Current.GoToAsync(nameof(PokemonDetailsPage), new Dictionary<string, object> { { "Pokemon", pokemon as Pokemon } });
+    #endregion
 }

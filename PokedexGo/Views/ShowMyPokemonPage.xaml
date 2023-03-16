@@ -11,28 +11,29 @@
     </ContentPage.BindingContext>
 
     <ScrollView>
-
         <VerticalStackLayout Padding="10"
-                         Spacing="10">
+                             Spacing="10">
 
             <Image Source="pokemonlogga.png"
-               HeightRequest="200"
-               HorizontalOptions="Center"/>
+                   HeightRequest="200"/>
 
             <Button Text="Go back"
-                HorizontalOptions="Center"
-                Clicked="OnClickedGoBack"/>
+                    HorizontalOptions="Center"
+                    Clicked="OnClickedGoBack"/>
 
-            <CollectionView ItemsSource="{Binding Pokemon}">
+            <CollectionView ItemsSource="{Binding Pokemon}"
+                            HorizontalOptions="Center">
+                
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <StackLayout Padding="10">
+                        <StackLayout>
+                            
                             <Grid Padding="10"
-                                  ColumnDefinitions=".35*, .60*, .5*">
+                                  ColumnSpacing="40"
+                                  ColumnDefinitions="Auto, Auto">
 
                                 <Image Source="{Binding Sprites.Other.Home.FrontDefault}"
                                        Grid.Column="0"
-                                       HorizontalOptions="Center"
                                        HeightRequest="100"/>
 
                                 <Label Text="{Binding Name}"
@@ -41,9 +42,15 @@
                                        VerticalTextAlignment="Center"
                                        FontAttributes="Bold"/>
                             </Grid>
+                            
                             <StackLayout.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:ShowMyPokemonPageViewModel}}, Path=SelectedItemCommand}"
+                                
+                                <!--<TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:ShowMyPokemonPageViewModel}}, Path=SelectedItemCommand}"
+                                                      CommandParameter="{Binding .}"/>-->
+
+                                <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:ShowMyPokemonPageViewModel}}, Path=GoToPokemonDetailsPageCommand}"
                                                       CommandParameter="{Binding .}"/>
+
                             </StackLayout.GestureRecognizers>
                         </StackLayout>
                     </DataTemplate>

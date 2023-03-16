@@ -1,5 +1,3 @@
-using PokedexGo.ViewModels;
-
 namespace PokedexGo.Views;
 
 public partial class ShowMyPokemonPage : ContentPage
@@ -10,5 +8,5 @@ public partial class ShowMyPokemonPage : ContentPage
     }
 
     private async void OnClickedGoBack(object sender, EventArgs e) =>
-        await Navigation.PopAsync();
+        await Shell.Current.GoToAsync("..");
 }
