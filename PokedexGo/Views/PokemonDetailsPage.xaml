@@ -24,7 +24,7 @@
                   HorizontalOptions="Center">
 
                 <Button Text="Change Is favorite"
-                        Command="{Binding ToggleFavoriteCommand}"/>
+                        Command="{Binding ToggleFavoriteCommand, Mode=TwoWay}"/>
 
                 <Button Text="Go back"
                         Clicked="OnClickedGoBack"

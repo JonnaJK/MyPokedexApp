@@ -9,41 +9,48 @@
         <local:MyPokemonPageViewModel/>
     </ContentPage.BindingContext>
 
-    <VerticalStackLayout Padding="10"
+    <ScrollView>
+        <VerticalStackLayout Padding="10"
                          Spacing="10">
 
-        <Image Source="pokemonlogga.png"
-               HeightRequest="250"
-               HorizontalOptions="Center"/>
+            <Image Source="pokemonlogga.png"
+                   HeightRequest="250"
+                   HorizontalOptions="Center"/>
 
-        <Label Text="{Binding WelcomeText, Mode=TwoWay}"
-               VerticalOptions="Center"
-               HorizontalOptions="Center"
-               FontSize="Header"/>
+            <Label Text="{Binding WelcomeText, Mode=TwoWay}"
+                   VerticalOptions="Center"
+                   HorizontalOptions="Center"
+                   FontSize="Header"/>
 
-        <Image Source="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/25.png"
-               HeightRequest="250"
-               HorizontalOptions="Center"/>
+            <Image Source="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/25.png"
+                   HeightRequest="250"
+                   HorizontalOptions="Center"/>
 
-        <Grid ColumnDefinitions="Auto, Auto, Auto, Auto"
-              HorizontalOptions="Center">
+            <Grid ColumnDefinitions="Auto, Auto"
+                  RowDefinitions="Auto, Auto"
+                  HorizontalOptions="Center">
 
-            <Button Text="Show my Pokemon"
-                    Command="{Binding GoToShowMyPokemonsPageCommand}"/>
+                <Button Text="Show my Pokemon"
+                        Command="{Binding GoToShowMyPokemonsPageCommand}"/>
 
-            <Button Text="Gotta catch'em all"
-                    Command="{Binding GoToCatchEmAllPageCommand}"
-                    Grid.Column="1"/>
+                <Button Text="Show my wanted Pokemon"
+                        Command="{Binding GoToShowMyWantedPokemonPageCommand}"
+                        Grid.Column="1"/>
 
-            <Button Text="Search pokemon"
-                    Command="{Binding GoToSearchPokemonPageCommand}"
-                    Grid.Column="2"/>
+                <Button Text="Gotta catch'em all"
+                        Command="{Binding GoToCatchEmAllPageCommand}"
+                        Grid.Row="1"/>
 
-        </Grid>
-        
-        <Button Text="Log out"
-                Clicked="OnClickedLogOut"
-                HorizontalOptions="Center"/>
+                <Button Text="Search pokemon"
+                        Command="{Binding GoToSearchPokemonPageCommand}"
+                        Grid.Column="1"
+                        Grid.Row="1"/>
+            </Grid>
 
-    </VerticalStackLayout>
+            <Button Text="Log out"
+                    Clicked="OnClickedLogOut"
+                    HorizontalOptions="Center"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

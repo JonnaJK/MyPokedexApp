@@ -59,43 +59,57 @@ public partial class LoginPageViewModel : ViewModelBase
     #region Commands
     public async Task Login()
     {
-        var loginFailMessage = await _loginFacade.CanLogin(Username, Password);
-        if (!string.IsNullOrWhiteSpace(loginFailMessage))
+        try
         {
-            await _alertService.ShowAlertAsync("Incorrect", loginFailMessage, "OK");
-            return;
+            var loginFailMessage = await _loginFacade.CanLogin(Username, Password);
+            if (!string.IsNullOrWhiteSpace(loginFailMessage))
+            {
+                await _alertService.ShowAlertAsync("Incorrect", loginFailMessage, "OK");
+                return;
+            }
+
+            var user = await _userService.GetUserAsync(Username, Password);
+            if (user is null)
+                return;
+
+            _user.Id = user.Id;
+            _user.Username = user.Username;
+            _user.Password = user.Password;
+            _user.Pokemon = user.Pokemon;
+            _user.FavoritePokemon = user.FavoritePokemon;
+            _user.WantedPokemon = user.WantedPokemon;
+
+            await Shell.Current.GoToAsync(nameof(MyPokemonPage));
         }
-
-        var user = await _userService.GetUserAsync(Username, Password);
-        if (user is null)
-            return;
-
-        _user.Id = user.Id;
-        _user.Username = user.Username;
-        _user.Password = user.Password;
-        _user.Pokemon = user.Pokemon;
-        _user.FavoritePokemon = user.FavoritePokemon;
-        _user.WantedPokemon = user.WantedPokemon;
-
-        await Shell.Current.GoToAsync(nameof(MyPokemonPage));
+        catch (Exception e)
+        {
+            await _alertService.ShowAlertAsync("Exception", e.Message, "OK");
+        }
     }
 
     public async Task RegisterNewUser()
     {
-        var registerFailMessage = await _registerNewUserFacade.CanRegister(Username, Password);
-        if (!string.IsNullOrWhiteSpace(registerFailMessage))
+        try
         {
-            await _alertService.ShowAlertAsync("Incorrect", registerFailMessage, "OK");
-            return;
+            var registerFailMessage = await _registerNewUserFacade.CanRegister(Username, Password);
+            if (!string.IsNullOrWhiteSpace(registerFailMessage))
+            {
+                await _alertService.ShowAlertAsync("Incorrect", registerFailMessage, "OK");
+                return;
+            }
+
+            _user.Id = new Guid();
+            _user.Username = Username;
+            _user.Password = Password;
+            _user.Pokemon.Add(PokeService.GetRandomPokemon());
+
+            await _userService.CreateUserAsync(_user);
+            await Shell.Current.GoToAsync(nameof(MyPokemonPage));
         }
-
-        _user.Id = new Guid();
-        _user.Username = Username;
-        _user.Password = Password;
-        _user.Pokemon.Add(PokeService.GetRandomPokemon());
-
-        await _userService.CreateUserAsync(_user);
-        await Shell.Current.GoToAsync(nameof(MyPokemonPage));
+        catch (Exception e)
+        {
+            await _alertService.ShowAlertAsync("Exception", e.Message, "OK");
+        }
     }
     #endregion
 }

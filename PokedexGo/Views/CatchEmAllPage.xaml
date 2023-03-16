@@ -9,41 +9,52 @@
         <local:CatchEmAllPageViewModel/>
     </ContentPage.BindingContext>
 
-    <VerticalStackLayout Padding="10"
-                         Spacing="20"
-                         HorizontalOptions="Center">
+    <ScrollView>
 
-        <Image Source="pokemonlogga.png"
-               HeightRequest="250"
-               HorizontalOptions="Center"/>
+        <VerticalStackLayout Padding="10"
+                             Spacing="10"
+                             HorizontalOptions="Center">
 
-        <Grid ColumnDefinitions="Auto, Auto"
-              HorizontalOptions="Center">
+            <Image Source="pokemonlogga.png"
+                   HeightRequest="250"
+                   HorizontalOptions="Center"/>
 
-            <Button Text="Go back"
-                HorizontalOptions="Center"
-                    Clicked="OnClickedGoBack"/>
-        </Grid>
+            <Grid ColumnDefinitions="Auto, Auto"
+                  HorizontalOptions="Center">
 
-        <Image Source="{Binding Pokemon.Sprites.Other.Home.FrontDefault, Mode=TwoWay}"
-               HeightRequest="300"/>
+                <Button Text="Go back"
+                        HorizontalOptions="Center"
+                        Clicked="OnClickedGoBack"/>
+            </Grid>
 
-        <Label Text="{Binding Pokemon.Name, StringFormat='A wild pokemon, {0}, appeared. Would you like to catch it?'}"
-               FontSize="Large"/>
+            <Image Source="{Binding Pokemon.Sprites.Other.Home.FrontDefault}"
+                   HeightRequest="300"/>
 
-        <Grid ColumnDefinitions="Auto, Auto"
-              HorizontalOptions="Center"
-              ColumnSpacing="40">
+            <Label Text="{Binding Pokemon.Name, StringFormat='A wild pokemon, {0}, appeared. Would you like to catch it?'}"
+                   FontSize="Large"/>
 
-            <Button Text="Yes, throw PokeBall"
-                    HorizontalOptions="Center"
-                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:CatchEmAllPageViewModel}}, Path=ThrowPokeBallCommand}"/>
-            
-            <Button Text="No, skip Pokemon"
-                    HorizontalOptions="Center"
-                    Command="{Binding Source={RelativeSource AncestorType={x:Type local:CatchEmAllPageViewModel}}, Path=SkipPokemonCommand}"
-                    Grid.Column="1"/>
-        </Grid>
+            <Label Text="{Binding SpeciesDetail.CaptureRate, StringFormat='Capture rate: {0}'}"
+                   FontSize="15"
+                   HorizontalOptions="Center"/>
 
-    </VerticalStackLayout>
+            <Label Text="{Binding SpeciesDetail.IsLegendary, StringFormat='Legendary: {0}'}"
+                   FontSize="15"
+                   HorizontalOptions="Center"/>
+
+            <Grid ColumnDefinitions="Auto, Auto"
+                  HorizontalOptions="Center"
+                  ColumnSpacing="40">
+
+                <Button Text="Yes, throw PokeBall"
+                        HorizontalOptions="Center"
+                        Command="{Binding ThrowPokeBallCommand}"/>
+
+                <Button Text="No, skip Pokemon"
+                        HorizontalOptions="Center"
+                        Command="{Binding SkipPokemonCommand}"
+                        Grid.Column="1"/>
+            </Grid>
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

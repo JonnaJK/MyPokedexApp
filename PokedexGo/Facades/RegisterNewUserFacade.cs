@@ -1,4 +1,5 @@
-﻿using PokedexGo.Interfaces;
+﻿using PokedexGo.Helpers;
+using PokedexGo.Interfaces;
 using PokedexGo.Services;
 using System;
 using System.Collections.Generic;
@@ -21,22 +22,34 @@ internal class RegisterNewUserFacade : IRegisterNewUserFacade
 
     private readonly ValidateUsernameService _validateUsername;
     private readonly IValidatePassword _validatePassword;
+    private readonly AlertService _alertService;
+
     public RegisterNewUserFacade()
     {
         _validateUsername = new ValidateUsernameService();
         _validatePassword = new ValidatePasswordService();
+
+        _alertService = ServiceHelper.GetService<AlertService>();
     }
 
     public async Task<string> CanRegister(string username, string password)
     {
-        var isValidUsername = await _validateUsername.ValidateUsernameAsync(username);
-        if (!isValidUsername)
-            return $"The username \"{username}\" already exists";
+        try
+        {
+            var isValidUsername = await _validateUsername.ValidateUsernameAsync(username);
+            if (!isValidUsername)
+                return $"The username \"{username}\" already exists";
 
-        var isValidPassword = _validatePassword.ValidatePassword(password);
-        if (!isValidPassword)
-            return $"The password is incorrect";
+            var isValidPassword = _validatePassword.ValidatePassword(password);
+            if (!isValidPassword)
+                return $"The password is incorrect";
 
-        return string.Empty;
+            return string.Empty;
+        }
+        catch (Exception e)
+        {
+            _alertService.ShowAlert("Exception", e.Message, "OK");
+            return string.Empty;
+        }
     }
 }

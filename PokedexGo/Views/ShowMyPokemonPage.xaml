@@ -42,12 +42,9 @@
                                        VerticalTextAlignment="Center"
                                        FontAttributes="Bold"/>
                             </Grid>
-                            
+
                             <StackLayout.GestureRecognizers>
                                 
-                                <!--<TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:ShowMyPokemonPageViewModel}}, Path=SelectedItemCommand}"
-                                                      CommandParameter="{Binding .}"/>-->
-
                                 <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type local:ShowMyPokemonPageViewModel}}, Path=GoToPokemonDetailsPageCommand}"
                                                       CommandParameter="{Binding .}"/>
 

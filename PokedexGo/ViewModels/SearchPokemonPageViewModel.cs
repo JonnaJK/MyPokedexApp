@@ -78,7 +78,7 @@ public class SearchPokemonPageViewModel : ViewModelBase
         }
         catch (Exception e)
         {
-
+            _alertService.ShowAlert("Exception", e.Message, "OK");
         }
     }
 

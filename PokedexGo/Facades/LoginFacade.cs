@@ -1,4 +1,5 @@
-﻿using PokedexGo.Interfaces;
+﻿using PokedexGo.Helpers;
+using PokedexGo.Interfaces;
 using PokedexGo.Services;
 
 namespace PokedexGo.Facades;
@@ -11,21 +12,32 @@ internal class LoginFacade : ILoginFacade
 
     private readonly IAuthenticateUsername _authenticationUsername;
     private readonly IAuthenticatePassword _authenticationPassword;
+    private readonly AlertService _alertService;
 
     public LoginFacade()
     {
         _authenticationUsername = new AuthenticateUsernameService();
         _authenticationPassword = new AuthenticatePasswordService();
+
+        _alertService = ServiceHelper.GetService<AlertService>();
     }
 
     public async Task<string> CanLogin(string username, string password)
     {
-        var isAuthenticated =
+        try
+        {
+            var isAuthenticated =
             await _authenticationUsername.IsAuthenticated(username) &&
             await _authenticationPassword.IsAuthenticated(username, password);
 
-        return isAuthenticated ?
-            string.Empty :
-            $"The username \"{username}\" or password is incorrect";
+            return isAuthenticated ?
+                string.Empty :
+                $"The username \"{username}\" or password is incorrect";
+        }
+        catch (Exception e)
+        {
+            _alertService.ShowAlert("Exception", e.Message, "OK");
+            return string.Empty;
+        }
     }
 }

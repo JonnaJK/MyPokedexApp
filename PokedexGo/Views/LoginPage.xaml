@@ -9,55 +9,57 @@
         <local:LoginPageViewModel/>
     </ContentPage.BindingContext>
 
-    <VerticalStackLayout Padding="10"
-                         Spacing="10">
-        <Grid>
-            
-            <Button Text="Go back"
-                    HorizontalOptions="End"
-                    VerticalOptions="Start"
-                    Clicked="OnClickedGoBack"/>
+    <ScrollView>
+        <VerticalStackLayout Padding="10"
+                             Spacing="10">
+            <Grid>
+                
+                <Button Text="Go back"
+                        HorizontalOptions="End"
+                        VerticalOptions="Start"
+                        Clicked="OnClickedGoBack"/>
 
-            <Image Source="pokemonlogga.png"
+                <Image Source="pokemonlogga.png"
+                       HeightRequest="200"
+                       HorizontalOptions="Center"/>
+            </Grid>
+
+            <Image Source="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/25.png"
                    HeightRequest="200"
                    HorizontalOptions="Center"/>
-            
-        </Grid>
 
-        <Image Source="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/home/25.png"
-               HeightRequest="200"
-               HorizontalOptions="Center"/>
+            <Grid RowDefinitions=".25*, .25*, .25*, .25*"
+                  ColumnDefinitions=".50*, .50*"
+                  HorizontalOptions="Center"
+                  Padding="10"
+                  RowSpacing="10">
 
-        <Grid RowDefinitions=".25*, .25*, .25*, .25*"
-              ColumnDefinitions=".50*, .50*"
-              HorizontalOptions="Center"
-              Padding="10"
-              RowSpacing="10">
+                <Entry Grid.ColumnSpan="2"
+                       Text="{Binding Username}"
+                       Placeholder="Enter username"
+                       HorizontalOptions="Fill"
+                       x:Name="EntryUserName"/>
 
-            <Entry Grid.ColumnSpan="2"
-                   Text="{Binding Username}"
-                   Placeholder="Enter username"
-                   HorizontalOptions="Fill"
-                   x:Name="EntryUserName"/>
+                <Entry Grid.Row="1"
+                       Grid.ColumnSpan="2"
+                       Text="{Binding Password}"
+                       Placeholder="Enter password"
+                       HorizontalOptions="Fill"
+                       IsPassword="True"/>
 
-            <Entry Grid.Row="1"
-                   Grid.ColumnSpan="2"
-                   Text="{Binding Password}"
-                   Placeholder="Enter password"
-                   HorizontalOptions="Fill"
-                   IsPassword="True"/>
+                <Button Grid.Row="2"
+                        Text="Register"
+                        HorizontalOptions="Center"
+                        Command="{Binding RegisterNewUserCommand}"/>
 
-            <Button Grid.Row="2"
-                    Text="Register"
-                    HorizontalOptions="Center"
-                    Command="{Binding RegisterNewUserCommand}"/>
+                <Button Grid.Row="2"
+                        Grid.Column="1"
+                        Text="Login"
+                        HorizontalOptions="Center"
+                        Command="{Binding LoginCommand}"/>
+            </Grid>
 
-            <Button Grid.Row="2"
-                    Grid.Column="1"
-                    Text="Login"
-                    HorizontalOptions="Center"
-                    Command="{Binding LoginCommand}"/>
-        </Grid>
+        </VerticalStackLayout>
 
-    </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

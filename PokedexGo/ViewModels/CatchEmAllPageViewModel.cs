@@ -9,7 +9,6 @@ public class CatchEmAllPageViewModel : ViewModelBase
 {
     #region Consts
     private const int MAX_POKEMON_ID_REQUEST = 906;
-    // The base capture rate; up to 255. The higher the number, the easier the catch.
     private const int MAX_CAPTURE_RATE = 260;
     #endregion
 
@@ -49,6 +48,7 @@ public class CatchEmAllPageViewModel : ViewModelBase
     public CatchEmAllPageViewModel()
     {
         _user = ServiceHelper.GetService<User>();
+
         _userService = ServiceHelper.GetService<UserService>();
         _pokeService = ServiceHelper.GetService<PokeService>();
         _alertService = ServiceHelper.GetService<AlertService>();
@@ -62,27 +62,34 @@ public class CatchEmAllPageViewModel : ViewModelBase
     #region Commands
     private async Task ThrowPokeBall()
     {
-        var random = new Random();
-
-        var title = "Status";
-        var cancelButton = "OK";
-
-        string message;
-        if (random.Next(MAX_CAPTURE_RATE) <= SpeciesDetail.CaptureRate)
+        try
         {
-            message = $"Gotcha! {Pokemon.Name} was caught!";
+            var random = new Random();
 
-            _user.Pokemon.Add(new Pokemon { Name = Pokemon.Name.ToLower() });
-            await _userService.UpdateUserAsync(_user);
+            var title = "Status";
+            var cancelButton = "OK";
+
+            string message;
+            if (random.Next(MAX_CAPTURE_RATE) <= SpeciesDetail.CaptureRate)
+            {
+                message = $"Gotcha! {Pokemon.Name} was caught!";
+
+                _user.Pokemon.Add(new Pokemon { Name = Pokemon.Name.ToLower() });
+                await _userService.UpdateUserAsync(_user);
+            }
+            else
+            {
+                message = $"Oh, no! The {Pokemon.Name} broke free!";
+            }
+
+            await _alertService.ShowAlertAsync(title, message, cancelButton);
+
+            await GetRandomPokemon();
         }
-        else
+        catch (Exception e)
         {
-            message = $"Oh, no! The {Pokemon.Name} broke free!";
+            await _alertService.ShowAlertAsync("Exception", e.Message, "OK");
         }
-
-        await _alertService.ShowAlertAsync(title, message, cancelButton);
-
-        await GetRandomPokemon();
     }
 
     private async Task SkipPokemon() =>
@@ -90,9 +97,16 @@ public class CatchEmAllPageViewModel : ViewModelBase
 
     public async Task GetRandomPokemon()
     {
-        var random = new Random();
-        Pokemon = (await _pokeService.GetRandomPokemonById(random.Next(MAX_POKEMON_ID_REQUEST)))
-            .CapitalizeFirstLetter();
+        try
+        {
+            var random = new Random();
+            Pokemon = (await _pokeService.GetRandomPokemonById(random.Next(MAX_POKEMON_ID_REQUEST)))
+                .CapitalizeFirstLetter();
+        }
+        catch (Exception e)
+        {
+            _alertService.ShowAlert("Exception", e.Message, "OK");
+        }
     }
     #endregion
 }

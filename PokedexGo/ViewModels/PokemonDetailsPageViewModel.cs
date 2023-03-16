@@ -61,7 +61,6 @@ public class PokemonDetailsPageViewModel : ViewModelBase
         }
     }
     public ICommand ToggleFavoriteCommand { get; private set; }
-    public ICommand ToggleWantedCommand { get; private set; }
     public ICommand RemoveCommand { get; private set; }
     public ICommand GetEnFlavorTextCommand { get; private set; }
     #endregion
@@ -74,7 +73,6 @@ public class PokemonDetailsPageViewModel : ViewModelBase
         _alertService = ServiceHelper.GetService<AlertService>();
 
         ToggleFavoriteCommand = new Command(async () => await ToggleIsFavorite());
-        ToggleWantedCommand = new Command(async () => await ToggleIsWanted());
         RemoveCommand = new Command(async () => await RemovePokemon());
     }
 
@@ -85,53 +83,51 @@ public class PokemonDetailsPageViewModel : ViewModelBase
     #region Commands
     private async Task RemovePokemon()
     {
-        var answer = await _alertService.ShowConfirmationAsync("Warning", "Are you sure that you want to remove this pokemon?", "Yes", "No");
-        if (answer)
+        try
         {
-            var pokemon = _user.Pokemon.Find(x => x.Name == _pokemon.Name.ToLower());
-            _user.Pokemon.Remove(pokemon);
-            await _userService.UpdateUserAsync(_user);
-            await Shell.Current.GoToAsync(nameof(ShowMyPokemonPage));
+            var answer = await _alertService.ShowConfirmationAsync("Warning", "Are you sure that you want to remove this pokemon?", "Yes", "No");
+            if (answer)
+            {
+                var pokemon = _user.Pokemon.Find(x => x.Name == _pokemon.Name.ToLower());
+                _user.Pokemon.Remove(pokemon);
+                await _userService.UpdateUserAsync(_user);
+                await Shell.Current.GoToAsync(nameof(ShowMyPokemonPage));
+            }
+        }
+        catch (Exception e)
+        {
+            await _alertService.ShowAlertAsync("Exception", e.Message, "OK");
         }
     }
 
     public async Task ToggleIsFavorite()
     {
-        // Change heart image source
-        ImageSource = Pokemon.IsFavorite ? "favorite.png" : "notfavorite.png";
+        try
+        {
+            // Change heart image source
+            ImageSource = Pokemon.IsFavorite ? "favorite.png" : "notfavorite.png";
 
-        Pokemon.IsFavorite = !Pokemon.IsFavorite;
-        OnPropertyChanged(nameof(Pokemon));
+            Pokemon.IsFavorite = !Pokemon.IsFavorite;
+            OnPropertyChanged(nameof(Pokemon));
 
-        _user.Pokemon.FindAll(x => x.Name == Pokemon.Name.ToLower()).ForEach(x => x.IsFavorite = Pokemon.IsFavorite);
+            _user.Pokemon.FindAll(x => x.Name == Pokemon.Name.ToLower()).ForEach(x => x.IsFavorite = Pokemon.IsFavorite);
 
-        if (Pokemon.IsFavorite)
-            _user.FavoritePokemon.Add(new Pokemon
-            {
-                Name = Pokemon.Name.ToLower(),
-                IsFavorite = Pokemon.IsFavorite,
-                IsWanted = Pokemon.IsWanted
-            });
-        else
-            _user.FavoritePokemon.Remove(_user.FavoritePokemon.Find(x => x.Name == Pokemon.Name.ToLower()));
+            if (Pokemon.IsFavorite)
+                _user.FavoritePokemon.Add(new Pokemon
+                {
+                    Name = Pokemon.Name.ToLower(),
+                    IsFavorite = Pokemon.IsFavorite,
+                    IsWanted = Pokemon.IsWanted
+                });
+            else
+                _user.FavoritePokemon.Remove(_user.FavoritePokemon.Find(x => x.Name == Pokemon.Name.ToLower()));
 
-        await _userService.UpdateUserAsync(_user);
+            await _userService.UpdateUserAsync(_user);
+        }
+        catch (Exception e)
+        {
+            await _alertService.ShowAlertAsync("Exception", e.Message, "OK");
+        }
     }
     #endregion
-
-    // TODO: Move to page wantedpokemons
-    public async Task ToggleIsWanted()
-    {
-        Pokemon.IsWanted = !Pokemon.IsWanted;
-        OnPropertyChanged(nameof(Pokemon));
-
-        _user.Pokemon.FindAll(x => x.Name == Pokemon.Name.ToLower()).ForEach(x => x.IsWanted = Pokemon.IsWanted);
-
-        if (Pokemon.IsWanted)
-            _user.WantedPokemon.Add(new Pokemon { Name = Pokemon.Name.ToLower(), IsFavorite = Pokemon.IsFavorite, IsWanted = Pokemon.IsWanted });
-        else
-            _user.WantedPokemon.Remove(_user.WantedPokemon.Find(x => x.Name == Pokemon.Name.ToLower()));
-
-        await _userService.UpdateUserAsync(_user);
-    }
 }
