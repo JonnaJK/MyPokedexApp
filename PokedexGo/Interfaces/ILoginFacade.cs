@@ -2,5 +2,5 @@
 
 internal interface ILoginFacade
 {
-    bool CanLogin(string username, string password);
+    Task<string> CanLogin(string username, string password);
 }

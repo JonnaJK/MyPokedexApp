@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:PokedexGo.ViewModels"
+             x:Class="PokedexGo.Views.SearchPokemonPage"
+             Title="Search Pokemon">
+
+    <ContentPage.BindingContext>
+        <local:SearchPokemonPageViewModel/>
+    </ContentPage.BindingContext>
+
+    <VerticalStackLayout>
+
+        <Image Source="pokemonlogga.png"
+               HorizontalOptions="Center"
+               HeightRequest="200"/>
+
+        <!--TODO: Make bindings to commands like below, first test if command is reachable and working-->
+        <Entry Text="{Binding PokemonNameEntry}"
+               Placeholder="Enter name of Pokemon"
+               HorizontalOptions="Center"/>
+
+        <Button Text="Search"
+                HorizontalOptions="Center"
+                Command="{Binding SearchCommand}"/>
+
+    </VerticalStackLayout>
+</ContentPage>

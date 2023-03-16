@@ -32,14 +32,14 @@
 
             <Entry Grid.Row="0"
                    Grid.ColumnSpan="2"
-                   Text="{Binding UserName}"
+                   Text="{Binding Username}"
                    Placeholder="Enter fullname"
                    HorizontalOptions="Fill"
                    x:Name="EntryUserName"/>
 
             <Entry Grid.Row="1"
                    Grid.ColumnSpan="2"
-                   Text="{Binding UserPassword}"
+                   Text="{Binding Password}"
                    Placeholder="Enter password"
                    HorizontalOptions="Fill"
                    IsPassword="True"

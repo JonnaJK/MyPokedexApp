@@ -18,7 +18,7 @@ public partial class MyPokemonPageViewModel : ViewModelBase
         get => _welcomeText;
         set
         {
-            _welcomeText = $"Welcome {_user.UserName}!";
+            _welcomeText = $"Welcome {_user.Username}!";
             OnPropertyChanged(nameof(WelcomeText));
         }
     }

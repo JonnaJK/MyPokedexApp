@@ -78,6 +78,9 @@
 	  <MauiXaml Update="Views\PokemonDetailsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Views\SearchPokemonPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Views\ShowMyPokemonPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

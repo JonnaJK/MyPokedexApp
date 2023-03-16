@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
+using PokedexGo.Facades;
+using PokedexGo.Interfaces;
 using PokedexGo.Models;
 using PokedexGo.Services;
 using PokedexGo.Settings;
@@ -42,8 +44,12 @@ public static class MauiProgram
         // Services - Singleton
         builder.Services.AddSingleton<PokeService>();
         builder.Services.AddSingleton<AlertService>();
+        //bättre med transient men eftersom det är en mobilapplikation och man egentligen bör prata med sin databas via ett api så valde jag att ha HttpService som singleton
+        builder.Services.AddSingleton<HttpService>();
         // Services - Transient
         builder.Services.AddTransient<UserService>();
+        builder.Services.AddTransient<ILoginFacade, LoginFacade>();
+        builder.Services.AddTransient<IRegisterNewUserFacade, RegisterNewUserFacade>();
 
         // Models - Singleton
         builder.Services.AddSingleton<User>();
@@ -53,12 +59,15 @@ public static class MauiProgram
         builder.Services.AddTransient<PokemonDetailsPage>();
         builder.Services.AddTransient<ShowMyPokemonPage>();
         builder.Services.AddTransient<CatchEmAllPage>();
+        // Views - Singleton
+        builder.Services.AddSingleton<SearchPokemonPage>();
 
         // View Models - Transient
         builder.Services.AddTransient<MyPokemonPageViewModel>();
         builder.Services.AddTransient<ShowMyPokemonPageViewModel>();
         builder.Services.AddTransient<PokemonDetailsPageViewModel>();
         builder.Services.AddTransient<CatchEmAllPageViewModel>();
+        builder.Services.AddTransient<SearchPokemonPageViewModel>();
 
         return builder.Build();
     }

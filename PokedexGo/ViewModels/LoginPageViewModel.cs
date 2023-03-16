@@ -3,6 +3,8 @@ using PokedexGo.Services;
 using PokedexGo.Views;
 using System.Windows.Input;
 using PokedexGo.Helpers;
+using PokedexGo.Interfaces;
+using PokedexGo.Facades;
 
 namespace PokedexGo.ViewModels;
 
@@ -11,27 +13,30 @@ public partial class LoginPageViewModel : ViewModelBase
     #region Attributes
     private User _user;
     private UserService _userService;
-    private string _userName;
-    private string _userPassword;
+    private AlertService _alertService;
+    private ILoginFacade _loginFacade;
+    private IRegisterNewUserFacade _registerNewUserFacade;
+    private string _username;
+    private string _password;
     #endregion
 
     #region Properties
-    public string UserName
+    public string Username
     {
-        get => _userName;
+        get => _username;
         set
         {
-            _userName = value;
-            OnPropertyChanged(nameof(UserName));
+            _username = value;
+            OnPropertyChanged(nameof(Username));
         }
     }
-    public string UserPassword
+    public string Password
     {
-        get => _userPassword;
+        get => _password;
         set
         {
-            _userPassword = value;
-            OnPropertyChanged(nameof(UserPassword));
+            _password = value;
+            OnPropertyChanged(nameof(Password));
         }
     }
     public List<Pokemon> Pokemons { get; set; }
@@ -44,6 +49,10 @@ public partial class LoginPageViewModel : ViewModelBase
     {
         _user = ServiceHelper.GetService<User>();
         _userService = ServiceHelper.GetService<UserService>();
+        _alertService = ServiceHelper.GetService<AlertService>();
+        _loginFacade = ServiceHelper.GetService<ILoginFacade>();
+        _registerNewUserFacade = ServiceHelper.GetService<IRegisterNewUserFacade>();
+
         LoginCommand = new Command(async () => await Login());
         RegisterNewUserCommand = new Command(async () => await RegisterNewUser());
     }
@@ -51,26 +60,40 @@ public partial class LoginPageViewModel : ViewModelBase
     #region Commands
     public async Task Login()
     {
-        var user = await _userService.GetUserAsync(UserName, UserPassword);
-        if (user is not null)
+        var message = await _loginFacade.CanLogin(Username, Password);
+        if (!string.IsNullOrWhiteSpace(message))
         {
-            _user.Id = user.Id;
-            _user.UserName = user.UserName;
-            _user.UserPassword = user.UserPassword;
-            _user.Pokemon = user.Pokemon;
-            _user.FavoritePokemon = user.FavoritePokemon;
-            _user.WantedPokemon = user.WantedPokemon;
-
-            await Shell.Current.GoToAsync(nameof(MyPokemonPage));
+            await _alertService.ShowAlertAsync("Incorrect", message, "OK");
+            return;
         }
+
+        var user = await _userService.GetUserAsync(Username, Password);
+        if (user is null)
+            return;
+
+        _user.Id = user.Id;
+        _user.Username = user.Username;
+        _user.Password = user.Password;
+        _user.Pokemon = user.Pokemon;
+        _user.FavoritePokemon = user.FavoritePokemon;
+        _user.WantedPokemon = user.WantedPokemon;
+
+        await Shell.Current.GoToAsync(nameof(MyPokemonPage));
     }
 
     public async Task RegisterNewUser()
     {
-        _user.Id = new Guid();
-        _user.UserName = UserName;
-        _user.UserPassword = UserPassword;
+        var message = await _registerNewUserFacade.CanRegister(Username, Password);
+        if (!string.IsNullOrWhiteSpace(message))
+        {
+            await _alertService.ShowAlertAsync("ValidationMessage", message, "OK");
+            return;
+        }
+
         // TODO: Randomisa sin starter pokemon!! 1% för pikachu, 33 för charmander, 33 för bulbasaur, 33 för squirtle
+        _user.Id = new Guid();
+        _user.Username = Username;
+        _user.Password = Password;
         _user.Pokemon = new List<Pokemon> { new Pokemon { Name = "pikachu" } };
 
         await _userService.CreateUserAsync(_user);

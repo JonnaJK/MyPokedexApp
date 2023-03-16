@@ -1,4 +1,6 @@
-﻿using PokedexGo.Models;
+﻿using PokedexGo.Helpers;
+using PokedexGo.Models;
+using System.Collections.Concurrent;
 
 namespace PokedexGo.Services;
 
@@ -8,21 +10,24 @@ internal class PokeService
 
     public PokeService()
     {
-        _httpService = new HttpService();
+        _httpService = ServiceHelper.GetService<HttpService>();
     }
 
-    // TODO: NEW Bör kanske vara i PokemonHelper?
     public async Task<List<Pokemon>> GetUsersPokemon(List<Pokemon> usersPokemon)
     {
-        var list = new List<Pokemon>();
-        foreach (var pokemon in usersPokemon)
-        {
-            var retrievedPokemon = await GetPokemonByName(pokemon.Name);
-            retrievedPokemon.IsWanted = pokemon.IsWanted;
-            retrievedPokemon.IsFavorite = pokemon.IsFavorite;
-            list.Add(retrievedPokemon);
-        }
-        return list;
+        var bag = new ConcurrentBag<Pokemon>();
+
+        await Parallel.ForEachAsync(usersPokemon, 
+            async (pokemon, token) =>
+            {
+                // TODO: Skrv en kommentar om varför jag gör detta, databas full pokemon. och anonym funktion
+                var retrievedPokemon = await GetPokemonByName(pokemon.Name);
+                retrievedPokemon.IsWanted = pokemon.IsWanted;
+                retrievedPokemon.IsFavorite = pokemon.IsFavorite;
+                bag.Add(retrievedPokemon);
+            });
+
+        return bag.OrderByDescending(x => x.IsFavorite).ThenBy(x => x.Id).ToList();
     }
 
     public async Task<Pokemon> GetRandomPokemonById(int pokemonId) =>

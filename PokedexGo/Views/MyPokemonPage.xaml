@@ -38,7 +38,8 @@
         </Grid>
         
         <Button Text="Log out"
-                Clicked="OnClickedLogOut"/>
+                Clicked="OnClickedLogOut"
+                HorizontalOptions="Center"/>
 
     </VerticalStackLayout>
 </ContentPage>
