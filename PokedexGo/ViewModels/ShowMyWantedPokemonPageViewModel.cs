@@ -34,11 +34,17 @@ public class ShowMyWantedPokemonPageViewModel : ViewModelBase
         _userService = ServiceHelper.GetService<UserService>();
         _pokeService = ServiceHelper.GetService<PokeService>();
         _alertService = ServiceHelper.GetService<AlertService>();
+        try
+        {
+            var task = Task.Run(() => _pokeService.GetUsersPokemon(_user.WantedPokemon));
+            task.Wait();
+            Pokemon = task.Result.ToList().CapitalizeFirstLetters();
+        }
+        catch (Exception e)
+        {
+            _alertService.ShowAlert("Exception", e.Message, "OK");
+        }
 
-        var task = Task.Run(() => _pokeService.GetUsersPokemon(_user.WantedPokemon));
-        task.Wait();
-
-        Pokemon = task.Result.ToList().CapitalizeFirstLetters();
     }
 
     #region Commands
@@ -46,6 +52,10 @@ public class ShowMyWantedPokemonPageViewModel : ViewModelBase
     {
         try
         {
+            var answer = await _alertService.ShowConfirmationAsync("Warning!", $"Do you wish to remove Pokemon {pokemon.Name} as wanted?", "Yes", "No");
+            if (answer is false)
+                return;
+
             Pokemon.Remove(pokemon);
 
             pokemon.IsWanted = !pokemon.IsWanted;
@@ -62,19 +72,4 @@ public class ShowMyWantedPokemonPageViewModel : ViewModelBase
         }
     });
     #endregion
-
-    //public async Task ToggleIsWanted()
-    //{
-    //    Pokemon.IsWanted = !Pokemon.IsWanted;
-    //    OnPropertyChanged(nameof(Pokemon));
-
-    //    _user.Pokemon.FindAll(x => x.Name == Pokemon.Name.ToLower()).ForEach(x => x.IsWanted = Pokemon.IsWanted);
-
-    //    if (Pokemon.IsWanted)
-    //        _user.WantedPokemon.Add(new Pokemon { Name = Pokemon.Name.ToLower(), IsFavorite = Pokemon.IsFavorite, IsWanted = Pokemon.IsWanted });
-    //    else
-    //        _user.WantedPokemon.Remove(_user.WantedPokemon.Find(x => x.Name == Pokemon.Name.ToLower()));
-
-    //    await _userService.UpdateUserAsync(_user);
-    //}
 }

@@ -31,19 +31,21 @@ public static class MauiProgram
             .AddJsonStream(stream)
             .Build();
         builder.Configuration.AddConfiguration(config);
-
         builder.Services.Configure<UserDatabaseSettings>(builder.Configuration.GetSection("UserDatabase"));
 
-        // Adderar Singleton Dependency Injection för de klasser som endast ska instansieras en gång och sparas i minnet
+        // Använder desing patterns Dependency Injection och Singleton för att enkelt instansiera en class/objekt och använda instans oavsett vart man är i applikationen.
+        // (eller Transient, som inte räknas som design pattern men vill nämna ändå, om jag vill ha en ny instans av objektet.
+
+        // Adderar Singleton för de klasser som endast ska instansieras en gång och sparas i minnet, exempelvis PokeService och AlertService för att spara minne och återanvända samma instans.
         // Valde att ha det på User för att när man är inloggad så ska samma instans av User och dess property användas på alla sidor
-        // Valde att ha det på PokeService
-        // Adderar en Transient Dependency Injection för de klasser som ska skapas upp endast när de används och sedan "skrotas"
+
+        // Adderar Transient för de klasser som ska skapas upp endast när de används och sedan "skrotas"
         // Valde att ha det på UserService för att det inte behövs en och samma instans av det objektet, dvs. behöver inte ta upp minne förutom när man behöver göra ett anrop till databasen
         
         // Services - Singleton
         builder.Services.AddSingleton<PokeService>();
         builder.Services.AddSingleton<AlertService>();
-        //bättre med transient men eftersom det är en mobilapplikation och man egentligen bör prata med sin databas via ett api så valde jag att ha HttpService som singleton
+        // Bättre med transient men eftersom det är en mobilapplikation och man egentligen bör prata med sin databas via ett api så valde jag att ha HttpService som singleton
         builder.Services.AddSingleton<HttpService>();
         // Services - Transient
         builder.Services.AddTransient<UserService>();

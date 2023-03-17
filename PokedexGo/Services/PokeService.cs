@@ -21,7 +21,7 @@ internal class PokeService
             async (pokemon, token) =>
             {
                 // Implementerar anonym funktion och delegat.
-                // I databasen sparar jag users fångade pokemon endast med Name, IsFavorite and IsWanted.
+                // I databasen sparar jag users fångade pokemon endast med Name, IsFavorite and IsWanted properties.
                 // När jag försökte spara med fullständig information fick jag en error
                 // MongoDB.Bson.BsonSerializationException som jag inte förstod/lyckades lösa.
                 var retrievedPokemon = await GetPokemonByName(pokemon.Name);

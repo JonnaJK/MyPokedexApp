@@ -12,7 +12,6 @@ public partial class MyPokemonPageViewModel : ViewModelBase
     private readonly User _user;
     #endregion
 
-
     #region Properties
     public string WelcomeText
     {
@@ -26,12 +25,12 @@ public partial class MyPokemonPageViewModel : ViewModelBase
     public ICommand GoToShowMyPokemonsPageCommand { get; private set; }
     public ICommand GoToCatchEmAllPageCommand { get; private set; }
     public ICommand GoToSearchPokemonPageCommand { get; private set; }
-
     #endregion
 
     public MyPokemonPageViewModel()
     {
         _user = ServiceHelper.GetService<User>();
+
         GoToShowMyPokemonsPageCommand = new Command(async () => await GoToShowMyPokemonsPage());
         GoToCatchEmAllPageCommand = new Command(async () => await GoToCatchEmAllPage());
         GoToSearchPokemonPageCommand = new Command(async () => await GoToSearchPokemonPage());

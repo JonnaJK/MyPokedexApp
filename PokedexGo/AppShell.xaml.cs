@@ -8,6 +8,7 @@ public partial class AppShell : Shell
     {
         InitializeComponent();
 
+        // Pages to route to
         Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
         Routing.RegisterRoute(nameof(MyPokemonPage), typeof(MyPokemonPage));
         Routing.RegisterRoute(nameof(ShowMyPokemonPage), typeof(ShowMyPokemonPage));

@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace PokedexGo.Models;
-
-
 
 public class TypeDetail
 {
@@ -179,20 +172,3 @@ public class PastDamageRelation
     [JsonPropertyName("damage_relations")]
     public DamageRelations DamageRelations { get; set; }
 }
-
-//public class Pokemon
-//{
-//    [JsonPropertyName("slot")]
-//    public int Slot { get; set; }
-
-//    [JsonPropertyName("pokemon")]
-//    public Pokemon Pokemon { get; set; }
-
-//    [JsonPropertyName("name")]
-//    public string Name { get; set; }
-
-//    [JsonPropertyName("url")]
-//    public string Url { get; set; }
-//}
-
-

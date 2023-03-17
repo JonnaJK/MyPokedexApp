@@ -16,12 +16,12 @@ public class PokemonDetailsPageViewModel : ViewModelBase
     private AlertService _alertService;
     private Pokemon _pokemon;
     private SpeciesDetail _speciesDetail;
-    private string _imageSource;
+    private ImageSource _imageSource;
     private string _flavorTexLabel;
     #endregion
 
     #region Properties
-    public string ImageSource
+    public ImageSource ImageSource
     {
         get => _imageSource;
         set
@@ -68,6 +68,7 @@ public class PokemonDetailsPageViewModel : ViewModelBase
     public PokemonDetailsPageViewModel()
     {
         _user = ServiceHelper.GetService<User>();
+
         _userService = ServiceHelper.GetService<UserService>();
         _pokeService = ServiceHelper.GetService<PokeService>();
         _alertService = ServiceHelper.GetService<AlertService>();
@@ -104,11 +105,12 @@ public class PokemonDetailsPageViewModel : ViewModelBase
     {
         try
         {
-            // Change heart image source
-            ImageSource = Pokemon.IsFavorite ? "favorite.png" : "notfavorite.png";
-
             Pokemon.IsFavorite = !Pokemon.IsFavorite;
             OnPropertyChanged(nameof(Pokemon));
+
+            // Change heart image source
+            ImageSource = Pokemon.IsFavorite ? "favorite.png" : "notfavorite.png";
+            OnPropertyChanged(nameof(ImageSource));
 
             _user.Pokemon.FindAll(x => x.Name == Pokemon.Name.ToLower()).ForEach(x => x.IsFavorite = Pokemon.IsFavorite);
 

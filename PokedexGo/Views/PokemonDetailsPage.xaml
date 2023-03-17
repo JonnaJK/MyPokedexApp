@@ -139,7 +139,6 @@
                     </CollectionView.ItemTemplate>
                 </CollectionView>
 
-
             </Grid>
 
         </VerticalStackLayout>

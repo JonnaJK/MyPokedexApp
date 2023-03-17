@@ -116,7 +116,7 @@ public class SearchPokemonPageViewModel : ViewModelBase
             ImageSource = "teamrocket.png";
             if (random.Next(101) <= 25)
             {
-                await _alertService.ShowAlertAsync("Too bad..", "Team Rocket ripped you of. " +
+                await _alertService.ShowAlertAsync("Too bad..", "Team Rocket ripped you off. " +
                     "Thats what you get for trading with criminals", "SHAME");
                 FlavorText = "Prepare for trouble!\r\n" +
                             "And make it double!\r\n" +
