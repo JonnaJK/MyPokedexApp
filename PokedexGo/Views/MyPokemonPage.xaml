@@ -37,7 +37,7 @@
                         Command="{Binding GoToShowMyWantedPokemonPageCommand}"
                         Grid.Column="1"/>
 
-                <Button Text="Gotta catch'em all"
+                <Button Text="Gotta catch 'em all"
                         Command="{Binding GoToCatchEmAllPageCommand}"
                         Grid.Row="1"/>
 

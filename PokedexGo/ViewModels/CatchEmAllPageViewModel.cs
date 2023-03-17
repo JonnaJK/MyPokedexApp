@@ -9,7 +9,7 @@ public class CatchEmAllPageViewModel : ViewModelBase
 {
     #region Consts
     private const int MAX_POKEMON_ID_REQUEST = 906;
-    private const int MAX_CAPTURE_RATE = 260;
+    private const int MAX_CAPTURE_RATE = 255;
     #endregion
 
     #region Attributes
@@ -88,7 +88,7 @@ public class CatchEmAllPageViewModel : ViewModelBase
         }
         catch (Exception e)
         {
-            await _alertService.ShowAlertAsync("Exception", e.Message, "OK");
+            await _alertService.ShowAlertAsync($"Exception in {nameof(ThrowPokeBall)}", e.Message, "OK");
         }
     }
 

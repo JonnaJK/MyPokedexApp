@@ -23,8 +23,7 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
             });
 
-        // TODO: NEW Gå igenom kommentarer
-        // Skapar en configuration för att enklare kunna använda databas options när jag ska connecta med min databas på MongoDB, connectionsträngen samt databasnamn och collectionnamn.
+        // Skapar en configuration för att enklare kunna använda databas options när jag ska connecta med min databas på MongoDB.
         // På detta sätt behöver jag endast ändra i appsettings.json
         var assembly = Assembly.GetExecutingAssembly();
         using var stream = assembly.GetManifestResourceStream("PokedexGo.appsettings.json");

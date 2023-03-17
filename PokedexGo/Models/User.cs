@@ -8,4 +8,5 @@ public class User
     public List<Pokemon> Pokemon { get; set; } = new();
     public List<Pokemon> FavoritePokemon { get; set; } = new();
     public List<Pokemon> WantedPokemon { get; set; } = new();
+    public List<PokeBall> PokeBalls { get; set; } = new();
 }

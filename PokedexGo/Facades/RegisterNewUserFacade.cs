@@ -34,22 +34,14 @@ internal class RegisterNewUserFacade : IRegisterNewUserFacade
 
     public async Task<string> CanRegister(string username, string password)
     {
-        try
-        {
-            var isValidUsername = await _validateUsername.ValidateUsernameAsync(username);
-            if (!isValidUsername)
-                return $"The username \"{username}\" already exists";
+        var isValidUsername = await _validateUsername.ValidateUsernameAsync(username);
+        if (!isValidUsername)
+            return $"The username \"{username}\" already exists";
 
-            var isValidPassword = _validatePassword.ValidatePassword(password);
-            if (!isValidPassword)
-                return $"The password is incorrect";
+        var isValidPassword = _validatePassword.ValidatePassword(password);
+        if (!isValidPassword)
+            return $"The password is incorrect";
 
-            return string.Empty;
-        }
-        catch (Exception e)
-        {
-            _alertService.ShowAlert("Exception", e.Message, "OK");
-            return string.Empty;
-        }
+        return string.Empty;
     }
 }

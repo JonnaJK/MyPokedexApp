@@ -24,20 +24,12 @@ internal class LoginFacade : ILoginFacade
 
     public async Task<string> CanLogin(string username, string password)
     {
-        try
-        {
-            var isAuthenticated =
-            await _authenticationUsername.IsAuthenticated(username) &&
-            await _authenticationPassword.IsAuthenticated(username, password);
+        var isAuthenticated =
+        await _authenticationUsername.IsAuthenticated(username) &&
+        await _authenticationPassword.IsAuthenticated(username, password);
 
-            return isAuthenticated ?
-                string.Empty :
-                $"The username \"{username}\" or password is incorrect";
-        }
-        catch (Exception e)
-        {
-            _alertService.ShowAlert("Exception", e.Message, "OK");
-            return string.Empty;
-        }
+        return isAuthenticated ?
+            string.Empty :
+            $"The username or password is incorrect";
     }
 }

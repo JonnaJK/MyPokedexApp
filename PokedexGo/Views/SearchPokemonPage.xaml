@@ -33,9 +33,17 @@
                     HorizontalOptions="Center"
                     Command="{Binding SearchCommand}"/>
 
-            <Image Source="{Binding Pokemon.Sprites.Other.Home.FrontDefault}"
-                   HorizontalOptions="Center"
-                   HeightRequest="150"/>
+            <Grid>
+
+                <Image Source="{Binding Pokemon.Sprites.Other.Home.FrontDefault}"
+                       HorizontalOptions="Center"
+                       HeightRequest="150"/>
+
+                <Image Source="{Binding ImageSource, Mode=TwoWay}"
+                       HorizontalOptions="Center"
+                       HeightRequest="150"/>
+                
+            </Grid>
 
             <Grid ColumnDefinitions="Auto, Auto"
                   RowDefinitions="Auto, Auto, Auto"
@@ -82,11 +90,11 @@
                         HorizontalOptions="Center"
                         Command="{Binding AddToWantedListCommand}"/>
 
-                <Button Text="NOT IMPLEMENTED (Buy from Team Rocket)"
+                <Button Text="Buy from Team Rocket"
                         HorizontalOptions="Center"
-                        Command="{Binding AddToWantedListCommand}"
+                        Command="{Binding BuyFromTeamRocketCommand}"
                         Grid.Column="1"/>
-                
+
             </Grid>
 
         </VerticalStackLayout>
